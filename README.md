@@ -19,7 +19,7 @@
 | `SOT` | 시제 일치 표 |
 | `CHOOSE` | 「시제 고르기」 문제 (`o[0]`이 정답, 화면에서는 섞여 나옴) |
 | `SOTQ` | 「시제 일치」 문제 (`o[0]`이 정답) |
-| `:root` CSS 변수 | 색상 (다크 모드 포함) |
+| `:root` CSS 변수 | 색상 (다크 모드 포함). 우측 상단 버튼으로 고른 테마는 localStorage `french-tenses-theme`에 저장 |
 
 ## 출처
 초록 상자 내용은 PONS 「Grammatik Französisch – Auf einen Blick」 2~4장의 시제 내용을 한국어로 정리한 것입니다.
