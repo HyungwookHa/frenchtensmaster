@@ -1,0 +1,1966 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="프랑스어 시제와 법을 한 장에 놓은 지도와 연습 문제">
+<title>프랑스어 시제 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Layout: one "note sheet" that redraws the handwritten grid (mood rows × past→future columns).
+   On phones the same grid turns 90° (time runs top → bottom). Detail panel under it, rule blocks after. */
+:root{
+  --paper:#F3F5F8;
+  --sheet:#FFFFFF;
+  --ink:#1A1D24;
+  --ink-2:#4B5260;
+  --ink-3:#858C9A;
+  --rule:#D9DEE6;
+  --hover:#EDF0F5;
+  --red:#D2283C;
+  --red-soft:#FCEBED;
+  --blue:#2A52C4;
+  --blue-soft:#E3EAFC;
+  --hl:rgba(255,204,30,.55);
+  --green:#1F8A4C;
+  --green-soft:#EBF6EF;
+  --green-ink:#14532D;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-head:"Gowun Batang","AppleMyungjo","Batang",serif;
+  --f-fr:"Newsreader","Iowan Old Style",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111318; --sheet:#181B22; --ink:#E7E9EE; --ink-2:#B3B9C5; --ink-3:#777E8C;
+    --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
+    --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --hl:rgba(250,204,21,.32);
+    --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111318; --sheet:#181B22; --ink:#E7E9EE; --ink-2:#B3B9C5; --ink-3:#777E8C;
+  --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
+  --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --hl:rgba(250,204,21,.32);
+  --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+em{font-family:var(--f-fr);font-style:italic;font-size:1.06em}
+b{font-weight:600}
+
+.page{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:40px 72px;display:flex;flex-direction:column;gap:28px}
+
+/* ---------- header ---------- */
+.top{display:flex;flex-direction:column;gap:6px;max-width:68ch}
+.eyebrow{font-family:var(--f-fr);font-style:italic;color:var(--ink-3);font-size:16px;margin:0}
+h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);line-height:1.25;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{margin:4px 0 0;color:var(--ink-2)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0;list-style:none;font-size:13px;color:var(--ink-2)}
+.legend li{display:flex;align-items:center;gap:8px}
+.lg-box{width:22px;height:14px;border:1.5px solid var(--red);border-radius:3px 6px 4px 5px}
+.lg-circ{width:16px;height:16px;border:1.5px solid var(--ink);border-radius:50%}
+.lg-arrow{width:26px;height:10px}
+.lg-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.lg-sel{width:24px;height:16px;border-radius:4px;background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue)}
+.lg-pair{width:24px;height:16px;border-radius:4px;border:1.5px dashed var(--blue)}
+.jumps{margin:-14px 0 0;font-size:13.5px}
+.jumps a{color:var(--blue);font-weight:600;text-underline-offset:3px}
+.jumps a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* ---------- note sheet / map ---------- */
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:22px 18px 26px}
+.hint{display:none;font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
+.map-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.map{
+  display:grid;
+  grid-template-columns:52px 56px repeat(2,minmax(112px,1fr)) minmax(290px,1.9fr) repeat(2,minmax(112px,1fr));
+  min-width:840px;position:relative;
+}
+.map > *{position:relative;z-index:1}
+
+/* desktop placement: rows = moods, columns = time */
+.g-axis{grid-column:3 / 8;grid-row:1}
+.g-prog{grid-column:5;grid-row:2}
+.g-hrtop{grid-column:2 / 8;grid-row:3}
+.g-mdir{grid-column:1;grid-row:3 / 5}
+.g-oral{grid-column:2;grid-row:3}
+.g-lit{grid-column:2;grid-row:4}
+.g-pqp{grid-column:3;grid-row:3}
+.g-pcimp{grid-column:4;grid-row:3}
+.g-cluster{grid-column:5;grid-row:3}
+.g-fa{grid-column:6;grid-row:3}
+.g-fs{grid-column:7;grid-row:3}
+.g-hrmid{grid-column:2 / 5;grid-row:4}
+.g-pa{grid-column:3;grid-row:4}
+.g-ps{grid-column:4;grid-row:4}
+.g-now{grid-column:5;grid-row:4}
+.g-litnote{grid-column:6 / 8;grid-row:4}
+.g-hrcond{grid-column:1 / 8;grid-row:5}
+.g-mcond{grid-column:1 / 3;grid-row:5}
+.g-cpasse{grid-column:4;grid-row:5}
+.g-cpres{grid-column:5;grid-row:5}
+.g-cfwd{grid-column:6 / 8;grid-row:5}
+.g-hrsubj{grid-column:1 / 8;grid-row:6}
+.g-msubj{grid-column:1 / 3;grid-row:6}
+.g-spqp{grid-column:3;grid-row:6}
+.g-spimp{grid-column:4;grid-row:6}
+.g-spres{grid-column:5;grid-row:6}
+.g-sfwd{grid-column:6 / 8;grid-row:6}
+.tlab{display:none}
+/* second grid: 명령법 + 인칭 없는 형태 (same column tracks as the first grid) */
+.b-hr1{grid-column:1 / 8;grid-row:1}
+.b-mimp{grid-column:1 / 3;grid-row:1}
+.b-ipasse{grid-column:4;grid-row:1}
+.b-ipres{grid-column:5;grid-row:1}
+.b-ifwd{grid-column:6 / 8;grid-row:1}
+.b-hr2{grid-column:1 / 8;grid-row:2}
+.b-mnf{grid-column:1;grid-row:2 / 4}
+.b-rinf{grid-column:2;grid-row:2}
+.b-rpart{grid-column:2;grid-row:3}
+.b-infp{grid-column:4;grid-row:2}
+.b-inf{grid-column:5;grid-row:2}
+.b-hr3{grid-column:2 / 6;grid-row:3}
+.b-pp{grid-column:4;grid-row:3}
+.b-ppr{grid-column:5;grid-row:3}
+.b-note{grid-column:6 / 8;grid-row:2 / 4}
+
+.axis{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-3);padding-bottom:10px}
+.axis .side{display:flex;align-items:center;gap:8px}
+.axis .side::after{content:"";flex:1;border-top:1px dashed var(--ink-3)}
+.axis .side.r::after{display:none}
+.axis .side.r::before{content:"";flex:1;border-top:1px dashed var(--ink-3)}
+.axis .now{font-weight:600;color:var(--ink-2)}
+.axis svg{width:9px;height:9px;flex:none}
+
+.mood{display:flex;align-items:center;justify-content:center;border-right:1.5px solid var(--ink)}
+.mood span{writing-mode:vertical-rl;text-orientation:upright;font-family:var(--f-head);font-weight:700;font-size:19px;letter-spacing:.35em}
+.mood.wide{justify-content:flex-start;padding-left:16px}
+.reg{display:flex;align-items:center;justify-content:center;border-right:1.5px solid var(--ink);font-family:var(--f-head);font-weight:700;font-size:16px}
+.hr{align-self:start;border-top:1.5px solid var(--ink);height:0;pointer-events:none}
+.cell{display:flex;align-items:center;justify-content:center;padding:18px 6px}
+
+/* chips = each tense, clickable */
+.chip{appearance:none;-webkit-appearance:none;position:relative;background:transparent;border:1.5px solid transparent;color:var(--ink);font:inherit;padding:6px 10px;border-radius:7px;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2;transition:background-color .15s, box-shadow .15s}
+.chip .k{font-weight:600;font-size:16px;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.chip .f{font-family:var(--f-fr);font-style:italic;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.chip:hover{background:var(--hover)}
+.chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.chip.sel{background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue)}
+.chip.pair{outline:1.5px dashed var(--blue);outline-offset:3px}
+.chip.has-pons::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--green)}
+.lit{font-size:10.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--ink-3);border-radius:3px;padding:0 4px;line-height:1.5}
+.box-red{border-color:var(--red);border-radius:3px 8px 4px 7px / 6px 3px 8px 4px}
+.circ{width:72px;height:72px;border-radius:50%;padding:0;justify-content:center;border-color:var(--ink)}
+.circ.red{border-color:var(--red)}
+.circ .f{font-size:12px}
+.slot{display:inline-flex;position:relative}
+
+.frac{display:flex;flex-direction:column;align-items:center;gap:4px}
+.frac-bar{width:86%;border:0;border-top:1.5px solid var(--ink);margin:0}
+
+.c-prog{display:flex;flex-direction:column;align-items:center;padding:14px 0 10px}
+.cluster{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px 4px}
+.k-pres::before{content:"";position:absolute;left:50%;top:-19px;height:18px;border-left:1.5px solid var(--ink)}
+.nowline{justify-self:center;width:0;border-left:1.5px solid var(--ink);pointer-events:none}
+.lit-note{align-self:center;font-size:12.5px;color:var(--ink-3);padding:0 8px;line-height:1.5;margin:0}
+
+.circ-wrap{position:relative;--r:38px}
+.circ-wrap::after{content:"";position:absolute;left:calc(50% + var(--r));right:0;top:50%;border-top:1.5px solid var(--ink-2)}
+.fwd{position:relative}
+.fwd .line{position:absolute;left:0;right:14px;top:50%;border-top:1.5px solid var(--ink-2)}
+.fwd svg{position:absolute;right:6px;top:calc(50% - 6px);width:10px;height:12px;color:var(--ink-2)}
+.fwd small{position:absolute;right:18px;bottom:calc(50% + 4px);font-size:12px;color:var(--ink-3);white-space:nowrap}
+
+/* mid widths: same grid, tighter */
+@media (min-width:761px) and (max-width:900px){
+  .hint-scroll{display:block}
+  .sheet{padding:16px 10px 18px}
+  .map{grid-template-columns:34px 42px repeat(2,minmax(86px,1fr)) minmax(250px,1.9fr) repeat(2,minmax(86px,1fr));min-width:690px}
+  .chip{padding:5px 6px}
+  .chip .k{font-size:14px}
+  .chip .f{font-size:11.5px}
+  .circ{width:62px;height:62px}
+  .circ .f{font-size:10.5px}
+  .circ-wrap{--r:33px}
+  .cluster{gap:4px}
+  .mood span{font-size:16px}
+  .mood.wide{padding-left:9px}
+  .reg{font-size:14px}
+  .lit-note{font-size:11.5px}
+}
+
+/* phones: the grid turns 90° — columns = moods, rows = time (top = past) */
+@media (max-width:760px){
+  .hint-vert{display:block}
+  .sheet{padding:14px 6px 16px}
+  .map-scroll{overflow:visible}
+  .map{grid-template-columns:20px minmax(0,1.05fr) minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr);min-width:0}
+  .g-axis,.g-now{display:none}
+  .g-mdir{grid-column:2 / 4;grid-row:1}
+  .g-oral{grid-column:2;grid-row:2}
+  .g-lit{grid-column:3;grid-row:2}
+  .g-mcond{grid-column:4;grid-row:1 / 3}
+  .g-msubj{grid-column:5;grid-row:1 / 3}
+  .g-hrtop{grid-column:1 / 6;grid-row:3}
+  .g-hrmid{grid-column:3;grid-row:2 / 11}
+  .g-hrcond{grid-column:4;grid-row:1 / 11}
+  .g-hrsubj{grid-column:5;grid-row:1 / 11}
+  .g-tpast{grid-column:1;grid-row:3 / 6}
+  .g-tnow{grid-column:1;grid-row:6 / 8}
+  .g-tfut{grid-column:1;grid-row:8 / 11}
+  .g-pqp{grid-column:2;grid-row:3}
+  .g-pcimp{grid-column:2;grid-row:4}
+  .g-cluster{display:contents}
+  .k-recent{grid-column:2;grid-row:5}
+  .k-pres{grid-column:2;grid-row:6}
+  .g-prog{grid-column:2;grid-row:7}
+  .k-proche{grid-column:2;grid-row:8}
+  .g-fa{grid-column:2;grid-row:9}
+  .g-fs{grid-column:2;grid-row:10}
+  .g-pa{grid-column:3;grid-row:3}
+  .g-ps{grid-column:3;grid-row:4}
+  .g-litnote{grid-column:3;grid-row:6 / 11}
+  .g-cpasse{grid-column:4;grid-row:4}
+  .g-cpres{grid-column:4;grid-row:6}
+  .g-cfwd{grid-column:4;grid-row:7 / 11}
+  .g-spqp{grid-column:5;grid-row:3}
+  .g-spimp{grid-column:5;grid-row:4}
+  .g-spres{grid-column:5;grid-row:6}
+  .g-sfwd{grid-column:5;grid-row:7 / 11}
+
+  .map.b{grid-template-columns:20px repeat(3,minmax(0,1fr));margin-top:26px}
+  .b-mimp{grid-column:2;grid-row:1 / 3}
+  .b-mnf{grid-column:3 / 5;grid-row:1}
+  .b-rinf{grid-column:3;grid-row:2}
+  .b-rpart{grid-column:4;grid-row:2}
+  .b-hr1{grid-column:1 / 5;grid-row:3}
+  .b-hr2{grid-column:3;grid-row:1 / 6}
+  .b-hr3{grid-column:4;grid-row:2 / 5}
+  .b-tpast{grid-column:1;grid-row:3}
+  .b-tnow{grid-column:1;grid-row:4}
+  .b-tfut{grid-column:1;grid-row:5}
+  .b-ipasse{grid-column:2;grid-row:3}
+  .b-ipres{grid-column:2;grid-row:4}
+  .b-ifwd{grid-column:2;grid-row:5;min-height:76px}
+  .b-infp{grid-column:3;grid-row:3}
+  .b-inf{grid-column:3;grid-row:4}
+  .b-pp{grid-column:4;grid-row:3}
+  .b-ppr{grid-column:4;grid-row:4}
+  .b-note{grid-column:3 / 5;grid-row:5}
+  .cell{padding:9px 2px}
+  .k-recent,.k-pres,.k-proche{justify-self:center;align-self:center;margin:7px 0}
+  .chip{padding:4px 4px;max-width:100%}
+  .chip .k{font-size:13.5px;flex-wrap:wrap;justify-content:center;white-space:normal;text-align:center;gap:2px 4px;word-break:keep-all}
+  .chip .f{font-size:10.5px;white-space:normal;text-align:center;overflow-wrap:anywhere}
+  .circ{width:58px;height:58px}
+  .circ .f{font-size:10px}
+  .slot{max-width:100%}
+  .k-pres::before{top:auto;bottom:-15px;height:14px}
+  .c-prog{padding:8px 0 6px}
+  .mood{border-right:0;padding:6px 0 4px}
+  .mood span{writing-mode:horizontal-tb;letter-spacing:.15em;font-size:15px}
+  .mood.wide{justify-content:center;padding-left:0}
+  .reg{border-right:0;font-size:12.5px;color:var(--ink-2);padding-bottom:6px}
+  .g-hrmid,.g-hrcond,.g-hrsubj,.b-hr2,.b-hr3{border-top:0;border-left:1.5px solid var(--ink);width:0;height:auto;align-self:stretch;justify-self:start}
+  .g-hrmid,.b-hr3{border-left-style:dashed;border-left-color:var(--ink-3)}
+  .lit-note{font-size:11px;align-self:start;padding:12px 4px;text-align:center;word-break:keep-all}
+  .circ-wrap{--r:30px}
+  .circ-wrap::after{left:50%;right:auto;top:calc(50% + var(--r));bottom:0;border-top:0;border-left:1.5px solid var(--ink-2)}
+  .fwd .line{left:50%;right:auto;top:0;bottom:12px;border-top:0;border-left:1.5px solid var(--ink-2)}
+  .fwd svg{right:auto;left:calc(50% - 4.25px);top:auto;bottom:2px;transform:rotate(90deg)}
+  .fwd small{right:auto;left:calc(50% + 6px);bottom:auto;top:30%;writing-mode:vertical-rl;font-size:11px}
+  .tlab{display:flex;align-items:center;justify-content:center;border-right:1px dashed var(--rule)}
+  .tlab span{writing-mode:vertical-rl;text-orientation:upright;font-size:11px;letter-spacing:.25em;color:var(--ink-3)}
+  .tlab.now span{color:var(--ink);font-weight:600}
+}
+
+/* ---------- detail ---------- */
+.detail{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px 40px;scroll-margin-top:16px}
+@media (max-width:860px){.detail{grid-template-columns:minmax(0,1fr)}}
+.d-head{grid-column:1 / -1;display:flex;flex-direction:column;gap:4px;border-top:2px solid var(--ink);padding-top:16px}
+.d-crumb{margin:0;font-size:13px;color:var(--ink-3);letter-spacing:.02em}
+.d-title{margin:0;font-family:var(--f-head);font-weight:700;font-size:clamp(26px,3.4vw,32px);line-height:1.25;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.d-title .fr{font-family:var(--f-fr);font-style:italic;font-weight:400;font-size:.72em;color:var(--blue)}
+.d-alias{margin:0;font-size:13.5px;font-weight:500;color:var(--red)}
+.d-info{display:flex;flex-direction:column;gap:20px;min-width:0}
+.d-info h3,.conj-box h3{margin:0 0 8px;font-size:12.5px;font-weight:600;color:var(--ink-3);letter-spacing:.06em}
+
+.formula{display:flex;flex-direction:column;gap:14px}
+.frow{display:flex;flex-direction:column;gap:6px}
+.flb{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.feq{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.fbox{display:inline-flex;align-items:center;gap:4px;min-height:46px;padding:4px 12px;border:1.5px solid var(--ink);border-radius:7px;background:var(--sheet);font-size:14px;font-weight:600;line-height:1.3}
+.fbox small{font-weight:400;color:var(--ink-2);font-size:12px}
+.fbox.fpp{border-style:dashed;font-weight:500}
+.fbox.fmid{font-weight:400;font-size:15px}
+.fplus{font-size:17px;font-weight:600;color:var(--ink-3);padding:0 1px}
+.fends{display:grid;grid-template-columns:repeat(6,auto);gap:4px}
+.fend{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:50px;min-height:46px;padding:3px 7px;border:1px solid var(--rule);border-radius:7px;background:var(--sheet);font-family:var(--f-fr);font-size:16px;line-height:1.15}
+.fend i{font-style:normal;font-family:var(--f-body);font-size:10.5px;color:var(--ink-3);margin-bottom:2px}
+@media (max-width:560px){.fends{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.fends-3{grid-template-columns:repeat(3,auto)}
+.fends-3 .fend{font-family:var(--f-body);font-size:13.5px;padding:4px 10px;text-align:center}
+.fends-3 .fend small{font-size:11px;color:var(--ink-3)}
+.fends-3 .fend em{font-size:16px}
+.pl{font-family:var(--f-body);font-size:12px;color:var(--ink-3);margin-right:2px}
+.fex{margin:0;font-family:var(--f-fr);font-size:14.5px;color:var(--ink-2)}
+.ftext{font-size:14.5px;color:var(--ink-2);padding:10px 12px;border:1px dashed var(--rule);border-radius:7px}
+.firr{display:flex;flex-direction:column;gap:6px}
+.firr-h{margin:0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.firr-grid{display:flex;flex-wrap:wrap;gap:6px}
+.firr-i{display:inline-flex;align-items:baseline;gap:6px;padding:5px 11px;border:1px solid var(--ink-3);border-radius:7px;background:var(--sheet);font-family:var(--f-fr);font-size:15.5px}
+.firr-i b{font-weight:600;color:var(--blue)}
+.firr-i .arr{font-family:var(--f-body);font-size:12px;color:var(--ink-3)}
+.fnote{margin:0;font-size:13.5px;color:var(--ink-2)}
+
+.uses{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:12px}
+.uses li::marker{color:var(--ink-3)}
+.uses .u{display:block}
+.uses .uex{display:block;margin-top:4px;padding-left:10px;border-left:2px solid var(--rule)}
+.uses .ufr{display:block;font-family:var(--f-fr);font-size:16.5px;line-height:1.45}
+.uses .uko{display:block;font-size:13.5px;color:var(--ink-2)}
+
+.pron{border-left:3px solid var(--blue);padding:2px 0 2px 14px;display:flex;flex-direction:column;gap:3px}
+.pron h3{color:var(--blue)}
+.pr-fr{margin:0;font-family:var(--f-fr);font-size:17.5px;line-height:1.45}
+.pr-fr b{font-weight:600;color:var(--blue)}
+.pr-ko{margin:0;font-size:13.5px;color:var(--ink-2)}
+.pr-tip{margin:6px 0 0;font-size:14px}
+.pr-go{align-self:flex-start;margin-top:8px}
+
+.d-note{margin:0;padding:10px 14px;background:var(--red-soft);border-radius:8px;font-size:14.5px}
+.d-note .pen{font-weight:600;color:var(--red);font-size:13px;margin-right:8px}
+.links{display:flex;flex-wrap:wrap;gap:6px}
+.mini{appearance:none;-webkit-appearance:none;font:inherit;font-size:13.5px;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:6px;padding:4px 10px;cursor:pointer}
+.mini:hover{background:var(--hover);border-color:var(--ink-3)}
+.mini:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* PONS green box */
+.pons{border:1.5px solid var(--green);background:var(--green-soft);border-radius:10px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.pons-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.pons-badge{font-family:var(--f-fr);font-weight:600;font-size:12.5px;letter-spacing:.1em;color:var(--sheet);background:var(--green);border-radius:4px;padding:2px 7px;line-height:1.3}
+.pons-title{font-weight:600;font-size:14.5px;color:var(--green-ink)}
+.pons-src{font-size:12.5px;color:var(--ink-3);margin-left:auto}
+.pons h4{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--green-ink)}
+.pons ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.6}
+.pons li::marker{color:var(--green)}
+.sot-line{margin:0;padding:10px 14px;border:1px solid var(--rule);border-left:3px solid var(--blue);border-radius:6px;background:var(--sheet);font-size:14.5px;line-height:1.6}
+.sot-line .lbl{display:block;font-size:12.5px;font-weight:600;color:var(--blue);margin-bottom:2px}
+.sot-line a{color:var(--blue);font-weight:600;font-size:13.5px;margin-left:6px;white-space:nowrap}
+/* 시제 일치 section */
+.sot-sec{display:flex;flex-direction:column;gap:18px;scroll-margin-top:16px;border-top:2px solid var(--blue);padding-top:16px}
+.sot-sec h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:24px}
+.sot-sec > p{margin:0;max-width:74ch}
+.sot-sec h3{margin:0 0 8px;font-size:15px;font-weight:600}
+.sot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.9fr);gap:22px 34px;align-items:start}
+@media (max-width:900px){.sot-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* conjugation box */
+.conj-box{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px 18px 14px;display:flex;flex-direction:column;gap:12px;min-width:0;align-self:start}
+.verbs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.vbtn{appearance:none;-webkit-appearance:none;font:inherit;background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:8px;padding:6px 3px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25;min-width:0}
+.vbtn .v{font-family:var(--f-fr);font-size:16.5px;white-space:nowrap}
+.vbtn .s{font-size:10.5px;color:var(--ink-3);text-align:center}
+.vbtn.refl{border-color:var(--blue)}
+.vbtn.refl .v{color:var(--blue)}
+.vbtn:hover{background:var(--hover)}
+.vbtn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.vbtn[aria-pressed="true"] .v{color:var(--sheet)}
+.vbtn[aria-pressed="true"] .s{color:var(--sheet);opacity:.75}
+.vbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (max-width:520px){.vbtn .v{font-size:14.5px}.vbtn .s{font-size:9.5px}}
+.conj{list-style:none;margin:0;padding:0}
+.conj li{font-family:var(--f-fr);font-size:18px;padding:6px 2px;border-bottom:1px dashed var(--rule);overflow-wrap:anywhere}
+.conj li:last-child{border-bottom:0}
+.hl{background:linear-gradient(transparent 56%, var(--hl) 56%);padding:0 1px}
+.fx{color:var(--ink-3)}
+.rp{color:var(--blue);font-weight:600}
+.conj-legend{margin:0;font-size:12.5px;color:var(--ink-3)}
+.conj-legend .rp,.conj-legend .hl{font-weight:500;color:var(--ink-2)}
+.conj-legend .rp{color:var(--blue)}
+.conj-note{margin:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- rules ---------- */
+.rules-title{margin:12px 0 0;font-family:var(--f-head);font-weight:700;font-size:24px}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 48px}
+@media (max-width:860px){.rules{grid-template-columns:minmax(0,1fr)}}
+.rule{border-top:2px solid var(--ink);padding-top:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.rule.wide{grid-column:1 / -1}
+.rule.red{border-top-color:var(--red)}
+.rule h3{margin:0;font-family:var(--f-head);font-weight:700;font-size:20px;line-height:1.35;text-wrap:balance}
+.rule.red h3{color:var(--red)}
+.rule.red h3 small{display:block;font-family:var(--f-body);font-size:14px;font-weight:600;color:var(--ink-2);margin-top:4px}
+.rule p{margin:0;max-width:68ch}
+.ex{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ex li{display:flex;flex-direction:column;border-left:2px solid var(--rule);padding-left:12px}
+.ex .fr{font-family:var(--f-fr);font-size:17.5px;line-height:1.45}
+.ex .ko{font-size:14px;color:var(--ink-2)}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:600;color:var(--ink-3);padding:6px 8px;border-bottom:1.5px solid var(--ink);white-space:nowrap}
+.tbl td{padding:8px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl td.fr{font-family:var(--f-fr);font-size:16px}
+.tbl .go{appearance:none;-webkit-appearance:none;font:inherit;font-weight:600;color:var(--blue);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap}
+.tbl .go:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.tbl .arrow{color:var(--ink-3);text-align:center;padding-inline:2px}
+.small{font-size:13.5px;color:var(--ink-2)}
+.omit{display:flex;flex-direction:column;gap:12px;border-top:1px dashed var(--ink-3);padding-top:16px;margin-top:8px}
+.omit h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:20px}
+.omit > p{margin:0;max-width:72ch;color:var(--ink-2)}
+.omit .tbl td{font-size:14px}
+.omit .tbl td.fr{font-size:15px}
+.omit .tbl .ko{font-family:var(--f-body);font-size:12.5px;color:var(--ink-2)}
+.omit .tbl tr.grp td{background:var(--hover);font-size:12.5px;font-weight:600;color:var(--ink-2);padding:6px 8px}
+
+footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px}
+
+/* ---------- tabs: 지도 / 연습 ---------- */
+.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--ink);margin-top:-8px;scroll-margin-top:12px}
+.tab{display:flex;align-items:baseline;gap:8px;padding:8px 16px 9px;margin-bottom:-1.5px;border:1.5px solid transparent;border-bottom:0;border-radius:8px 8px 0 0;color:var(--ink-3);text-decoration:none;font-family:var(--f-head);font-weight:700;font-size:17px}
+.tab small{font-family:var(--f-fr);font-style:italic;font-weight:400;font-size:13px}
+.tab:hover{color:var(--ink)}
+.tab[aria-current="page"]{color:var(--ink);background:var(--sheet);border-color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (max-width:420px){.tab small{display:none}}
+.view{display:flex;flex-direction:column;gap:28px}
+[hidden]{display:none !important}
+.d-prac{align-self:flex-start;margin-top:6px;color:var(--blue);border-color:var(--blue);font-weight:600}
+
+/* ---------- practice ---------- */
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mode{appearance:none;-webkit-appearance:none;font:inherit;text-align:left;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
+.mode b{font-size:15px}
+.mode span{font-size:12.5px;color:var(--ink-3)}
+.mode:hover{border-color:var(--ink-3)}
+.mode[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue);background:var(--blue-soft)}
+.mode:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (max-width:560px){.mode span{display:none}.mode{padding:9px 10px;text-align:center}}
+
+.p-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+@media (max-width:860px){.p-grid{grid-template-columns:minmax(0,1fr)}}
+.pcard{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:24px 22px;display:flex;flex-direction:column;gap:18px;min-width:0}
+@media (max-width:560px){.pcard{padding:18px 14px}}
+.q-crumb{margin:0;font-size:13px;color:var(--ink-3)}
+.q-prompt{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:0}
+.q-verb{font-family:var(--f-fr);font-style:italic;font-size:clamp(30px,5vw,40px);line-height:1.1}
+.q-tense{font-family:var(--f-head);font-weight:700;font-size:22px;color:var(--blue)}
+.q-person{font-family:var(--f-fr);font-size:18px;border:1.5px solid var(--ink);border-radius:999px;padding:0 12px}
+.q-task{margin:0;font-size:14px;color:var(--ink-2)}
+.ans-row{display:flex;gap:8px}
+.ans{flex:1;min-width:0;font-family:var(--f-fr);font-size:22px;padding:9px 14px;border:1.5px solid var(--ink);border-radius:8px;background:var(--paper);color:var(--ink)}
+.ans::placeholder{color:var(--ink-3);font-size:17px}
+.ans:focus{outline:2px solid var(--blue);outline-offset:1px}
+.ans.ok{border-color:var(--green);background:var(--green-soft)}
+.ans.no{border-color:var(--red);background:var(--red-soft)}
+.btn{appearance:none;-webkit-appearance:none;font:inherit;font-weight:600;font-size:15px;padding:10px 18px;border-radius:8px;border:1.5px solid var(--ink);background:var(--ink);color:var(--sheet);cursor:pointer;white-space:nowrap}
+.btn:hover{opacity:.88}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink-3);opacity:1}
+.btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.keys{display:flex;flex-wrap:wrap;gap:4px}
+.key{appearance:none;-webkit-appearance:none;font-family:var(--f-fr);font-size:17px;min-width:38px;height:38px;border:1px solid var(--rule);border-radius:6px;background:var(--sheet);color:var(--ink);cursor:pointer}
+.key:hover{background:var(--hover)}
+.q-tools{display:flex;flex-wrap:wrap;gap:8px}
+.hint-box{margin:0;font-size:14px;color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:7px;padding:8px 12px}
+.fb{border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:14.5px}
+.fb.ok{background:var(--green-soft)}
+.fb.no{background:var(--red-soft)}
+.fb .lbl{font-weight:600}
+.fb.ok .lbl{color:var(--green-ink)}
+.fb.no .lbl{color:var(--red)}
+.fb .right{font-family:var(--f-fr);font-size:20px}
+.fb .why{color:var(--ink-2)}
+.fb-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+
+.q-quote{margin:0;font-family:var(--f-fr);font-size:18px;padding:8px 12px;border-left:3px solid var(--blue);background:var(--blue-soft);border-radius:0 6px 6px 0}
+.q-quote .lbl{display:block;font-family:var(--f-body);font-size:12px;font-weight:600;color:var(--blue)}
+.q-sent{margin:0;font-family:var(--f-fr);font-size:clamp(20px,3vw,25px);line-height:1.55}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--ink);text-align:center;padding:0 4px;line-height:1.25}
+.blank.filled{border-color:var(--green);color:var(--green)}
+.q-inf{font-size:.72em;color:var(--ink-3)}
+.q-ko{margin:-8px 0 0;color:var(--ink-2);font-size:14.5px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:480px){.opts{grid-template-columns:minmax(0,1fr)}}
+.opt{appearance:none;-webkit-appearance:none;font-family:var(--f-fr);font-size:18px;text-align:left;padding:11px 14px;border:1.5px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:baseline;min-width:0;overflow-wrap:anywhere}
+.opt i{font-style:normal;font-family:var(--f-body);font-size:12px;color:var(--ink-3)}
+.opt:hover:not(:disabled){border-color:var(--ink-3);background:var(--hover)}
+.opt.ok{border-color:var(--green);background:var(--green-soft)}
+.opt.no{border-color:var(--red);background:var(--red-soft)}
+.opt:disabled{cursor:default}
+.opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.done-big{margin:0;font-family:var(--f-fr);font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
+.done-big span{font-size:28px;color:var(--ink-3)}
+
+.pside{display:flex;flex-direction:column;gap:22px;min-width:0}
+.pside h3{margin:0 0 8px;font-size:12.5px;font-weight:600;color:var(--ink-3);letter-spacing:.06em}
+.score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);padding-top:12px}
+.score div{display:flex;flex-direction:column}
+.score b{font-family:var(--f-fr);font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.score span{font-size:12px;color:var(--ink-3)}
+.picks{display:flex;flex-wrap:wrap;gap:5px}
+.pick{appearance:none;-webkit-appearance:none;font:inherit;font-size:13px;padding:4px 10px;border:1px solid var(--rule);border-radius:999px;background:transparent;color:var(--ink-2);cursor:pointer}
+.pick:hover{border-color:var(--ink-3)}
+.pick[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.pick.fr{font-family:var(--f-fr);font-size:14.5px}
+.pick:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.p-note{margin:0;font-size:13px;color:var(--ink-3)}
+.weak-list{display:flex;flex-direction:column;gap:4px;margin:0;padding:0;list-style:none}
+.weak-i{appearance:none;-webkit-appearance:none;font:inherit;font-size:14px;width:100%;display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--sheet);color:var(--ink);cursor:pointer;text-align:left}
+.weak-i:hover{border-color:var(--ink-3)}
+.weak-i .cnt{color:var(--red);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.linkbtn{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin-top:8px;font:inherit;font-size:12.5px;color:var(--ink-3);text-decoration:underline;cursor:pointer}
+
+@media (prefers-reduced-motion: reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
+
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <p class="eyebrow">Les temps et les modes</p>
+    <h1>프랑스어 시제 지도</h1>
+    <p class="lede">프랑스어의 시제와 법을 한 장에 놓은 지도입니다. 가로는 과거에서 미래로 가는 시간, 세로는 법(직설법·조건법·접속법·명령법)이고, 맨 아래는 인칭이 없는 부정법과 분사입니다. 칸을 누르면 그 칸이 파란 칸으로 바뀌고, 아래에 만드는 법, 쓰임과 예문, 대명동사 예, 활용표가 나옵니다. 함께 생기는 파란 점선은 그 시제의 짝꿍(복합형과 그 조동사의 시제)이고, 시제 일치와는 다른 관계입니다. 초록 점이 있는 칸은 PONS 문법표에서 가져온 보충 설명이 초록 상자로 함께 나옵니다. 다 읽었다면 「연습」 탭에서 활용 쓰기, 시제 고르기, 시제 일치 문제로 확인해 보세요.</p>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="보기">
+    <a class="tab" href="#tense-map" aria-current="page">지도 <small>la carte</small></a>
+    <a class="tab" href="#practice">연습 <small>exercices</small></a>
+  </nav>
+
+  <div class="view" id="view-map">
+
+  <ul class="legend" aria-label="읽는 법">
+    <li><span class="lg-box" aria-hidden="true"></span>빨간 네모: 시제가 아닌 3형제</li>
+    <li><span class="lg-circ" aria-hidden="true"></span>동그라미: 현재</li>
+    <li><svg class="lg-arrow" viewBox="0 0 26 10" aria-hidden="true"><path d="M1 5H23M18 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>미래까지 담당</li>
+    <li><span class="lit">문어</span>글에서만 쓰는 형태</li>
+    <li><span class="lg-dot" aria-hidden="true"></span>초록 점: PONS 보충 설명 있음</li>
+    <li><span class="lg-sel" aria-hidden="true"></span>파란 칸: 지금 보고 있는 시제</li>
+    <li><span class="lg-pair" aria-hidden="true"></span>파란 점선: 짝꿍 (복합형 ↔ 그 조동사의 시제)</li>
+  </ul>
+  <p class="jumps"><a href="#sot">시제 일치 표 바로가기 ↓</a></p>
+
+  <section class="sheet" aria-label="시제 지도">
+    <p class="hint hint-scroll">표를 옆으로 밀면 미래 쪽까지 보입니다 →</p>
+    <p class="hint hint-vert">휴대폰에서는 지도를 세로로 돌렸습니다. 위가 과거, 아래가 미래입니다.</p>
+    <div class="map-scroll">
+      <div class="map" id="map">
+        <div class="axis g-axis" aria-hidden="true">
+          <span class="side">과거</span>
+          <span class="now">현재</span>
+          <span class="side r">미래<svg viewBox="0 0 9 9"><path d="M0 0l9 4.5L0 9z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="tlab g-tpast" aria-hidden="true"><span>과거</span></div>
+        <div class="tlab now g-tnow" aria-hidden="true"><span>현재</span></div>
+        <div class="tlab g-tfut" aria-hidden="true"><span>미래</span></div>
+
+        <!-- above the table: 현재진행 -->
+        <div class="c-prog g-prog">
+          <button class="chip box-red" data-t="present_prog"><span class="k">현재진행</span><span class="f">en train de</span></button>
+        </div>
+
+        <!-- 직설법 -->
+        <div class="hr g-hrtop"></div>
+        <div class="mood g-mdir"><span>직설</span></div>
+        <div class="reg g-oral">구어</div>
+        <div class="reg g-lit">문어</div>
+
+        <div class="cell g-pqp">
+          <button class="chip" data-t="plus_que_parfait"><span class="k">대과거</span><span class="f">Plus-que-parfait</span></button>
+        </div>
+        <div class="cell g-pcimp">
+          <div class="frac">
+            <span class="slot"><button class="chip" data-t="passe_compose"><span class="k">복합과거</span><span class="f">Passé composé</span></button></span>
+            <hr class="frac-bar">
+            <span class="slot"><button class="chip" data-t="imparfait"><span class="k">반과거</span><span class="f">Imparfait</span></button></span>
+          </div>
+        </div>
+        <div class="cluster g-cluster">
+          <button class="chip box-red k-recent" data-t="passe_recent"><span class="k">근접과거</span><span class="f">Passé récent</span></button>
+          <span class="slot k-pres"><button class="chip circ red" data-t="present"><span class="k">현재</span><span class="f">Présent</span></button></span>
+          <span class="slot k-proche"><button class="chip box-red" data-t="futur_proche"><span class="k">근접미래</span><span class="f">Futur proche</span></button></span>
+        </div>
+        <div class="cell g-fa">
+          <button class="chip" data-t="futur_anterieur"><span class="k">전미래</span><span class="f">Futur antérieur</span></button>
+        </div>
+        <div class="cell g-fs">
+          <button class="chip" data-t="futur_simple"><span class="k">단순미래</span><span class="f">Futur simple</span></button>
+        </div>
+
+        <div class="hr g-hrmid"></div>
+        <div class="cell g-pa">
+          <button class="chip" data-t="passe_anterieur"><span class="k">전과거</span><span class="f">Passé antérieur</span></button>
+        </div>
+        <div class="cell g-ps">
+          <button class="chip" data-t="passe_simple"><span class="k">단순과거</span><span class="f">Passé simple</span></button>
+        </div>
+        <div class="nowline g-now" aria-hidden="true"></div>
+        <p class="lit-note g-litnote">반과거·대과거·현재·미래는<br>문어에서도 그대로 씁니다</p>
+
+        <!-- 조건법 -->
+        <div class="hr g-hrcond"></div>
+        <div class="mood wide g-mcond"><span>조건</span></div>
+        <div class="cell g-cpasse">
+          <button class="chip" data-t="cond_passe"><span class="k">복합과거</span><span class="f">Passé</span></button>
+        </div>
+        <div class="cell circ-wrap g-cpres">
+          <span class="slot"><button class="chip circ" data-t="cond_present"><span class="k">현재</span><span class="f">Présent</span></button></span>
+        </div>
+        <div class="fwd g-cfwd" aria-hidden="true">
+          <span class="line"></span><svg viewBox="0 0 10 12"><path d="M0 0l10 6L0 12z" fill="currentColor"/></svg><small>미래까지</small>
+        </div>
+
+        <!-- 접속법 -->
+        <div class="hr g-hrsubj"></div>
+        <div class="mood wide g-msubj"><span>접속</span></div>
+        <div class="cell g-spqp">
+          <button class="chip" data-t="subj_pqp"><span class="k">대과거 <span class="lit">문어</span></span><span class="f">Plus-que-parfait</span></button>
+        </div>
+        <div class="cell g-spimp">
+          <div class="frac">
+            <button class="chip" data-t="subj_passe"><span class="k">복합과거</span><span class="f">Passé</span></button>
+            <hr class="frac-bar">
+            <button class="chip" data-t="subj_imparfait"><span class="k">반과거 <span class="lit">문어</span></span><span class="f">Imparfait</span></button>
+          </div>
+        </div>
+        <div class="cell circ-wrap g-spres">
+          <button class="chip circ" data-t="subj_present"><span class="k">현재</span><span class="f">Présent</span></button>
+        </div>
+        <div class="fwd g-sfwd" aria-hidden="true">
+          <span class="line"></span><svg viewBox="0 0 10 12"><path d="M0 0l10 6L0 12z" fill="currentColor"/></svg><small>미래까지</small>
+        </div>
+      </div>
+      <div class="map b" id="map2">
+        <div class="tlab b-tpast" aria-hidden="true"><span>과거</span></div>
+        <div class="tlab now b-tnow" aria-hidden="true"><span>현재</span></div>
+        <div class="tlab b-tfut" aria-hidden="true"><span>미래</span></div>
+
+        <!-- 명령법 -->
+        <div class="hr b-hr1"></div>
+        <div class="mood wide b-mimp"><span>명령</span></div>
+        <div class="cell b-ipasse">
+          <button class="chip" data-t="imp_passe"><span class="k">과거 <span class="lit">드묾</span></span><span class="f">Passé</span></button>
+        </div>
+        <div class="cell circ-wrap b-ipres">
+          <span class="slot"><button class="chip circ" data-t="imp_present"><span class="k">현재</span><span class="f">Présent</span></button></span>
+        </div>
+        <div class="fwd b-ifwd" aria-hidden="true">
+          <span class="line"></span><svg viewBox="0 0 10 12"><path d="M0 0l10 6L0 12z" fill="currentColor"/></svg><small>미래까지</small>
+        </div>
+
+        <!-- 인칭이 없는 형태: 부정법, 분사 -->
+        <div class="hr b-hr2"></div>
+        <div class="mood b-mnf"><span>비인칭</span></div>
+        <div class="reg b-rinf">부정법</div>
+        <div class="reg b-rpart">분사</div>
+        <div class="cell b-infp">
+          <button class="chip" data-t="inf_passe"><span class="k">과거</span><span class="f">Infinitif passé</span></button>
+        </div>
+        <div class="cell b-inf">
+          <button class="chip" data-t="inf_present"><span class="k">현재</span><span class="f">Infinitif (동사원형)</span></button>
+        </div>
+        <div class="hr b-hr3"></div>
+        <div class="cell b-pp">
+          <button class="chip" data-t="part_passe"><span class="k">과거분사</span><span class="f">Participe passé</span></button>
+        </div>
+        <div class="cell b-ppr">
+          <div class="frac">
+            <button class="chip" data-t="part_present"><span class="k">현재분사</span><span class="f">Participe présent</span></button>
+            <hr class="frac-bar">
+            <button class="chip" data-t="gerondif"><span class="k">제롱디프</span><span class="f">en + 현재분사</span></button>
+          </div>
+        </div>
+        <p class="lit-note b-note">인칭이 없는 형태입니다. 시간은 주절을 기준으로 '같은 때·그 뒤(현재)'와 '먼저 끝난 일(과거)'만 나타냅니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail" id="detail" aria-live="polite">
+    <div class="d-head">
+      <p class="d-crumb" id="d-crumb"></p>
+      <h2 class="d-title" id="d-title"></h2>
+      <p class="d-alias" id="d-alias" hidden></p>
+      <button class="mini d-prac" id="d-prac" hidden>이 시제 활용 연습하기 →</button>
+    </div>
+    <div class="d-info">
+      <div><h3>만드는 법</h3><div class="formula" id="d-formula"></div></div>
+      <div><h3>언제 쓰나</h3><ul class="uses" id="d-uses"></ul></div>
+      <div class="pron" id="d-pron" hidden></div>
+      <p class="d-note" id="d-note" hidden></p>
+      <p class="sot-line" id="d-sot" hidden></p>
+      <div class="pons" id="d-pons" hidden></div>
+      <div><h3>같이 보기</h3><div class="links" id="d-links"></div></div>
+    </div>
+    <div class="conj-box" id="conj-box">
+      <h3>활용표</h3>
+      <div class="verbs" id="verbs">
+        <button class="vbtn" data-v="parler" aria-pressed="true"><span class="v">parler</span><span class="s">1군 · avoir</span></button>
+        <button class="vbtn" data-v="finir" aria-pressed="false"><span class="v">finir</span><span class="s">2군 · avoir</span></button>
+        <button class="vbtn refl" data-v="lever" aria-pressed="false"><span class="v">se lever</span><span class="s">대명동사 · être</span></button>
+        <button class="vbtn" data-v="aller" aria-pressed="false"><span class="v">aller</span><span class="s">불규칙 · être</span></button>
+        <button class="vbtn" data-v="etre" aria-pressed="false"><span class="v">être</span><span class="s">불규칙 · avoir</span></button>
+        <button class="vbtn" data-v="avoir" aria-pressed="false"><span class="v">avoir</span><span class="s">불규칙 · avoir</span></button>
+        <button class="vbtn" data-v="faire" aria-pressed="false"><span class="v">faire</span><span class="s">불규칙 · avoir</span></button>
+        <button class="vbtn" data-v="prendre" aria-pressed="false"><span class="v">prendre</span><span class="s">불규칙 · avoir</span></button>
+        <button class="vbtn" data-v="venir" aria-pressed="false"><span class="v">venir</span><span class="s">불규칙 · être</span></button>
+        <button class="vbtn" data-v="pouvoir" aria-pressed="false"><span class="v">pouvoir</span><span class="s">불규칙 · avoir</span></button>
+      </div>
+      <ul class="conj" id="conj"></ul>
+      <p class="conj-legend" id="conj-legend"></p>
+      <p class="conj-note" id="conj-note"></p>
+    </div>
+  </section>
+
+  <section class="sot-sec" id="sot" aria-labelledby="sot-h">
+    <h2 id="sot-h">시제 일치 (간접화법)</h2>
+    <p>남의 말이나 생각을 <em>que</em>로 옮겨 말할 때, 주절의 시제에 따라 <em>que</em> 뒤 동사의 시제가 정해지는 규칙입니다. 주절이 현재면 그대로 두고, 주절이 과거(<em>Il a dit, Il disait</em>)면 과거 쪽으로 옮깁니다. 지도로 보면 현재와 복합과거는 한 칸 왼쪽으로, 반과거와 대과거는 그대로, 미래 시제는 조건법 줄로 내려갑니다.</p>
+    <p class="small">지도의 파란 점선(짝꿍)과는 다른 관계입니다. 짝꿍은 "복합형을 만드는 조동사의 시제", 시제 일치는 "주절이 과거일 때 옮겨 가는 시제"입니다. 예를 들어 복합과거의 짝꿍은 현재이지만, 시제 일치에서 복합과거는 대과거로 바뀝니다.</p>
+    <div class="sot-grid">
+      <div>
+        <h3>① 주절이 현재일 때: 그대로</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>따옴표 안</th><th></th><th>간접화법</th></tr></thead>
+            <tbody>
+              <tr><td>현재</td><td class="arrow">→</td><td>현재<br><em>« Je pars. » → Il dit qu'il part.</em></td></tr>
+              <tr><td>복합과거</td><td class="arrow">→</td><td>복합과거<br><em>« Je suis parti. » → Il dit qu'il est parti.</em></td></tr>
+              <tr><td>단순미래</td><td class="arrow">→</td><td>단순미래<br><em>« Je partirai. » → Il dit qu'il partira.</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>② 주절이 과거일 때: 과거 쪽으로 이동</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>따옴표 안 (직접화법)</th><th></th><th>간접화법</th><th>예</th></tr></thead>
+            <tbody>
+              <tr><td><button class="go" data-t="present">현재</button></td><td class="arrow">→</td><td><button class="go" data-t="imparfait">반과거</button></td><td class="fr">« Je pars. » → Il a dit qu'il partait.</td></tr>
+              <tr><td><button class="go" data-t="passe_compose">복합과거</button></td><td class="arrow">→</td><td><button class="go" data-t="plus_que_parfait">대과거</button></td><td class="fr">« Je suis parti. » → Il a dit qu'il était parti.</td></tr>
+              <tr><td><button class="go" data-t="imparfait">반과거</button></td><td class="arrow">→</td><td>반과거 (그대로)</td><td class="fr">« Je partais. » → Il a dit qu'il partait.</td></tr>
+              <tr><td><button class="go" data-t="plus_que_parfait">대과거</button></td><td class="arrow">→</td><td>대과거 (그대로)</td><td class="fr">« J'étais parti. » → Il a dit qu'il était parti.</td></tr>
+              <tr><td><button class="go" data-t="futur_simple">단순미래</button></td><td class="arrow">→</td><td><button class="go" data-t="cond_present">조건법 현재</button></td><td class="fr">« Je partirai. » → Il a dit qu'il partirait.</td></tr>
+              <tr><td><button class="go" data-t="futur_anterieur">전미래</button></td><td class="arrow">→</td><td><button class="go" data-t="cond_passe">조건법 과거</button></td><td class="fr">« Je serai parti. » → Il a dit qu'il serait parti.</td></tr>
+              <tr><td><button class="go" data-t="futur_proche">근접미래</button></td><td class="arrow">→</td><td><em>aller</em> 반과거 + 동사원형</td><td class="fr">« Je vais partir. » → Il a dit qu'il allait partir.</td></tr>
+              <tr><td><button class="go" data-t="passe_recent">근접과거</button></td><td class="arrow">→</td><td><em>venir</em> 반과거 + <em>de</em></td><td class="fr">« Je viens de partir. » → Il a dit qu'il venait de partir.</td></tr>
+              <tr><td><button class="go" data-t="imp_present">명령법</button></td><td class="arrow">→</td><td><em>de</em> + 동사원형</td><td class="fr">« Pars ! » → Il m'a dit de partir.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small">조건법(현재·과거)은 주절이 과거가 되어도 바뀌지 않습니다: <em>« Je voudrais partir. » → Il a dit qu'il voudrait partir.</em></p>
+        <p class="small">접속법은 말할 때 주절이 과거여도 현재·과거를 그대로 씁니다 (<em>Je voulais qu'il vienne.</em>). 글에서는 접속법 반과거·대과거로 옮기기도 합니다 (<em>Je voulais qu'il vînt.</em>).</p>
+      </div>
+    </div>
+    <div>
+      <h3>함께 바뀌는 것</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>무엇이</th><th>어떻게</th><th>예</th></tr></thead>
+          <tbody>
+            <tr><td>예/아니오 의문문</td><td><em>si</em> + 평서문 어순</td><td class="fr">« Tu viens ? » → Il m'a demandé si je venais.</td></tr>
+            <tr><td>의문사 의문문</td><td>의문사 + 평서문 어순</td><td class="fr">« Où vas-tu ? » → Il m'a demandé où j'allais.</td></tr>
+            <tr><td>인칭</td><td>말한 사람 기준으로 바꿈</td><td class="fr">« Je suis fatiguée. » → Elle a dit qu'elle était fatiguée.</td></tr>
+            <tr><td>시간 표현</td><td>"오늘·어제·내일"이 "그날·전날·다음 날"로</td><td><em>aujourd'hui → ce jour-là · hier → la veille · demain → le lendemain · maintenant → à ce moment-là</em></td></tr>
+            <tr><td>대명동사</td><td>같은 규칙, 재귀대명사도 인칭에 맞춤</td><td class="fr">« Je me suis trompé. » → Il a dit qu'il s'était trompé.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="pons">
+      <div class="pons-head"><span class="pons-badge">PONS</span><span class="pons-title">문법표 보충 설명</span><span class="pons-src">4장 · 왼쪽 단 위 (Zeitenfolge in der indirekten Rede)</span></div>
+      <div><h4>주절이 현재일 때 (Zeitenfolge in der Gegenwart)</h4><ul>
+        <li>시제 그대로: <em>Il dit&nbsp;: « Je pars. » → Il dit qu'il part.</em> (현재 → 현재)</li>
+      </ul></div>
+      <div><h4>주절이 과거일 때 (Zeitenfolge in der Vergangenheit und im Futur)</h4><ul>
+        <li>주절은 <em>Il a dit</em>(복합과거)든 <em>Il disait</em>(반과거)든 같음</li>
+        <li>현재 → 반과거: <em>« Je pars au Canada. » → qu'il partait au Canada.</em></li>
+        <li>반과거 → 반과거: <em>« Je partais au Canada. » → qu'il partait au Canada.</em></li>
+        <li>복합과거 → 대과거: <em>« Je suis parti au Canada. » → qu'il était parti au Canada.</em></li>
+        <li>대과거 → 대과거: <em>« J'étais parti au Canada. » → qu'il était parti au Canada.</em></li>
+        <li>단순미래 → 조건법 현재: <em>« Je partirai au Canada. » → qu'il partirait au Canada.</em></li>
+        <li>전미래 → 조건법 과거: <em>« Je serai parti au Canada. » → qu'il serait parti au Canada.</em></li>
+      </ul></div>
+      <div><h4>간접화법 밖에서도</h4><ul>
+        <li>이 시제 이동은 다른 종속절에도 똑같이 적용됨: <em>Je pense qu'on va visiter le Louvre.</em> (현재) → <em>Je pensais qu'on allait visiter le Louvre.</em> (반과거)</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <h2 class="rules-title">지도에 숨어 있는 규칙</h2>
+  <section class="rules">
+    <article class="rule">
+      <h3>복합시제는 늘 짝꿍 단순시제의 왼쪽</h3>
+      <p>복합시제는 조동사 <em>avoir</em> / <em>être</em> + 과거분사입니다. 조동사를 어떤 시제로 활용하느냐가 복합시제의 이름을 정하고, 복합시제는 늘 짝꿍보다 한 발 먼저 끝난 일을 말합니다. 그래서 지도에서도 짝꿍의 왼쪽에 놓입니다.</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>조동사의 시제</th><th>avoir / être</th><th></th><th>복합시제</th></tr></thead>
+          <tbody>
+            <tr><td>직설법 현재</td><td class="fr">j'ai / je suis</td><td class="arrow">→</td><td><button class="go" data-t="passe_compose">복합과거</button></td></tr>
+            <tr><td>반과거</td><td class="fr">j'avais / j'étais</td><td class="arrow">→</td><td><button class="go" data-t="plus_que_parfait">대과거</button></td></tr>
+            <tr><td>단순과거</td><td class="fr">j'eus / je fus</td><td class="arrow">→</td><td><button class="go" data-t="passe_anterieur">전과거</button></td></tr>
+            <tr><td>단순미래</td><td class="fr">j'aurai / je serai</td><td class="arrow">→</td><td><button class="go" data-t="futur_anterieur">전미래</button></td></tr>
+            <tr><td>조건법 현재</td><td class="fr">j'aurais / je serais</td><td class="arrow">→</td><td><button class="go" data-t="cond_passe">조건법 과거</button></td></tr>
+            <tr><td>접속법 현재</td><td class="fr">que j'aie / que je sois</td><td class="arrow">→</td><td><button class="go" data-t="subj_passe">접속법 과거</button></td></tr>
+            <tr><td>접속법 반과거</td><td class="fr">que j'eusse / que je fusse</td><td class="arrow">→</td><td><button class="go" data-t="subj_pqp">접속법 대과거</button></td></tr>
+            <tr><td>명령법 현재</td><td class="fr">aie / sois</td><td class="arrow">→</td><td><button class="go" data-t="imp_passe">명령법 과거</button></td></tr>
+            <tr><td>부정법 현재</td><td class="fr">avoir / être</td><td class="arrow">→</td><td><button class="go" data-t="inf_passe">부정법 과거</button></td></tr>
+            <tr><td>현재분사</td><td class="fr">ayant / étant</td><td class="arrow">→</td><td><button class="go" data-t="part_passe">완료 분사</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">인칭이 있는 법의 7쌍에 명령법·부정법·분사의 3쌍이 더해져, 단순형 10개에 복합형 10개가 하나씩 짝지어집니다. 대명동사는 어느 복합시제든 조동사가 늘 <em>être</em>입니다 (<em>je me suis levé, je m'étais levé, je me serai levé …</em>).</p>
+      <p class="small">부정문은 어느 복합시제든 <em>ne … pas</em>가 조동사를 감쌉니다: <em>je n'avais pas fini · je n'aurai pas fini · je ne serais pas venu</em>.</p>
+    </article>
+
+    <article class="rule red">
+      <h3>시제라고 보기 어려운 3형제<small>왜? 동사 활용 X</small></h3>
+      <p>세 표현 모두 본동사는 동사원형 그대로이고, 앞에 붙은 <em>venir</em> · <em>être</em> · <em>aller</em>만 활용됩니다. 그래서 문법책에서는 시제가 아니라 우언 표현(<em>périphrase</em>)이라고 부릅니다.</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>이름</th><th>공식</th><th>뜻</th></tr></thead>
+          <tbody>
+            <tr><td><button class="go" data-t="passe_recent">근접과거</button></td><td class="fr">venir de + 동사원형</td><td>방금 ~했다</td></tr>
+            <tr><td><button class="go" data-t="present_prog">현재진행</button></td><td class="fr">être en train de + 동사원형</td><td>지금 ~하는 중이다</td></tr>
+            <tr><td><button class="go" data-t="futur_proche">근접미래</button></td><td class="fr">aller + 동사원형</td><td>곧 ~할 것이다</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">앞의 동사만 반과거로 바꾸면 과거 시점 버전이 됩니다. <em>je venais de manger</em> (막 먹었던 참), <em>j'étais en train de manger</em> (먹던 중이었다), <em>j'allais manger</em> (막 먹으려던 참). 대명동사는 재귀대명사가 동사원형 앞에 붙습니다: <em>je vais me coucher</em>.</p>
+    </article>
+
+    <article class="rule">
+      <h3>조건법·접속법의 현재는 미래까지 맡는다</h3>
+      <p>조건법과 접속법에는 미래형이 따로 없습니다. 그래서 지도의 화살표처럼 현재형이 지금과 앞으로의 일을 함께 맡고, 그보다 먼저 끝난 일은 왼쪽의 복합형(조건법 과거, 접속법 과거)이 맡습니다.</p>
+      <ul class="ex">
+        <li><span class="fr">Si tu venais demain, je serais content.</span><span class="ko">네가 내일 온다면 기쁠 텐데. (조건법 현재 + 내일)</span></li>
+        <li><span class="fr">Il faut que tu partes demain.</span><span class="ko">너는 내일 떠나야 한다. (접속법 현재 + 내일)</span></li>
+      </ul>
+      <p>직설법과 조건법은 <em>si</em> 가정문으로 이어집니다. <em>si</em> 절에는 미래형과 조건법을 쓰지 않습니다.</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>si 절</th><th>주절</th><th>의미</th></tr></thead>
+          <tbody>
+            <tr><td>현재</td><td>단순미래</td><td>실현 가능<br><em>Si tu viens, on ira au cinéma.</em></td></tr>
+            <tr><td>반과거</td><td>조건법 현재</td><td>지금·앞으로와 반대<br><em>Si j'étais riche, je voyagerais.</em></td></tr>
+            <tr><td>대과거</td><td>조건법 과거</td><td>과거 사실과 반대<br><em>Si tu étais venu, tu l'aurais vu.</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="rule">
+      <h3>문어 시제를 구어로 바꾸면</h3>
+      <p>지도의 문어 칸과 접속법의 문어 표시는 글(소설, 역사서, 격식 문체)에서만 보는 형태입니다. 말할 때는 오른쪽 형태로 바꿔 씁니다. 읽을 때 알아보는 것이 목표라서, 3인칭(<em>il</em>, <em>ils</em>) 형태부터 익히면 충분합니다.</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>문어</th><th></th><th>구어</th></tr></thead>
+          <tbody>
+            <tr><td><button class="go" data-t="passe_simple">단순과거</button> <em>il parla</em></td><td class="arrow">→</td><td>복합과거 <em>il a parlé</em></td></tr>
+            <tr><td><button class="go" data-t="passe_anterieur">전과거</button> <em>il eut parlé</em></td><td class="arrow">→</td><td>대과거 <em>il avait parlé</em> (또는 복합과거)</td></tr>
+            <tr><td><button class="go" data-t="subj_imparfait">접속법 반과거</button> <em>qu'il parlât</em></td><td class="arrow">→</td><td>접속법 현재 <em>qu'il parle</em></td></tr>
+            <tr><td><button class="go" data-t="subj_pqp">접속법 대과거</button> <em>qu'il eût parlé</em></td><td class="arrow">→</td><td>접속법 과거 <em>qu'il ait parlé</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">반과거는 문어에서도 그대로 쓰입니다. 그래서 소설의 이야기는 단순과거(사건) + 반과거(배경)로, 말로 하는 이야기는 복합과거(사건) + 반과거(배경)로 진행됩니다.</p>
+    </article>
+
+  </section>
+
+  <section class="omit" id="omit" aria-labelledby="omit-h">
+    <h2 id="omit-h">이 정리표에 넣지 않은 것</h2>
+    <p>현재 프랑스어 문법에서 시제와 관련된 내용 중 이 정리표에 칸으로 넣지 않은 것들입니다. 드물거나 중급 이상이라 뺀 것들을 종류별로 나눠 두었습니다.</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>개념</th><th>예</th><th>넣지 않은 이유</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="3">드물게 쓰는 형태</td></tr>
+          <tr><td>복복합과거 (passé surcomposé)</td><td class="fr">Quand il a eu fini, il est parti.<br><span class="ko">그는 다 끝내자 떠났다.</span></td><td>일부 지역의 구어에서 전과거 대신 쓰는 정도로 드묾</td></tr>
+          <tr><td>그 밖의 복복합 시제 (대과거·전미래 등)</td><td class="fr">j'avais eu fini · j'aurai eu fini</td><td>매우 드묾</td></tr>
+          <tr><td>조건법 과거 제2형</td><td class="fr">J'eusse aimé partir.<br><span class="ko">떠나고 싶었는데.</span></td><td>접속법 대과거와 모양이 같아 그 칸에서 설명만 함</td></tr>
+          <tr><td>제롱디프 과거</td><td class="fr">en ayant fini</td><td>제롱디프 칸 메모에서 언급만 함</td></tr>
+          <tr class="grp"><td colspan="3">시제의 특별한 쓰임 (중급 이상)</td></tr>
+          <tr><td>서술·역사적 현재</td><td class="fr">En 1789, la Révolution éclate.<br><span class="ko">1789년, 혁명이 일어난다.</span></td><td>중급 이상</td></tr>
+          <tr><td>미래의 공손 용법</td><td class="fr">Je vous demanderai de patienter.<br><span class="ko">기다려 주시기 바랍니다.</span></td><td>중급 이상</td></tr>
+          <tr><td>복합과거로 말하는 가까운 완료 (구어)</td><td class="fr">J'ai fini dans cinq minutes.<br><span class="ko">5분이면 끝나.</span></td><td>구어 특유의 쓰임</td></tr>
+          <tr class="grp"><td colspan="3">3형제 밖의 우언 표현</td></tr>
+          <tr><td><em>être sur le point de</em> + 동사원형</td><td class="fr">Il est sur le point de partir.<br><span class="ko">그는 막 떠나려는 참이다.</span></td><td>근접미래보다 더 임박함. 3형제만 다룸</td></tr>
+          <tr><td><em>se mettre à · commencer à</em> + 동사원형</td><td class="fr">Il se met à pleuvoir.<br><span class="ko">비가 오기 시작한다.</span></td><td>시작을 나타내는 표현. 3형제만 다룸</td></tr>
+          <tr><td><em>devoir</em> + 동사원형 (추측)</td><td class="fr">Il doit être malade.<br><span class="ko">그는 아픈가 보다.</span></td><td>추측 표현. 3형제만 다룸</td></tr>
+          <tr class="grp"><td colspan="3">시제와 함께 다루는 문법 (일부만 다룸)</td></tr>
+          <tr><td>수동태의 시제별 형태</td><td class="fr">La maison a été construite en 1900.<br><span class="ko">그 집은 1900년에 지어졌다.</span></td><td>être의 시제가 곧 수동태의 시제. 과거분사 칸에서만 다룸</td></tr>
+          <tr><td>발음</td><td>-ent 묵음, parlai / parlais 구별 등</td><td>이 지도는 형태와 쓰임만 다룸</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  </div>
+
+  <section class="view" id="view-practice" aria-label="연습" hidden>
+    <div class="modes" role="group" aria-label="연습 종류">
+      <button class="mode" data-mode="conj" aria-pressed="true"><b>활용 쓰기</b><span>동사를 직접 활용해 입력</span></button>
+      <button class="mode" data-mode="choose" aria-pressed="false"><b>시제 고르기</b><span>문맥에 맞는 시제 고르기</span></button>
+      <button class="mode" data-mode="sot" aria-pressed="false"><b>시제 일치</b><span>간접화법으로 옮기기</span></button>
+    </div>
+    <div class="p-grid">
+      <div class="pcard" id="pcard" aria-live="polite"></div>
+      <aside class="pside">
+        <div class="score" id="pscore"></div>
+        <div id="pset"></div>
+        <div id="pweak"></div>
+      </aside>
+    </div>
+  </section>
+
+  <footer>활용표 동사 10개: parler, finir, se lever, aller, être, avoir, faire, prendre, venir, pouvoir · 초록 상자: PONS 「Grammatik Französisch – Auf einen Blick」 2~4장의 시제 내용을 한국어로 정리</footer>
+</div>
+
+<script>
+(function(){
+  /* ---------- conjugation data ---------- */
+  var AUX = {
+    avoir:{present:["ai","as","a","avons","avez","ont"],imparfait:["avais","avais","avait","avions","aviez","avaient"],ps:["eus","eus","eut","eûmes","eûtes","eurent"],futur:["aurai","auras","aura","aurons","aurez","auront"],cond:["aurais","aurais","aurait","aurions","auriez","auraient"],subj:["aie","aies","ait","ayons","ayez","aient"],subjimp:["eusse","eusses","eût","eussions","eussiez","eussent"]},
+    etre:{present:["suis","es","est","sommes","êtes","sont"],imparfait:["étais","étais","était","étions","étiez","étaient"],ps:["fus","fus","fut","fûmes","fûtes","furent"],futur:["serai","seras","sera","serons","serez","seront"],cond:["serais","serais","serait","serions","seriez","seraient"],subj:["sois","sois","soit","soyons","soyez","soient"],subjimp:["fusse","fusses","fût","fussions","fussiez","fussent"]}
+  };
+  var FORMS = {
+    parler:{present:["parle","parles","parle","parlons","parlez","parlent"],imparfait:["parlais","parlais","parlait","parlions","parliez","parlaient"],ps:["parlai","parlas","parla","parlâmes","parlâtes","parlèrent"],futur:["parlerai","parleras","parlera","parlerons","parlerez","parleront"],cond:["parlerais","parlerais","parlerait","parlerions","parleriez","parleraient"],subj:["parle","parles","parle","parlions","parliez","parlent"],subjimp:["parlasse","parlasses","parlât","parlassions","parlassiez","parlassent"]},
+    finir:{present:["finis","finis","finit","finissons","finissez","finissent"],imparfait:["finissais","finissais","finissait","finissions","finissiez","finissaient"],ps:["finis","finis","finit","finîmes","finîtes","finirent"],futur:["finirai","finiras","finira","finirons","finirez","finiront"],cond:["finirais","finirais","finirait","finirions","finiriez","finiraient"],subj:["finisse","finisses","finisse","finissions","finissiez","finissent"],subjimp:["finisse","finisses","finît","finissions","finissiez","finissent"]},
+    lever:{present:["lève","lèves","lève","levons","levez","lèvent"],imparfait:["levais","levais","levait","levions","leviez","levaient"],ps:["levai","levas","leva","levâmes","levâtes","levèrent"],futur:["lèverai","lèveras","lèvera","lèverons","lèverez","lèveront"],cond:["lèverais","lèverais","lèverait","lèverions","lèveriez","lèveraient"],subj:["lève","lèves","lève","levions","leviez","lèvent"],subjimp:["levasse","levasses","levât","levassions","levassiez","levassent"]},
+    aller:{present:["vais","vas","va","allons","allez","vont"],imparfait:["allais","allais","allait","allions","alliez","allaient"],ps:["allai","allas","alla","allâmes","allâtes","allèrent"],futur:["irai","iras","ira","irons","irez","iront"],cond:["irais","irais","irait","irions","iriez","iraient"],subj:["aille","ailles","aille","allions","alliez","aillent"],subjimp:["allasse","allasses","allât","allassions","allassiez","allassent"]},
+    etre: AUX.etre,
+    avoir: AUX.avoir,
+    faire:{present:["fais","fais","fait","faisons","faites","font"],imparfait:["faisais","faisais","faisait","faisions","faisiez","faisaient"],ps:["fis","fis","fit","fîmes","fîtes","firent"],futur:["ferai","feras","fera","ferons","ferez","feront"],cond:["ferais","ferais","ferait","ferions","feriez","feraient"],subj:["fasse","fasses","fasse","fassions","fassiez","fassent"],subjimp:["fisse","fisses","fît","fissions","fissiez","fissent"]},
+    prendre:{present:["prends","prends","prend","prenons","prenez","prennent"],imparfait:["prenais","prenais","prenait","prenions","preniez","prenaient"],ps:["pris","pris","prit","prîmes","prîtes","prirent"],futur:["prendrai","prendras","prendra","prendrons","prendrez","prendront"],cond:["prendrais","prendrais","prendrait","prendrions","prendriez","prendraient"],subj:["prenne","prennes","prenne","prenions","preniez","prennent"],subjimp:["prisse","prisses","prît","prissions","prissiez","prissent"]},
+    venir:{present:["viens","viens","vient","venons","venez","viennent"],imparfait:["venais","venais","venait","venions","veniez","venaient"],ps:["vins","vins","vint","vînmes","vîntes","vinrent"],futur:["viendrai","viendras","viendra","viendrons","viendrez","viendront"],cond:["viendrais","viendrais","viendrait","viendrions","viendriez","viendraient"],subj:["vienne","viennes","vienne","venions","veniez","viennent"],subjimp:["vinsse","vinsses","vînt","vinssions","vinssiez","vinssent"]},
+    pouvoir:{present:["peux","peux","peut","pouvons","pouvez","peuvent"],imparfait:["pouvais","pouvais","pouvait","pouvions","pouviez","pouvaient"],ps:["pus","pus","put","pûmes","pûtes","purent"],futur:["pourrai","pourras","pourra","pourrons","pourrez","pourront"],cond:["pourrais","pourrais","pourrait","pourrions","pourriez","pourraient"],subj:["puisse","puisses","puisse","puissions","puissiez","puissent"],subjimp:["pusse","pusses","pût","pussions","pussiez","pussent"]}
+  };
+  var VERBS = {
+    parler:{inf:"parler",aux:"avoir",pp:"parlé"},
+    finir:{inf:"finir",aux:"avoir",pp:"fini"},
+    lever:{inf:"lever",aux:"etre",pp:"levé",refl:true},
+    aller:{inf:"aller",aux:"etre",pp:"allé"},
+    etre:{inf:"être",aux:"avoir",pp:"été"},
+    avoir:{inf:"avoir",aux:"avoir",pp:"eu"},
+    faire:{inf:"faire",aux:"avoir",pp:"fait"},
+    prendre:{inf:"prendre",aux:"avoir",pp:"pris"},
+    venir:{inf:"venir",aux:"etre",pp:"venu"},
+    pouvoir:{inf:"pouvoir",aux:"avoir",pp:"pu"}
+  };
+  var HELP = {venir:FORMS.venir.present, etre:AUX.etre.present, aller:FORMS.aller.present};
+  var IMP = {parler:["parle","parlons","parlez"],finir:["finis","finissons","finissez"],lever:["lève","levons","levez"],aller:["va","allons","allez"],etre:["sois","soyons","soyez"],avoir:["aie","ayons","ayez"],faire:["fais","faisons","faites"],prendre:["prends","prenons","prenez"],venir:["viens","venons","venez"],pouvoir:null};
+  var PPR = {parler:"parlant",finir:"finissant",lever:"levant",aller:"allant",etre:"étant",avoir:"ayant",faire:"faisant",prendre:"prenant",venir:"venant",pouvoir:"pouvant"};
+  var PRON = ["je","tu","il","nous","vous","ils"];
+  var REFL = ["me","te","se","nous","vous","se"];
+  var AGR = ["(e)","(e)","","(e)s","(e)(s)","s"];
+  function vowel(s){ return /^[aeiouâêîôûéèœ]/i.test(s); }
+  function pronoun(i, next, subj){
+    var p = (i === 0 && vowel(next)) ? "j'" : PRON[i] + " ";
+    if (subj) p = ((i === 2 || i === 5) ? "qu'" : "que ") + p;
+    return p;
+  }
+  function reflFor(i, next){
+    var r = REFL[i];
+    if (i !== 3 && i !== 4 && vowel(next)) return r.charAt(0) + "'";
+    return r + " ";
+  }
+
+  /* ---------- tense content ---------- */
+  var T = {
+    present:{ko:"현재",fr:"Présent",crumb:"직설법 · 구어 · 단순시제",b:{s:"present"},
+      f:[
+        {lb:"1군 <em>-er</em>",base:"동사원형 − <em>er</em>",ends:["-e","-es","-e","-ons","-ez","-ent"],ex:"parler → je parle, nous parlons"},
+        {lb:"2군 <em>-ir</em>",base:"동사원형 − <em>ir</em>",ends:["-is","-is","-it","-issons","-issez","-issent"],ex:"finir → je finis, nous finissons"},
+        {lb:"3군 (대부분)",base:"어간",ends:["-s","-s","-t","-ons","-ez","-ent"],ex:"prendre → je prends · venir → je viens · 예외: ils font·vont·sont·ont, vous faites·dites·êtes"}],
+      fnote:"3군은 동사마다 어간이 달라서 따로 익혀야 합니다. offrir·ouvrir는 1군 어미(-e, -es, -e), pouvoir·vouloir는 -x, -x, -t를 씁니다.",
+      irr:[{h:"자주 쓰는 불규칙 (je형)",items:[["être","je suis"],["avoir","j'ai"],["aller","je vais"],["faire","je fais"],["prendre","je prends"],["venir","je viens"],["pouvoir","je peux"]]}],
+      uses:[
+        {u:"지금의 상태나 행동 (영어의 현재진행 뜻까지 포함)",fr:"Elle travaille en ce moment.",ko:"그녀는 지금 일하는 중이다."},
+        {u:"<em>depuis</em> + 기간: 과거에 시작해 지금도 이어지는 일 (\"~째\"). 복합과거가 아니라 현재를 씀",fr:"J'habite ici depuis trois ans.",ko:"3년째 여기 살고 있다."},
+        {u:"습관·반복",fr:"Je bois un café tous les matins.",ko:"나는 매일 아침 커피를 마신다."},
+        {u:"변하지 않는 사실",fr:"L'eau bout à 100 degrés.",ko:"물은 100도에서 끓는다."},
+        {u:"이미 정해진 가까운 미래",fr:"Le train part à 8 heures demain.",ko:"기차는 내일 8시에 출발한다."},
+        {u:"<em>si</em> + 현재 → 단순미래 (실현 가능한 조건)",fr:"S'il pleut, je resterai à la maison.",ko:"비가 오면 집에 있을 거야."}],
+      pron:{fr:"Je <b>me lève</b> à 7 heures.",ko:"나는 7시에 일어난다.",tip:"재귀대명사는 활용된 동사 바로 앞: <em>je me lève, nous nous levons</em>. 부정문은 <em>Je ne me lève pas.</em>"},
+      note:"3형제(근접과거·현재진행·근접미래)는 모두 현재를 기준으로 붙는 표현이라 지도에서 현재 바로 옆에 붙어 있습니다.",
+      links:["present_prog","passe_recent","futur_proche","passe_compose"]},
+
+    present_prog:{ko:"현재진행",fr:"être en train de + 동사원형",crumb:"직설법 · 3형제 · 우언 표현",b:{p:"etre",link:"en train de"},
+      f:[{help:"etre",mid:"en train de",ex:"je suis en train de manger · il est en train d'écrire (모음 앞 d')"}],
+      uses:[
+        {u:"지금 바로 ~하는 중이라는 것을 강조",fr:"Je suis en train de manger.",ko:"나 지금 밥 먹는 중이야."},
+        {u:"현재형만으로도 진행 뜻이 되므로, 진행을 꼭 짚고 싶을 때만 씀",fr:"Ne le dérange pas, il est en train de travailler.",ko:"방해하지 마, 그 사람 지금 일하는 중이야."},
+        {u:"<em>être</em>를 반과거로 바꾸면 과거 진행 (~하던 중이었다)",fr:"Il était en train de dormir quand j'ai appelé.",ko:"내가 전화했을 때 그는 자던 중이었다."}],
+      pron:{fr:"Elle <b>est en train de se maquiller</b>.",ko:"그녀는 화장하는 중이다.",tip:"재귀대명사는 동사원형 앞에 붙고 주어에 맞춰 바뀜: <em>je suis en train de me préparer</em>."},
+      note:"시제라고 보기 어려운 이유: 활용되는 건 <em>être</em>뿐이고 본동사는 원형 그대로입니다.",
+      links:["present","passe_recent","futur_proche","imparfait"]},
+
+    passe_recent:{ko:"근접과거",fr:"Passé récent",crumb:"직설법 · 3형제 · 우언 표현",b:{p:"venir",link:"de"},
+      f:[{help:"venir",mid:"de",ex:"je viens de partir · je viens d'arriver (모음 앞 d')"}],
+      uses:[
+        {u:"방금 ~했다: 막 끝난 일",fr:"Je viens d'arriver.",ko:"나 방금 도착했어."},
+        {u:"<em>venir</em>를 반과거로 바꾸면 막 ~했던 참이었다",fr:"Il venait de partir quand tu as téléphoné.",ko:"네가 전화했을 때 그는 막 떠난 참이었다."},
+        {u:"주의: <em>de</em> 없이 <em>venir</em> + 동사원형이면 \"~하러 오다\"",fr:"Il vient dîner ce soir.",ko:"그는 오늘 저녁 먹으러 온다."}],
+      pron:{fr:"Je <b>viens de me réveiller</b>.",ko:"나 방금 깼어.",tip:"재귀대명사는 동사원형 앞: <em>il vient de se réveiller, nous venons de nous réveiller</em>."},
+      note:"시제라고 보기 어려운 이유: 활용되는 건 <em>venir</em>뿐이고 본동사는 원형 그대로입니다.",
+      links:["passe_compose","present","futur_proche","present_prog"]},
+
+    futur_proche:{ko:"근접미래",fr:"Futur proche",crumb:"직설법 · 3형제 · 우언 표현",b:{p:"aller",link:""},
+      f:[{help:"aller",ex:"je vais partir · je vais aller"}],
+      uses:[
+        {u:"곧 ~할 것이다: 눈앞의 조짐",fr:"Regarde le ciel, il va pleuvoir.",ko:"하늘 봐, 곧 비 오겠다."},
+        {u:"지금과 이어진 계획 (말할 때는 단순미래보다 훨씬 자주 씀)",fr:"On va manger au restaurant ce soir.",ko:"오늘 저녁엔 식당에서 먹을 거야."},
+        {u:"<em>aller</em>를 반과거로 바꾸면 막 ~하려던 참이었다",fr:"J'allais partir quand tu es arrivé.",ko:"네가 왔을 때 나는 막 나가려던 참이었다."}],
+      pron:{fr:"Je <b>vais me coucher</b> tôt ce soir.",ko:"오늘 밤엔 일찍 잘 거야.",tip:"재귀대명사는 동사원형 앞: <em>tu vas te coucher, on va se coucher</em>."},
+      note:"시제라고 보기 어려운 이유: 활용되는 건 <em>aller</em>뿐이고 본동사는 원형 그대로입니다.",
+      links:["futur_simple","present","passe_recent","present_prog"]},
+
+    passe_compose:{ko:"복합과거",fr:"Passé composé",crumb:"직설법 · 구어 · 복합시제",b:{c:"present"},
+      f:[{aux:"present"},{lb:"부정문 어순 (모든 복합시제 공통)",seq:[["주어","fmid"],["<em>ne</em>","fmid"],["(대명사)","fmid"],["조동사","fbase"],["<em>pas</em>","fmid"],["과거분사","fpp"]],ex:"Je ne l'ai pas vu. · Elle ne s'est pas levée. · Ils n'étaient pas encore arrivés."}],
+      irr:[
+        {h:"과거분사 규칙형",items:[["-er","-é"],["-ir","-i"],["-dre","-u"]]},
+        {h:"자주 쓰는 불규칙 과거분사",items:[["avoir","eu"],["être","été"],["faire","fait"],["prendre","pris"],["mettre","mis"],["venir","venu"],["voir","vu"],["pouvoir","pu"],["vouloir","voulu"],["devoir","dû"],["savoir","su"],["naître","né"]]}],
+      fnote:"예: j'ai parlé · je suis allé(e) · je me suis levé(e)",
+      uses:[
+        {u:"과거에 끝난 일: 언제 했는지 딱 떨어지는 \"점\"",fr:"Hier, j'ai vu un film.",ko:"어제 영화 한 편 봤다."},
+        {u:"이야기에서 사건을 하나씩 앞으로 진행시킴 (배경은 반과거)",fr:"Il est entré, il a pris son manteau et il est reparti.",ko:"그는 들어와서 외투를 챙겨 다시 나갔다."},
+        {u:"<em>être</em>를 쓰는 동사 (이동·상태 변화 동사, 모든 대명동사)는 과거분사가 주어와 성·수 일치",fr:"Elle est partie à 8 heures.",ko:"그녀는 8시에 떠났다."},
+        {u:"부정문: <em>ne … pas</em>가 조동사를 감싸고, 과거분사는 그 밖에 옴",fr:"Je n'ai pas mangé. / Elle n'est pas venue.",ko:"나는 안 먹었다. / 그녀는 오지 않았다."},
+        {u:"의문문: 억양·<em>est-ce que</em>는 평서문 어순 그대로, 도치는 주어를 조동사 뒤로",fr:"Tu as mangé&nbsp;? / Est-ce que tu as mangé&nbsp;? / As-tu mangé&nbsp;?",ko:"너 먹었어?"},
+        {u:"대명사는 조동사 앞, 짧은 부사(<em>déjà, encore, bien, beaucoup</em>)는 조동사와 과거분사 사이",fr:"Je l'ai déjà vu. / Je ne l'ai pas encore vu.",ko:"나는 그걸 이미 봤다. / 나는 그걸 아직 못 봤다."},
+        {u:"<em>il y a</em> + 기간: \"~ 전에\" 한 번 일어난 일 (<em>depuis</em> + 현재와 구분). 단, 부정문은 <em>depuis</em>와도 복합과거",fr:"Je suis arrivé il y a trois ans. / Je ne l'ai pas vu depuis un mois.",ko:"3년 전에 왔다. / 한 달째 그를 못 봤다."}],
+      pron:{fr:"Elle <b>s'est levée</b> tôt ce matin.",ko:"그녀는 오늘 아침 일찍 일어났다.",tip:"대명동사는 항상 <em>être</em>, 과거분사는 주어에 일치 (levée). 부정문: <em>Elle ne s'est pas levée.</em> 단, 뒤에 직접목적어가 오면 일치하지 않음: <em>Elle s'est lavé les mains.</em>"},
+      note:"지도에서 반과거와 분수처럼 위아래로 놓은 것은 같은 과거 칸을 사건(복합과거)과 배경(반과거)이 나눠 쓴다는 뜻입니다. 문어에서는 복합과거만 단순과거로 바뀝니다.",
+      links:["imparfait","passe_simple","passe_recent","plus_que_parfait"]},
+
+    imparfait:{ko:"반과거",fr:"Imparfait",crumb:"직설법 · 구어·문어 공통 · 단순시제",b:{s:"imparfait"},
+      f:[{base:"<em>nous</em> 현재형 − <em>ons</em>",ends:["-ais","-ais","-ait","-ions","-iez","-aient"],ex:"nous finissons → finiss- → je finissais"}],
+      irr:[{h:"불규칙 어간 (이것 하나뿐)",items:[["être","ét-"]]}],
+      uses:[
+        {u:"과거의 배경·묘사·상태: 시작과 끝이 보이지 않는 \"선\"",fr:"Il faisait beau et la mer était calme.",ko:"날씨가 좋았고 바다는 잔잔했다."},
+        {u:"과거의 습관: ~하곤 했다",fr:"Quand j'étais petit, je jouais au foot tous les jours.",ko:"어렸을 때 나는 매일 축구를 하곤 했다."},
+        {u:"진행 중이던 일: ~하고 있었다",fr:"Il pleuvait quand je suis sorti.",ko:"내가 나갔을 때 비가 오고 있었다."},
+        {u:"<em>si</em> + 반과거 → 조건법 현재 (지금 사실과 반대되는 가정)",fr:"Si j'avais le temps, je voyagerais.",ko:"시간이 있다면 여행할 텐데."},
+        {u:"<em>Si on</em> + 반과거 ?: 제안·권유 (\"~할까?\"). 주절 없이 이것만으로 씀",fr:"Si on allait au cinéma ce soir&nbsp;?",ko:"오늘 저녁 영화 보러 갈까?"},
+        {u:"공손하게 말을 꺼낼 때: 현재 대신 반과거로 완곡하게",fr:"Je voulais vous demander un service.",ko:"부탁 하나 드리려고요."},
+        {u:"<em>depuis</em> + 반과거: 과거의 어느 시점까지 이어지던 일",fr:"J'habitais à Paris depuis deux ans quand je l'ai rencontré.",ko:"그를 만났을 때 나는 파리에 산 지 2년째였다."}],
+      pron:{fr:"Quand j'étais petit, je <b>me couchais</b> à 9 heures.",ko:"어렸을 때 나는 9시에 자곤 했다.",tip:"과거 습관을 말할 때 대명동사도 그대로 반과거: <em>je me couchais, nous nous couchions</em>."},
+      note:"반과거는 구어 칸에 있지만 문어에서도 그대로 씁니다. 소설은 단순과거(사건) + 반과거(배경)로 진행됩니다.",
+      links:["passe_compose","plus_que_parfait","passe_simple","cond_present"]},
+
+    plus_que_parfait:{ko:"대과거",fr:"Plus-que-parfait",crumb:"직설법 · 구어·문어 공통 · 복합시제",b:{c:"imparfait"},
+      f:[{aux:"imparfait"}],
+      fnote:"예: j'avais parlé · j'étais allé(e) · je m'étais levé(e)",
+      uses:[
+        {u:"과거의 기준 시점보다 더 먼저 끝난 일 (과거의 과거)",fr:"Quand je suis arrivé, le film avait déjà commencé.",ko:"내가 도착했을 때 영화는 이미 시작했었다."},
+        {u:"간접화법에서 과거 주절 뒤의 복합과거가 대과거로 바뀜",fr:"Il m'a dit qu'il avait fini.",ko:"그는 다 끝냈다고 내게 말했다."},
+        {u:"<em>si</em> + 대과거 → 조건법 과거 (과거 사실과 반대되는 가정)",fr:"Si j'avais su, je serais venu.",ko:"알았더라면 왔을 텐데."},
+        {u:"아쉬움",fr:"Si seulement j'avais su&nbsp;!",ko:"알기만 했더라면!"}],
+      pron:{fr:"Quand je suis arrivé, ils <b>s'étaient</b> déjà <b>couchés</b>.",ko:"내가 도착했을 때 그들은 이미 잠자리에 들었었다.",tip:"<em>être</em> 반과거 + 과거분사 일치. <em>déjà</em> 같은 부사는 조동사와 과거분사 사이에 옵니다."},
+      note:"전미래와 거울 대칭입니다. 기준점이 과거면 대과거, 미래면 전미래.",
+      links:["imparfait","passe_compose","futur_anterieur","passe_anterieur"]},
+
+    passe_simple:{ko:"단순과거",fr:"Passé simple",crumb:"직설법 · 문어 · 단순시제",b:{s:"ps"},
+      f:[
+        {lb:"1군 <em>-er</em>",base:"동사원형 − <em>er</em>",ends:["-ai","-as","-a","-âmes","-âtes","-èrent"],ex:"parler → il parla, ils parlèrent"},
+        {lb:"2군 · 많은 3군",base:"동사원형 − <em>ir</em> / <em>re</em>",ends:["-is","-is","-it","-îmes","-îtes","-irent"],ex:"finir → il finit · rendre → il rendit"},
+        {lb:"일부 3군",base:"어간",ends:["-us","-us","-ut","-ûmes","-ûtes","-urent"],ex:"vouloir → il voulut · lire → il lut"}],
+      irr:[{h:"불규칙 (je형)",items:[["être","je fus"],["avoir","j'eus"],["faire","je fis"],["venir","je vins"],["voir","je vis"],["prendre","je pris"],["mettre","je mis"],["naître","je naquis"]]}],
+      uses:[
+        {u:"소설·역사서·동화 같은 글에서 복합과거 역할",fr:"Il ouvrit la porte et sortit.",ko:"그는 문을 열고 나갔다."},
+        {u:"지금과 끊어진, 완결된 과거 사건",fr:"Victor Hugo naquit en 1802.",ko:"빅토르 위고는 1802년에 태어났다."},
+        {u:"글의 이야기는 단순과거(사건) + 반과거(배경)로 진행",fr:"Il faisait nuit quand le roi arriva.",ko:"왕이 도착했을 때는 밤이었다."}],
+      pron:{fr:"Elle <b>se leva</b> et sortit.",ko:"그녀는 일어나서 나갔다.",tip:"글에서 자주 보는 형태: <em>il se leva, ils se levèrent</em>."},
+      note:"대화에서는 거의 쓰지 않습니다. 읽을 때 알아보는 게 목표라 3인칭(<em>il, ils</em>) 형태부터 익히면 됩니다.",
+      links:["passe_compose","passe_anterieur","imparfait","subj_imparfait"]},
+
+    passe_anterieur:{ko:"전과거",fr:"Passé antérieur",crumb:"직설법 · 문어 · 복합시제",b:{c:"ps"},
+      f:[{aux:"ps"}],
+      fnote:"예: j'eus parlé · je fus allé(e) · je me fus levé(e)",
+      uses:[
+        {u:"글에서만 씀. 단순과거로 쓴 사건 바로 직전에 끝난 일",fr:"Dès qu'il eut fini son repas, il sortit.",ko:"식사를 마치자마자 그는 나갔다."},
+        {u:"<em>quand, lorsque, dès que, aussitôt que, après que</em> 뒤에 주로 옴",fr:"Quand elle fut partie, il se mit à pleurer.",ko:"그녀가 떠나자 그는 울기 시작했다."},
+        {u:"말로 바꾸면 보통 복합과거나 대과거",fr:"Dès qu'il a fini son repas, il est sorti.",ko:"식사를 마치자마자 그는 나갔다. (구어)"}],
+      pron:{fr:"Dès qu'il <b>se fut assis</b>, il commença à parler.",ko:"자리에 앉자마자 그는 말하기 시작했다.",tip:"<em>être</em> 단순과거 + 과거분사: <em>il se fut assis, elle se fut assise</em>."},
+      links:["passe_simple","plus_que_parfait","futur_anterieur"]},
+
+    futur_simple:{ko:"단순미래",fr:"Futur simple",crumb:"직설법 · 구어 · 단순시제",b:{s:"futur"},
+      f:[{base:"동사원형 <small>(-re는 e를 뺌)</small>",ends:["-ai","-as","-a","-ons","-ez","-ont"],ex:"parler → je parlerai · prendre → je prendrai"}],
+      irr:[{h:"불규칙 어간",items:[["être","ser-"],["avoir","aur-"],["aller","ir-"],["faire","fer-"],["venir","viendr-"],["pouvoir","pourr-"],["voir","verr-"],["vouloir","voudr-"],["devoir","devr-"],["savoir","saur-"]]}],
+      fnote:"어미는 <em>avoir</em> 현재형(ai, as, a, avons, avez, ont)에서 따온 모양입니다.",
+      uses:[
+        {u:"미래의 일, 예측",fr:"Demain, il fera beau.",ko:"내일은 날씨가 좋을 것이다."},
+        {u:"약속·결심",fr:"Je t'appellerai ce soir.",ko:"오늘 저녁에 전화할게."},
+        {u:"<em>quand</em>, <em>dès que</em> 뒤에서도 미래형 (영어와 다름)",fr:"Quand tu arriveras, appelle-moi.",ko:"도착하면 전화해."},
+        {u:"<em>si</em> + 현재 → 단순미래 (실현 가능한 조건)",fr:"Si tu viens, on ira au cinéma.",ko:"네가 오면 영화 보러 가자."}],
+      pron:{fr:"Demain, je <b>me lèverai</b> tôt.",ko:"내일은 일찍 일어날 거야.",tip:"<em>lever</em>의 e → è가 미래형 모든 인칭에: <em>je me lèverai, nous nous lèverons</em>."},
+      links:["futur_proche","futur_anterieur","cond_present"]},
+
+    futur_anterieur:{ko:"전미래",fr:"Futur antérieur",crumb:"직설법 · 구어 · 복합시제",b:{c:"futur"},
+      f:[{aux:"futur"}],
+      fnote:"예: j'aurai parlé · je serai allé(e) · je me serai levé(e)",
+      uses:[
+        {u:"미래의 어떤 시점보다 먼저 끝나 있을 일 (미래의 과거)",fr:"À midi, j'aurai fini mes devoirs.",ko:"정오면 숙제를 다 끝냈을 거야."},
+        {u:"<em>quand, dès que, après que</em> 뒤에서 자주",fr:"Je t'appellerai dès que j'aurai fini.",ko:"끝나는 대로 전화할게."},
+        {u:"지나간 일에 대한 추측: ~했나 보다",fr:"Il n'est pas là&nbsp;? Il aura raté son train.",ko:"그가 안 왔어? 기차를 놓쳤나 보네."}],
+      pron:{fr:"Quand tu rentreras, je <b>me serai</b> déjà <b>couché</b>.",ko:"네가 돌아올 때쯤이면 나는 이미 잠자리에 들었을 거야.",tip:"<em>être</em> 단순미래 + 과거분사 일치 (여성이면 couchée)."},
+      note:"지도에서 전미래가 단순미래보다 왼쪽(앞)에 있는 이유: 미래 시점보다 먼저 끝나는 일이기 때문입니다. 대과거와 거울 대칭.",
+      links:["futur_simple","plus_que_parfait","cond_passe"]},
+
+    cond_present:{ko:"조건법 현재",fr:"Conditionnel présent",crumb:"조건법 · 단순시제",alias:"지도 표기: 현재 → 미래까지",b:{s:"cond"},
+      f:[{base:"단순미래 어간",ends:["-ais","-ais","-ait","-ions","-iez","-aient"],ex:"parler → je parlerais · être → je serais"}],
+      irr:[{h:"불규칙 어간 (단순미래와 같음)",items:[["être","ser-"],["avoir","aur-"],["aller","ir-"],["faire","fer-"],["venir","viendr-"],["pouvoir","pourr-"],["voir","verr-"],["vouloir","voudr-"],["devoir","devr-"],["savoir","saur-"]]}],
+      fnote:"어미는 반과거 어미와 같습니다. 미래 어간 + 과거 어미 = 과거에서 본 미래.",
+      uses:[
+        {u:"<em>si</em> + 반과거 → 조건법 현재: 지금이나 앞으로에 대한 가정의 결과",fr:"Si j'avais de l'argent, j'achèterais une maison.",ko:"돈이 있다면 집을 살 텐데."},
+        {u:"공손한 요청·바람",fr:"Je voudrais un café, s'il vous plaît.",ko:"커피 한 잔 주세요."},
+        {u:"조언",fr:"Tu devrais te reposer.",ko:"너 좀 쉬는 게 좋겠어."},
+        {u:"확인되지 않은 정보 (기사체)",fr:"Selon la police, le suspect serait à Paris.",ko:"경찰에 따르면 용의자는 파리에 있다고 한다."},
+        {u:"과거에서 본 미래",fr:"Il a dit qu'il viendrait.",ko:"그는 오겠다고 말했다."}],
+      pron:{fr:"À ta place, je <b>me reposerais</b>.",ko:"내가 너라면 좀 쉬겠어.",tip:"조언할 때 자주 쓰는 틀: <em>À ta place, je …</em> (내가 너라면)"},
+      note:"화살표의 의미: 조건법에는 미래형이 따로 없어서 현재형이 지금과 앞으로를 함께 맡습니다. <em>demain</em>과 같이 써도 됩니다. 참고: 프랑스 교육부의 2020년 문법 용어에서는 조건법을 별도의 법이 아니라 직설법의 한 시제로 분류합니다. 한국 교재는 대부분 별도의 법으로 다룹니다.",
+      links:["cond_passe","imparfait","futur_simple","subj_present"]},
+
+    cond_passe:{ko:"조건법 과거",fr:"Conditionnel passé",crumb:"조건법 · 복합시제",alias:"지도 표기: 복합과거",b:{c:"cond"},
+      f:[{aux:"cond"}],
+      fnote:"예: j'aurais parlé · je serais allé(e) · je me serais levé(e)",
+      uses:[
+        {u:"<em>si</em> + 대과거 → 조건법 과거: 과거 사실과 반대되는 가정의 결과",fr:"Si j'avais su, je serais venu.",ko:"알았더라면 왔을 텐데."},
+        {u:"후회·비난",fr:"Tu aurais dû me le dire.",ko:"나한테 말했어야지."},
+        {u:"확인되지 않은 과거 정보 (기사체)",fr:"L'incendie aurait fait trois blessés.",ko:"화재로 세 명이 다친 것으로 알려졌다."},
+        {u:"과거에서 본 미래완료",fr:"Il a dit qu'il aurait fini avant midi.",ko:"그는 정오 전에 끝내 놓겠다고 말했다."}],
+      pron:{fr:"Si j'avais su, je <b>me serais levé</b> plus tôt.",ko:"알았더라면 더 일찍 일어났을 텐데.",tip:"<em>être</em> 조건법 현재 + 과거분사 일치 (여성이면 levée)."},
+      note:"지도에는 복합과거로 적었는데, 정식 이름은 조건법 과거입니다. 조동사를 조건법 현재로 만든 복합형이라는 점에서 같은 원리입니다.",
+      links:["cond_present","plus_que_parfait","futur_anterieur","subj_pqp"]},
+
+    subj_present:{ko:"접속법 현재",fr:"Subjonctif présent",crumb:"접속법 · 단순시제",alias:"지도 표기: 현재 → 미래까지",b:{s:"subj",q:1},
+      f:[{base:"<em>ils</em> 현재형 − <em>ent</em>",ends:["-e","-es","-e","-ions","-iez","-ent"],ex:"ils finissent → finiss- → que je finisse"}],
+      irr:[{h:"불규칙 (que je형)",items:[["être","sois"],["avoir","aie"],["aller","aille"],["faire","fasse"],["pouvoir","puisse"],["savoir","sache"],["vouloir","veuille"]]}],
+      uses:[
+        {u:"필요·의무 (<em>il faut que</em>)",fr:"Il faut que tu partes demain.",ko:"너는 내일 떠나야 한다."},
+        {u:"의지·바람 (<em>vouloir que, souhaiter que</em>)",fr:"Je veux qu'il vienne.",ko:"나는 그가 오기를 원한다."},
+        {u:"감정 (<em>être content que, avoir peur que</em>)",fr:"Je suis content que tu sois là.",ko:"네가 여기 있어서 기뻐."},
+        {u:"몇몇 접속사 뒤 (<em>bien que, pour que, avant que</em>)",fr:"Je reste, bien qu'il soit tard.",ko:"늦었지만 나는 남아 있을게."},
+        {u:"말할 때는 주절이 과거여도 대부분 접속법 현재",fr:"Je voulais qu'il vienne.",ko:"나는 그가 오기를 원했다."}],
+      pron:{fr:"Il faut que tu <b>te lèves</b> tôt demain.",ko:"너 내일 일찍 일어나야 해.",tip:"<em>que</em> + 주어 + 재귀대명사 + 동사: <em>que je me lève, que nous nous levions</em>."},
+      note:"화살표의 의미: 접속법에도 미래형이 없어서 현재형이 지금과 앞으로를 함께 맡습니다.",
+      links:["subj_passe","subj_imparfait","cond_present","present"]},
+
+    subj_passe:{ko:"접속법 과거",fr:"Subjonctif passé",crumb:"접속법 · 복합시제",alias:"지도 표기: 복합과거",b:{c:"subj",q:1},
+      f:[{aux:"subj"}],
+      fnote:"예: que j'aie parlé · que je sois allé(e) · que je me sois levé(e)",
+      uses:[
+        {u:"접속법이 필요한 자리에서, 주절보다 먼저 끝난 일",fr:"Je suis content que tu sois venu.",ko:"네가 와서 기뻐."},
+        {u:"접속사 뒤에서도 같음",fr:"Bien qu'il ait plu, nous sommes sortis.",ko:"비가 왔는데도 우리는 나갔다."},
+        {u:"말할 때는 주절이 과거여도 접속법 대과거 대신 이것을 씀",fr:"Je doutais qu'il ait compris.",ko:"나는 그가 이해했는지 의심스러웠다."}],
+      pron:{fr:"Je suis content que vous <b>vous soyez</b> bien <b>amusés</b>.",ko:"너희가 즐겁게 놀았다니 기뻐.",tip:"<em>être</em> 접속법 현재 + 과거분사 일치 (복수라서 amusés)."},
+      links:["subj_present","subj_pqp","passe_compose"]},
+
+    subj_imparfait:{ko:"접속법 반과거",fr:"Subjonctif imparfait",crumb:"접속법 · 문어 · 단순시제",alias:"지도 표기: 반과거",b:{s:"subjimp",q:1},
+      f:[{base:"단순과거 <em>tu</em>형 − <em>s</em>",ends:["-sse","-sses","-^t","-ssions","-ssiez","-ssent"],ex:"tu parlas → parla- → que je parlasse, qu'il parlât"}],
+      irr:[{h:"자주 보는 형태 (qu'il형)",items:[["être","fût"],["avoir","eût"],["faire","fît"],["venir","vînt"]]}],
+      fnote:"il형은 마지막 모음에 ^를 얹고 t를 붙입니다 (parlât, finît, fût).",
+      uses:[
+        {u:"글에서만 씀. 주절이 과거일 때, 그와 같은 때이거나 그 뒤의 일",fr:"Il fallait qu'il partît.",ko:"그는 떠나야 했다. (구어: qu'il parte)"},
+        {u:"실제로 자주 보이는 건 3인칭 단수",fr:"Bien qu'il fût malade, il travaillait.",ko:"그는 아팠지만 일을 했다."}],
+      pron:{fr:"Il fallait qu'elle <b>se levât</b> avant l'aube.",ko:"그녀는 동이 트기 전에 일어나야 했다. (구어: qu'elle se lève)"},
+      links:["subj_present","passe_simple","subj_pqp"]},
+
+    subj_pqp:{ko:"접속법 대과거",fr:"Subjonctif plus-que-parfait",crumb:"접속법 · 문어 · 복합시제",alias:"지도 표기: 대과거",b:{c:"subjimp",q:1},
+      f:[{aux:"subjimp"}],
+      fnote:"예: que j'eusse parlé · que je fusse allé(e) · que je me fusse levé(e)",
+      uses:[
+        {u:"글에서만 씀. 주절이 과거일 때, 그보다 먼저 끝난 일",fr:"Je doutais qu'il eût compris.",ko:"나는 그가 이해했는지 의심스러웠다. (구어: qu'il ait compris)"},
+        {u:"글에서 조건법 과거 대신 쓰이기도 함 (조건법 과거 제2형)",fr:"Qui l'eût cru&nbsp;?",ko:"누가 그걸 믿었겠어?"}],
+      pron:{fr:"Bien qu'il <b>se fût excusé</b>, elle restait fâchée.",ko:"그가 사과했는데도 그녀는 여전히 화가 나 있었다. (구어: se soit excusé)"},
+      links:["subj_passe","subj_imparfait","cond_passe","plus_que_parfait"]},
+
+    imp_present:{ko:"명령법 현재",fr:"Impératif présent",crumb:"명령법 · 단순시제",b:{imp:"present"},
+      f:[{cells:[["tu","현재형 tu형<br><small>-er 어미 동사는 -s 빼기</small>"],["nous","현재형 nous형"],["vous","현재형 vous형"]],ex:"parler → parle, parlons, parlez · finir → finis, finissons, finissez · offrir → offre"}],
+      irr:[{h:"불규칙 (être·avoir·savoir·vouloir는 접속법 현재를 바탕으로 한 형태)",items:[["être","sois, soyons, soyez"],["avoir","aie, ayons, ayez"],["savoir","sache, sachons, sachez"],["vouloir","veuille, veuillons, veuillez"],["aller","va, allons, allez"]]}],
+      fnote:"주어 없이 씁니다. -er 어미 동사(1군 전부, aller, 어미가 1군 모양인 offrir·ouvrir)는 tu형에서 -s가 빠지지만, y·en 앞에서는 다시 붙습니다 (<em>Vas-y&nbsp;!</em> <em>Manges-en&nbsp;!</em>). <em>pouvoir</em>처럼 명령법이 없는 동사도 있습니다.",
+      uses:[
+        {u:"명령",fr:"Ferme la porte, s'il te plaît.",ko:"문 좀 닫아 줘."},
+        {u:"조언·안내 (vous형이 많음)",fr:"Tournez à gauche après le pont.",ko:"다리를 지나서 왼쪽으로 도세요."},
+        {u:"기원·바람",fr:"Passe une bonne soirée&nbsp;!",ko:"좋은 저녁 보내!"},
+        {u:"권유: nous형은 \"~하자\"",fr:"Allons au cinéma ce soir.",ko:"오늘 저녁 영화 보러 가자."},
+        {u:"부정 명령: <em>ne … pas</em>로 동사를 감쌈",fr:"Ne dépense pas tout&nbsp;!",ko:"다 쓰지 마!"},
+        {u:"목적어 대명사: 긍정 명령은 동사 뒤에 하이픈 (me → moi), 부정 명령은 동사 앞",fr:"Donne-la&nbsp;! / Ne la donne pas.",ko:"그거 줘! / 그거 주지 마."},
+        {u:"대명사가 둘이면 긍정 명령은 직접목적어(le·la·les)가 먼저, 부정 명령은 평서문 순서",fr:"Donne-le-moi&nbsp;! / Ne me le donne pas.",ko:"그거 나한테 줘! / 그거 나한테 주지 마."}],
+      pron:{fr:"<b>Dépêche-toi</b>, on va être en retard&nbsp;!",ko:"서둘러, 우리 늦겠어!",tip:"긍정 명령: 동사 + 하이픈 + <em>toi / nous / vous</em> (<em>Lève-toi, Levons-nous, Levez-vous</em>). 부정 명령: 대명사가 제자리(동사 앞)로 돌아가고 toi는 te로 (<em>Ne te dépêche pas</em>)."},
+      note:"명령은 지금 말하고 앞으로 실행하는 일이라, 조건법·접속법처럼 현재가 미래까지 맡습니다 (화살표). 명령문은 의문문으로 쓰지 않습니다.",
+      links:["imp_passe","present","subj_present"]},
+
+    imp_passe:{ko:"명령법 과거",fr:"Impératif passé",crumb:"명령법 · 복합시제 · 드물게 씀",b:{imp:"passe"},
+      f:[{cells:[["tu","<em>aie</em> / <em>sois</em>"],["nous","<em>ayons</em> / <em>soyons</em>"],["vous","<em>ayez</em> / <em>soyez</em>"]],tail:"과거분사",ex:"aie fini · sois rentré(e) · ayez terminé"}],
+      fnote:"조동사는 명령법 현재형입니다. <em>être</em>를 쓰는 동사는 과거분사가 일치합니다.",
+      uses:[
+        {u:"미래의 어느 시점까지 끝내 두라는 명령",fr:"Sois rentré avant minuit.",ko:"자정 전까지 들어와 있어."},
+        {u:"기한을 정한 지시 (주로 글·격식)",fr:"Ayez fini ce travail avant vendredi.",ko:"금요일 전까지 이 일을 끝내 두세요."}],
+      pron:{fr:"Sois <b>levé</b> à 7 heures.",ko:"7시에는 일어나 있어.",tip:"대명동사의 명령법 과거는 사실상 쓰지 않습니다. 대신 위처럼 <em>être</em> + 과거분사(상태)로 말합니다."},
+      note:"전미래처럼 '미래의 어느 시점에는 이미 끝나 있을 일'을 가리킵니다. 실제로는 드물어서 알아보는 정도면 충분합니다.",
+      links:["imp_present","futur_anterieur","passe_compose"]},
+
+    inf_present:{ko:"부정법 현재",fr:"Infinitif présent",crumb:"부정법 (인칭 없음) · 단순형",alias:"= 동사원형",b:{nf:"inf"},
+      f:[{seq:[["동사원형 <small>(-er, -ir, -re, -oir)</small>","fbase"]],ex:"parler · finir · prendre · pouvoir · se lever"}],
+      fnote:"인칭·시제 활용이 없습니다. 대명동사는 se가 주어에 맞춰 바뀝니다 (je vais me lever).",
+      uses:[
+        {u:"다른 동사 뒤 (<em>vouloir, pouvoir, devoir, aimer</em> …)",fr:"Je veux partir.",ko:"나는 떠나고 싶다."},
+        {u:"전치사 뒤 (<em>à, de, pour, sans, avant de</em> …)",fr:"Il est parti sans dire au revoir.",ko:"그는 작별 인사도 없이 떠났다."},
+        {u:"명사처럼 주어·보어로",fr:"Voyager coûte cher.",ko:"여행은 돈이 많이 든다."},
+        {u:"안내문·요리법의 지시",fr:"Ne pas fumer.",ko:"금연."}],
+      pron:{fr:"J'ai du mal à <b>me lever</b> le matin.",ko:"나는 아침에 일어나기가 힘들다.",tip:"재귀대명사는 문장의 주어에 맞춰 바뀝니다: <em>Tu dois te lever. / Nous devons nous lever.</em>"},
+      note:"프랑스어 문법에서는 동사원형도 하나의 '법(mode)'으로 보고 부정법(infinitif)이라 부릅니다. 인칭이 없어서, 시간은 주절을 기준으로 '같은 때나 그 뒤'를 나타냅니다 (<em>Je veux partir</em>: 떠나는 건 원하는 것보다 뒤).",
+      links:["inf_passe","futur_proche","passe_recent"]},
+
+    inf_passe:{ko:"부정법 과거",fr:"Infinitif passé",crumb:"부정법 (인칭 없음) · 복합형",alias:"= 동사원형의 완료형",b:{nf:"infp"},
+      f:[{seq:[["<em>avoir</em> / <em>être</em> <small>(원형 그대로)</small>","fbase"],["과거분사","fpp"]],ex:"avoir parlé · être allé(e)(s) · s'être levé(e)(s)"}],
+      fnote:"조동사 고르는 법과 과거분사 일치는 복합과거와 같습니다.",
+      uses:[
+        {u:"<em>après</em> 뒤에서 \"~한 뒤에\" (<em>après</em> 뒤의 동사원형은 반드시 이 형태)",fr:"Après avoir mangé, il est sorti.",ko:"밥을 먹은 뒤 그는 나갔다."},
+        {u:"전치사 없이도: 주절보다 먼저 끝난 일",fr:"Il croit avoir compris.",ko:"그는 이해했다고 생각한다."},
+        {u:"감정·판단 + <em>de</em>",fr:"Je suis content d'avoir réussi.",ko:"합격해서 기쁘다."},
+        {u:"<em>pour</em> + 부정법 과거 = ~했기 때문에",fr:"Il a été puni pour avoir menti.",ko:"그는 거짓말을 해서 벌을 받았다."}],
+      pron:{fr:"Après <b>m'être levé</b>, j'ai pris une douche.",ko:"일어난 뒤 나는 샤워를 했다.",tip:"재귀대명사는 <em>être</em> 앞, 주어에 맞춰 바뀜: <em>après t'être levé(e), après nous être levé(e)s</em>."},
+      note:"<em>après avoir mangé</em> 전체는 시간을 나타내는 전치사구지만, 그 안의 <em>avoir mangé</em>가 부정법 과거입니다. 전치사 없이도 쓰이고(<em>Il croit avoir compris</em>), 주절의 주어가 한 일이어야 합니다.",
+      links:["inf_present","part_passe","passe_compose"]},
+
+    part_present:{ko:"현재분사",fr:"Participe présent",crumb:"분사 (인칭 없음) · 단순형",b:{nf:"ppr"},
+      f:[{seq:[["<em>nous</em> 현재형 − <em>ons</em>","fbase"],["-ant","fmid"]],ex:"nous finissons → finiss- → finissant"}],
+      irr:[{h:"불규칙 (3개뿐)",items:[["être","étant"],["avoir","ayant"],["savoir","sachant"]]}],
+      fnote:"성·수 변화가 없습니다.",
+      uses:[
+        {u:"관계절 <em>qui</em> 대신 명사를 꾸밈 (주로 글·공문)",fr:"Les étudiants parlant français peuvent s'inscrire.",ko:"프랑스어를 하는 학생은 신청할 수 있다. (= qui parlent)"},
+        {u:"이유·상황 (문장 앞, 글에서)",fr:"Étant malade, il est resté à la maison.",ko:"아파서 그는 집에 있었다."},
+        {u:"형용사로 굳은 형태는 성·수 일치하고 철자가 다르기도 함",fr:"une journée fatigante",ko:"피곤한 하루 (현재분사로는 fatiguant)"}],
+      pron:{fr:"<b>Se levant</b> avec difficulté, il a regardé l'heure.",ko:"힘겹게 일어나며 그는 시간을 보았다.",tip:"재귀대명사는 주어에 맞춰: <em>me levant, te levant, se levant</em> …"},
+      note:"현재분사와 제롱디프는 다릅니다. 현재분사는 명사를 꾸미거나 이유를 나타내는 쪽(형용사·관계절 역할)이고, 제롱디프는 <em>en</em>이 붙어 동사를 꾸미는 쪽(부사 역할)입니다. 짝꿍: 조동사를 현재분사로 만든 <em>ayant parlé</em>가 완료 분사입니다 (과거분사 칸).",
+      links:["gerondif","part_passe","imparfait"]},
+
+    gerondif:{ko:"제롱디프",fr:"Gérondif",crumb:"분사 (인칭 없음) · en + 현재분사",b:{nf:"ger"},
+      f:[{seq:[["<em>en</em>","fmid"],["현재분사","fpp"]],ex:"en parlant · en finissant · en se levant"}],
+      fnote:"현재분사와 모양이 같고 앞에 en만 붙습니다. 성·수 변화가 없습니다.",
+      uses:[
+        {u:"동시 동작: ~하면서",fr:"Il chante en prenant sa douche.",ko:"그는 샤워하면서 노래한다."},
+        {u:"방법·수단: ~함으로써",fr:"C'est en forgeant qu'on devient forgeron.",ko:"쇠를 두드려야 대장장이가 된다. (하다 보면 는다)"},
+        {u:"조건: ~하면",fr:"En partant maintenant, tu arriveras à l'heure.",ko:"지금 떠나면 제시간에 도착할 거야."},
+        {u:"대립: <em>tout en</em> ~ (~하면서도)",fr:"Tout en étant riche, il vit simplement.",ko:"그는 부자이면서도 검소하게 산다."}],
+      pron:{fr:"Il s'est fait mal <b>en se levant</b>.",ko:"그는 일어나다가 다쳤다.",tip:"en + 재귀대명사 + 현재분사, 재귀대명사는 주어에 맞춰: <em>en me levant, en nous levant</em>."},
+      note:"제롱디프의 주어는 항상 주절의 주어와 같아야 합니다. 완료형 <em>en ayant fini</em>도 있지만 드뭅니다.",
+      links:["part_present","present","imparfait"]},
+
+    part_passe:{ko:"과거분사",fr:"Participe passé",crumb:"분사 (인칭 없음) · 과거분사와 완료 분사",b:{nf:"pp"},
+      f:[{lb:"완료 분사 (현재분사의 복합형)",seq:[["<em>ayant</em> / <em>étant</em>","fbase"],["과거분사","fpp"]],ex:"ayant parlé · étant arrivé(e)(s) · s'étant levé(e)(s)"}],
+      irr:[
+        {h:"과거분사 규칙형",items:[["-er","-é"],["-ir","-i"],["-dre","-u"]]},
+        {h:"자주 쓰는 불규칙 과거분사",items:[["avoir","eu"],["être","été"],["faire","fait"],["prendre","pris"],["mettre","mis"],["venir","venu"],["voir","vu"],["pouvoir","pu"],["vouloir","voulu"],["devoir","dû"],["savoir","su"],["naître","né"]]}],
+      fnote:"일치할 때: 여성 +e, 복수 +s (parlé, parlée, parlés, parlées). <em>été</em>와 <em>pu</em>는 형태가 변하지 않습니다.",
+      uses:[
+        {u:"복합시제를 만드는 재료",fr:"J'ai fini. / Elle est arrivée.",ko:"나는 끝냈다. / 그녀가 도착했다."},
+        {u:"수동태: <em>être</em> + 과거분사 (+ <em>par</em>)",fr:"La lettre a été écrite par Paul.",ko:"그 편지는 폴이 썼다."},
+        {u:"형용사처럼 명사를 꾸밈 (성·수 일치)",fr:"une porte fermée · des livres ouverts",ko:"닫힌 문 · 펼쳐진 책들"},
+        {u:"완료 분사: 주절보다 먼저 끝난 일 (주로 글)",fr:"Ayant fini son travail, elle est partie.",ko:"일을 끝낸 뒤 그녀는 떠났다."}],
+      pron:{fr:"<b>S'étant levé</b> tard, il a raté son train.",ko:"늦게 일어나서 그는 기차를 놓쳤다.",tip:"완료 분사에서 대명동사는 <em>s'étant</em> + 과거분사 (주어에 일치)."},
+      note:"과거분사는 지도 위 모든 복합시제(복합과거, 대과거, 전미래 …)의 재료라서 '먼저 끝난 일' 칸, 즉 현재분사의 왼쪽에 둡니다.",
+      links:["passe_compose","inf_passe","part_present"]}
+  };
+
+  /* ---------- PONS sheet additions (only where they add something) ---------- */
+  var PONS = {
+    present:{src:"2장 · 왼쪽 단 ~ 가운데 단 위",blocks:[
+      {h:"-er 동사의 철자 규칙",items:["어간이 -g, -c로 끝나면 -o-, -a- 앞에서 철자가 바뀜 (발음을 지키려고): <em>voyager → nous voyageons</em>, <em>commencer → nous commençons</em>"]},
+      {h:"je·tu·il·ils형만 바뀌는 -er 동사 (nous·vous형은 규칙)",items:[
+        "<em>acheter → tu achètes</em> (e → è), <em>préférer → je préfère</em> (é → è)",
+        "<em>jeter → ils jettent</em> (t → tt), <em>appeler → tu appelles</em> (l → ll)",
+        "<em>envoyer → j'envoie</em>, <em>essuyer → j'essuie</em> (y → i), <em>essayer → il essaye / il essaie</em> (둘 다 가능)"]},
+      {h:"-ir, -re 동사",items:[
+        "-ir 동사는 두 종류: <em>finir, choisir</em>처럼 복수에서 -iss-가 붙는 동사 (<em>nous finissons</em>), <em>partir, sortir</em>처럼 안 붙는 동사 (<em>je pars, nous partons</em>)",
+        "-re 동사 기본형: <em>rendre</em> (je rends, il rend, nous rendons), <em>lire</em> (je lis, nous lisons)",
+        "-re 동사는 대부분 불규칙: <em>mettre</em> (je mets, nous mettons), <em>connaître</em> (je connais, il connaît, nous connaissons)"]},
+      {h:"꼭 외울 불규칙",items:["<em>aller</em>: vais, vas, va, allons, allez, vont","<em>faire</em>: fais, fais, fait, faisons, faites, font"]}
+    ]},
+    futur_proche:{src:"2장 오른쪽 단 · 3장 왼쪽 단 · 4장 왼쪽 단",blocks:[
+      {h:"이 표에서의 이름",items:["<em>Futur composé</em>라고 부름. 공식은 같음: <em>aller</em> 현재형 + 동사원형 (<em>je vais aller</em>도 가능)"]},
+      {h:"단순미래와의 차이",items:[
+        "근접미래는 <b>의도·계획</b>, 단순미래는 <b>예측</b>에 가까움. 둘 다 되는 경우도 많음",
+        "<em>On va boire un verre après le travail&nbsp;?</em> 퇴근하고 한잔할까? (하려는 생각)"]},
+      {h:"주절이 과거가 되면",items:["<em>aller</em>를 반과거로: <em>Je pense qu'on va visiter le Louvre.</em> → <em>Je pensais qu'on allait visiter le Louvre.</em>"]}
+    ]},
+    passe_compose:{src:"2장 · 가운데 단 ~ 오른쪽 단 위",blocks:[
+      {h:"avoir냐 être냐",items:[
+        "대부분의 동사는 <em>avoir</em>. <em>avoir</em>와 <em>être</em> 자신도 <em>avoir</em>를 씀 (<em>j'ai eu, j'ai été</em>)",
+        "움직이는 동작이라도 <em>courir, marcher, nager, voyager</em>는 <em>avoir</em>",
+        "<em>être</em>는 방향 있는 이동·머무름 동사 (<em>aller, arriver, venir, entrer, monter, descendre, sortir, partir, rester</em>)와 모든 대명동사 (<em>je me suis levée</em>)",
+        "같은 동사라도 직접목적어가 있으면 <em>avoir</em>, 없으면 <em>être</em>: <em>Elle a sorti la poubelle.</em> 쓰레기통을 내놓았다 / <em>Elle est sortie dehors.</em> 밖에 나갔다 · <em>Il a passé son examen.</em> 시험을 치렀다 / <em>Il est passé devant moi.</em> 내 앞을 지나갔다"]},
+      {h:"avoir일 때의 과거분사 일치",items:["원래 변하지 않지만, 직접목적어가 동사 앞에 오면 그 목적어에 성·수 일치: <em>Tu as invité Louise&nbsp;? Oui, je l'ai invitée.</em>"]},
+      {h:"반과거와 구분",items:["복합과거는 정해진 때에 일어나 끝난 '점' 같은 사건: <em>Il a neigé la nuit dernière.</em> 어젯밤에 눈이 왔다"]}
+    ]},
+    imparfait:{src:"2장 가운데·오른쪽 단 · 4장 왼쪽 단",blocks:[
+      {h:"만들기",items:["불규칙 동사도 <em>nous</em>형에서 출발: <em>aller → nous allons → j'allais</em>, <em>faire → nous faisons → je faisais</em>"]},
+      {h:"복합과거와 한 문장에",items:["<em>Quand elle est arrivée, je dormais déjà.</em> 그녀가 도착했을 때 나는 이미 자고 있었다 (도착 = 복합과거 사건, 자고 있었음 = 반과거 배경)"]},
+      {h:"간접화법 (주절이 과거일 때)",items:[
+        "따옴표 안의 현재 → 반과거: <em>Il a dit&nbsp;: « Je pars au Canada. »</em> → <em>Il a dit qu'il partait au Canada.</em>",
+        "따옴표 안이 반과거면 그대로 반과거"]}
+    ]},
+    passe_simple:{src:"2장 · 오른쪽 단",blocks:[
+      {h:"쓰임",items:["주로 문학 텍스트에서, 대부분 3인칭 단수·복수로 씀. 뜻은 복합과거와 같음"]},
+      {h:"3인칭으로 알아 두면 좋은 형태",items:[
+        "규칙: <em>entrer → il entra, ils entrèrent</em> · <em>choisir → il choisit, ils choisirent</em> · <em>rendre → il rendit, ils rendirent</em>",
+        "불규칙: <em>avoir → il eut, ils eurent</em> · <em>être → il fut, ils furent</em> · <em>aller → il alla, ils allèrent</em> · <em>faire → il fit, ils firent</em>"]}
+    ]},
+    futur_simple:{src:"2장 오른쪽 단 · 3장 왼쪽 단 · 4장 왼쪽 단",blocks:[
+      {h:"어간이 바뀌는 -er 동사",items:["현재형 je형에 -rai, -ras, -ra, -rons, -rez, -ront: <em>acheter → j'achète → j'achèterai</em>"]},
+      {h:"근접미래와의 차이",items:["단순미래는 <b>예측</b>, 근접미래는 <b>의도</b>에 가까움. 말할 때는 근접미래를 더 많이 씀"]},
+      {h:"간접화법 (주절이 과거일 때)",items:["단순미래 → 조건법 현재: <em>Il disait&nbsp;: « Je partirai au Canada. »</em> → <em>Il disait qu'il partirait au Canada.</em>"]}
+    ]},
+    cond_present:{src:"3장 · 왼쪽 단",blocks:[
+      {h:"기존 설명에 더할 쓰임",items:[
+        "바람: <em>J'aimerais parler couramment italien.</em> 이탈리아어를 유창하게 하고 싶다",
+        "가능성: <em>En cas de pluie, on pourrait se retrouver au café.</em> 비가 오면 카페에서 만날 수도 있겠다"]}
+    ]},
+    cond_passe:{src:"3장 왼쪽 단 · 4장 왼쪽 단",blocks:[
+      {h:"쓰임",items:[
+        "이루지 못한 바람: <em>J'aurais aimé devenir astronaute.</em> 우주비행사가 되고 싶었는데",
+        "이룰 수 없는 조건, 특히 과거의 일: <em>Si j'avais eu le temps, je serais venu.</em> 시간이 있었다면 왔을 텐데"]},
+      {h:"간접화법 (주절이 과거일 때)",items:["전미래 → 조건법 과거: <em>Il a dit&nbsp;: « Je serai parti. »</em> → <em>Il a dit qu'il serait parti.</em>"]}
+    ]},
+    subj_present:{src:"3장 · 가운데 단 ~ 오른쪽 단",blocks:[
+      {h:"어간이 두 개인 동사",items:[
+        "현재형에서 nous·vous의 어간이 ils와 다르면 접속법에도 그 차이가 남음: <em>prendre → que je prenne, qu'ils prennent</em> / <em>que nous prenions, que vous preniez</em>",
+        "<em>aller</em>도 같은 식: <em>que j'aille</em> / <em>que nous allions</em>"]},
+      {h:"접속법을 부르는 다섯 경우 (que 종속절)",items:[
+        "의지: <em>vouloir, aimer, préférer, souhaiter, attendre, accepter que</em>",
+        "감정: <em>regretter, apprécier, être content(e) / triste, avoir peur que</em>",
+        "비인칭 표현: <em>il faut / il faudrait, c'est important, c'est dommage que</em>",
+        "접속사: <em>bien que</em> (~인데도), <em>pour que / afin que</em> (~하도록), <em>sans que</em> (~하지 않고), <em>jusqu'à ce que</em> (~할 때까지)",
+        "부정된 생각·의견: <em>ne pas croire, ne pas penser, ne pas être sûr(e) que</em>"]},
+      {h:"주의: 직설법을 쓰는 경우",items:[
+        "<em>espérer que</em> 뒤는 직설법: <em>J'espère qu'il va arriver.</em>",
+        "긍정의 <em>penser que</em>도 직설법: <em>Je pense que tu as raison.</em> / 부정이면 접속법: <em>Je ne pense pas que tu aies raison.</em>"]}
+    ]},
+    imp_present:{src:"3장 가운데 단 · 6장 왼쪽 단",blocks:[
+      {h:"만들기",items:[
+        "현재형 1인칭 단수(je형) → tu 명령형, 현재형 1·2인칭 복수 → nous·vous 명령형",
+        "<em>parler → parle, parlons, parlez</em> · <em>choisir → choisis, choisissons, choisissez</em> · <em>prendre → prends, prenons, prenez</em>"]},
+      {h:"불규칙",items:[
+        "<em>avoir → aie, ayons, ayez</em> · <em>être → sois, soyons, soyez</em> · <em>faire → fais, faisons, faites</em>",
+        "<em>aller → va, allons, allez</em> (y 앞에서는 <em>vas-y</em>)"]},
+      {h:"쓰임",items:["독일어 명령법과 같은 방식으로 쓴다고만 설명함 (명령·지시·권유)"]},
+      {h:"긍정 명령의 대명사 (6장)",items:["강세형 대명사가 동사 뒤: <em>Donne-moi ton adresse.</em> 주소 줘 / 부정이면 앞: <em>Ne me donne pas ton adresse.</em>"]}
+    ]},
+    inf_present:{src:"4장 가운데 단 · 6장 왼쪽·가운데 단",blocks:[
+      {h:"동사원형의 부정",items:["<em>ne</em>와 <em>pas</em>가 둘 다 동사원형 앞에 옴: <em>Il est recommandé de ne pas fumer.</em> 담배를 피우지 않는 것이 좋다"]},
+      {h:"동사원형이 뒤따를 때 대명사 위치",items:[
+        "목적어 대명사는 동사원형 바로 앞: <em>Il voudrait lui montrer cette bague.</em> 그는 그녀에게 이 반지를 보여 주고 싶어 한다",
+        "부정은 활용된 동사를 감싸고, 대명사는 그대로 동사원형 앞: <em>Non, je ne vais pas lui téléphoner.</em>"]}
+    ]},
+    part_present:{src:"3장 · 가운데 단 위",blocks:[
+      {h:"만들기",items:["현재형 1인칭 복수(nous)의 어간 + -ant: <em>nous restons → restant</em>","<em>avoir → ayant, être → étant, faire → faisant</em>"]},
+      {h:"쓰임",items:["주로 공문서 같은 글에서 관계절(qui …)을 대신함: <em>Les personnes choisissant la randonnée ont rendez-vous à 9 heures.</em> (= qui choisissent) 하이킹을 고른 분들은 9시에 모입니다"]}
+    ]},
+    gerondif:{src:"3장 · 가운데 단",blocks:[
+      {h:"만들기",items:["<em>en</em> + 현재분사: <em>en prenant</em>"]},
+      {h:"쓰임",items:["두 동작이 동시에 일어남: <em>Elle regarde la télé en mangeant.</em> 그녀는 밥을 먹으면서 TV를 본다"]}
+    ]},
+    part_passe:{src:"2장 가운데 단 · 3장 오른쪽 단",blocks:[
+      {h:"만들기 (2장)",items:["규칙형: -er → -é, -ir → -i, -dre → -u","불규칙형: <em>avoir → eu, être → été, vouloir → voulu, pouvoir → pu, savoir → su, devoir → dû, connaître → connu, venir → venu, mettre → mis, prendre → pris, faire → fait</em>"]},
+      {h:"일치 (2장)",items:["<em>être</em>와 쓰면 주어에 성·수 일치: <em>Ils sont partis.</em>","<em>avoir</em>와 쓰면 그대로, 단 직접목적어가 앞에 오면 그것에 일치: <em>je l'ai invitée</em>"]},
+      {h:"수동태 (3장)",items:[
+        "주어 + <em>être</em>의 시제형 + 과거분사 (+ <em>par</em> + 행위자): <em>Kennedy a été assassiné en 1963.</em>",
+        "<em>aimer, apprécier, connaître, respecter</em> 뒤에서는 <em>par</em> 대신 <em>de</em>: <em>Ma voisine est aimée et connue de tous.</em> 내 이웃은 모두에게 사랑받고 알려져 있다",
+        "수동태는 주로 글에서 쓰고, 말할 때는 <em>on</em>으로 바꿔 말함: <em>On a construit une autoroute.</em> 고속도로가 생겼다"]}
+    ]}
+  };
+
+  /* ---------- sequence of tenses, per tense ---------- */
+  var SOT = {
+    present:{to:"imparfait"},
+    passe_compose:{to:"plus_que_parfait"},
+    imparfait:{same:true, from:"present"},
+    plus_que_parfait:{same:true, from:"passe_compose"},
+    futur_simple:{to:"cond_present"},
+    futur_anterieur:{to:"cond_passe"},
+    cond_present:{txt:"주절이 과거가 되면 따옴표 안의 <b>단순미래</b>가 이 시제로 바뀝니다 (과거에서 본 미래). 따옴표 안이 처음부터 조건법이면 그대로입니다: <em>« Je voudrais partir. » → Il a dit qu'il voudrait partir.</em>"},
+    cond_passe:{txt:"주절이 과거가 되면 따옴표 안의 <b>전미래</b>가 이 시제로 바뀝니다. 따옴표 안이 처음부터 조건법 과거면 그대로입니다."},
+    futur_proche:{txt:"<em>aller</em>를 반과거로 바꿉니다: <em>« Je vais partir. » → Il a dit qu'il allait partir.</em>"},
+    passe_recent:{txt:"<em>venir</em>를 반과거로 바꿉니다: <em>« Je viens de partir. » → Il a dit qu'il venait de partir.</em>"},
+    imp_present:{txt:"명령문은 <em>de</em> + 동사원형으로 옮깁니다: <em>« Pars&nbsp;! » → Il m'a dit de partir.</em>"}
+  };
+
+  var PAIRS = [["present","passe_compose"],["imparfait","plus_que_parfait"],["passe_simple","passe_anterieur"],["futur_simple","futur_anterieur"],["cond_present","cond_passe"],["subj_present","subj_passe"],["subj_imparfait","subj_pqp"],["imp_present","imp_passe"],["inf_present","inf_passe"]];
+  function pairOf(k){
+    for (var i = 0; i < PAIRS.length; i++){
+      if (PAIRS[i][0] === k) return {other:PAIRS[i][1], isCompound:false};
+      if (PAIRS[i][1] === k) return {other:PAIRS[i][0], isCompound:true};
+    }
+    return null;
+  }
+
+  /* ---------- conjugation ---------- */
+  function conj(tk, vk){
+    var b = T[tk].b, V = VERBS[vk], out = [], j;
+    var LAB = ["(tu) ","(nous) ","(vous) "], PL6 = ["(je) ","(tu) ","(il) ","(nous) ","(vous) ","(ils) "];
+    if (b.imp){
+      if (!IMP[vk]) return [[["pouvoir는 명령법이 없습니다.", "fx"]]];
+      if (b.imp === "present"){
+        for (j = 0; j < 3; j++){
+          if (V.refl) out.push([[LAB[j], "pl"], [IMP[vk][j], "hl"], [["-toi","-nous","-vous"][j], "rp"]]);
+          else out.push([[LAB[j], "pl"], [IMP[vk][j], "hl"]]);
+        }
+        if (V.refl) for (j = 0; j < 3; j++) out.push([["(부정) ", "pl"], ["ne ", "fx"], [["te ","nous ","vous "][j], "rp"], [IMP[vk][j], "hl"], [" pas", "fx"]]);
+      } else {
+        if (V.refl) return [[["대명동사는 명령법 과거를 사실상 쓰지 않습니다.", "fx"]]];
+        var ia = V.aux === "etre" ? ["sois","soyons","soyez"] : ["aie","ayons","ayez"];
+        var ig = V.aux === "etre" ? ["(e)","(e)s","(e)(s)"] : ["","",""];
+        for (j = 0; j < 3; j++) out.push([[LAB[j], "pl"], [ia[j], "hl"], [" " + V.pp + ig[j]]]);
+      }
+      return out;
+    }
+    if (b.nf){
+      var ppr = PPR[vk];
+      if (b.nf === "inf"){
+        if (V.refl){ for (j = 0; j < 6; j++) out.push([[PL6[j], "pl"], [reflFor(j, V.inf), "rp"], [V.inf, "hl"]]); }
+        else out.push([[V.inf, "hl"]]);
+      } else if (b.nf === "infp"){
+        if (V.refl){ for (j = 0; j < 6; j++) out.push([[PL6[j], "pl"], [reflFor(j, "être"), "rp"], ["être", "hl"], [" " + V.pp + AGR[j]]]); }
+        else if (V.aux === "etre") out.push([["être", "hl"], [" " + V.pp + "(e)(s)"]]);
+        else out.push([["avoir", "hl"], [" " + V.pp]]);
+      } else if (b.nf === "ppr"){
+        if (V.refl){ for (j = 0; j < 6; j++) out.push([[PL6[j], "pl"], [reflFor(j, ppr), "rp"], [ppr, "hl"]]); }
+        else out.push([[ppr, "hl"]]);
+      } else if (b.nf === "ger"){
+        if (V.refl){ for (j = 0; j < 6; j++) out.push([[PL6[j], "pl"], ["en ", "fx"], [reflFor(j, ppr), "rp"], [ppr, "hl"]]); }
+        else out.push([["en ", "fx"], [ppr, "hl"]]);
+      } else if (b.nf === "pp"){
+        var pp0 = V.pp;
+        if (vk === "etre" || vk === "pouvoir") out.push([["(변하지 않음) ", "pl"], [pp0, "hl"]]);
+        else {
+          var pforms = [pp0, pp0 + "e", /s$/.test(pp0) ? pp0 : pp0 + "s", pp0 + "es"];
+          var plabs = ["(남성 단수) ","(여성 단수) ","(남성 복수) ","(여성 복수) "];
+          for (j = 0; j < 4; j++) out.push([[plabs[j], "pl"], [pforms[j], "hl"]]);
+        }
+        if (V.refl) out.push([["(완료 분사) ", "pl"], ["s'", "rp"], ["étant", "hl"], [" " + pp0 + "(e)(s)"]]);
+        else if (V.aux === "etre") out.push([["(완료 분사) ", "pl"], ["étant", "hl"], [" " + pp0 + "(e)(s)"]]);
+        else out.push([["(완료 분사) ", "pl"], ["ayant", "hl"], [" " + pp0]]);
+      }
+      return out;
+    }
+    for (var i = 0; i < 6; i++){
+      if (b.s){
+        var f = FORMS[vk][b.s][i];
+        if (V.refl){ var r1 = reflFor(i, f); out.push([[pronoun(i, r1, b.q)], [r1, "rp"], [f, "hl"]]); }
+        else out.push([[pronoun(i, f, b.q)], [f, "hl"]]);
+      } else if (b.c){
+        var auxKey = V.refl ? "etre" : V.aux;
+        var a = AUX[auxKey][b.c][i];
+        var pp = V.pp + (auxKey === "etre" ? AGR[i] : "");
+        if (V.refl){ var r2 = reflFor(i, a); out.push([[pronoun(i, r2, b.q)], [r2, "rp"], [a, "hl"], [" " + pp]]); }
+        else out.push([[pronoun(i, a, b.q)], [a, "hl"], [" " + pp]]);
+      } else {
+        var h = HELP[b.p][i], link;
+        if (V.refl){
+          link = b.link === "de" ? " de " : (b.link === "en train de" ? " en train de " : " ");
+          out.push([[pronoun(i, h, false)], [h, "hl"], [link, "fx"], [reflFor(i, V.inf), "rp"], [V.inf, "fx"]]);
+        } else {
+          if (b.link === "de") link = vowel(V.inf) ? " d'" : " de ";
+          else if (b.link === "en train de") link = vowel(V.inf) ? " en train d'" : " en train de ";
+          else link = " ";
+          out.push([[pronoun(i, h, false)], [h, "hl"], [link + V.inf, "fx"]]);
+        }
+      }
+    }
+    return out;
+  }
+
+  function verbNote(tk, vk){
+    var b = T[tk].b, V = VERBS[vk], notes = [];
+    if (b.imp){
+      if (!IMP[vk]) return "";
+      if (b.imp === "present"){
+        if (V.refl) return "긍정 명령은 동사 뒤에 하이픈으로 <em>-toi, -nous, -vous</em>, 부정 명령은 <em>te, nous, vous</em>를 동사 앞에 둡니다. <em>lever</em>는 tu형에서 è (<em>lève</em>).";
+        notes.push("주어 없이 tu·nous·vous 세 형태만 있습니다.");
+        if (vk === "parler" || vk === "aller") notes.push("1군 동사와 <em>aller</em>는 tu형에서 -s가 빠집니다 (<em>parle, va</em>).");
+        if (vk === "etre" || vk === "avoir") notes.push("<em>" + V.inf + "</em>는 접속법 현재에서 온 불규칙 형태입니다.");
+        return notes.join(" ");
+      }
+      if (V.refl) return "";
+      notes.push("조동사(형광펜)가 명령법 현재형이고, 과거분사는 그대로입니다.");
+      if (V.aux === "etre") notes.push("<em>être</em>를 쓰는 동사라 과거분사가 듣는 사람의 성·수에 일치합니다.");
+      return notes.join(" ");
+    }
+    if (b.nf){
+      if (V.refl && b.nf !== "pp") notes.push("재귀대명사는 문장의 주어에 맞춰 바뀝니다. 괄호 안이 그 주어입니다.");
+      if (b.nf === "inf") notes.push("동사원형 그 자체입니다.");
+      if (b.nf === "infp") notes.push(V.refl ? "대명동사는 <em>être</em> + 과거분사이고, 주어에 일치합니다." : (V.aux === "etre" ? "<em>être</em>를 쓰는 동사라 과거분사가 주어에 성·수 일치합니다." : "<em>avoir</em> + 과거분사, 과거분사는 그대로입니다."));
+      if (b.nf === "ppr") notes.push("nous형 어간 + -ant. 성·수 변화가 없습니다.");
+      if (b.nf === "ger") notes.push("en + 현재분사. 주어는 주절의 주어와 같아야 합니다.");
+      if (b.nf === "pp") notes.push((vk === "etre" || vk === "pouvoir") ? "<em>" + V.pp + "</em>는 일치하지 않는 과거분사입니다." : "형용사처럼 쓰거나 일치가 필요할 때 여성 +e, 복수 +s를 붙입니다.");
+      return notes.join(" ");
+    }
+    if (V.refl){
+      if (b.s) notes.push("재귀대명사는 활용된 동사 바로 앞에 오고, 주어에 맞춰 me, te, se, nous, vous, se로 바뀝니다.");
+      if (b.c) notes.push("대명동사는 복합시제에서 항상 <em>être</em>를 쓰고, 과거분사는 보통 주어에 성·수 일치합니다. 모음 앞에서는 <em>t'es, s'est</em>처럼 줄어듭니다.");
+      if (b.p) notes.push("3형제에서는 앞의 동사만 활용되고, 재귀대명사는 동사원형 바로 앞으로 갑니다 (<em>je vais me lever</em>).");
+      if (tk === "present" || tk === "subj_present") notes.push("<em>lever</em>는 소리 나지 않는 어미 앞에서 e → è: <em>je me lève</em> / <em>nous nous levons</em>.");
+      if (tk === "futur_simple" || tk === "cond_present") notes.push("<em>lever</em>는 미래·조건법에서 모든 인칭이 è: <em>je me lèverai, nous nous lèverons</em>.");
+    } else {
+      if (b.c) notes.push("형광펜 친 조동사가 시제를 정하고, 과거분사는 그대로입니다.");
+      if (b.p) notes.push("앞의 동사만 활용되고, 뒤의 동사원형은 그대로입니다.");
+      if (b.s) notes.push("동사 자체가 활용됩니다.");
+      if (V.aux === "etre" && b.c) notes.push("<em>" + V.inf + "</em>는 조동사로 <em>être</em>를 써서 과거분사가 주어와 성·수 일치합니다. (e)는 여성, (s)는 복수.");
+      if ((vk === "etre" || vk === "avoir") && b.c) notes.push("<em>" + V.inf + "</em> 자신은 조동사로 <em>avoir</em>를 씁니다 (<em>j'ai " + V.pp + "</em>).");
+      if (tk === "present_prog" && (vk === "etre" || vk === "avoir" || vk === "pouvoir")) notes.push("상태를 나타내는 동사라 진행형으로는 거의 쓰지 않습니다.");
+      if (tk === "passe_recent" && vk === "venir") notes.push("<em>je viens de venir</em>는 문법상 가능하지만 어색해서 잘 쓰지 않습니다.");
+    }
+    return notes.join(" ");
+  }
+
+  /* ---------- formula boxes ---------- */
+  var PERS = ["je","tu","il","nous","vous","ils"];
+  var AUXNAME = {present:"현재형",imparfait:"반과거",ps:"단순과거",futur:"단순미래",cond:"조건법 현재",subj:"접속법 현재",subjimp:"접속법 반과거"};
+  var HELPNAME = {venir:"venir",etre:"être",aller:"aller"};
+  var PLUS = '<span class="fplus" aria-hidden="true">+</span>';
+  function endsHTML(arr){
+    return '<span class="fends">' + arr.map(function(e, i){ return '<span class="fend"><i>' + PERS[i] + '</i>' + e + '</span>'; }).join("") + '</span>';
+  }
+  function boxHTML(x, cls){ return '<span class="fbox' + (cls ? " " + cls : "") + '">' + x + '</span>'; }
+  function rowHTML(lb, inner, ex){
+    return '<div class="frow">' + (lb ? '<span class="flb">' + lb + '</span>' : '') + '<div class="feq">' + inner + '</div>' + (ex ? '<p class="fex">' + ex + '</p>' : '') + '</div>';
+  }
+  function formulaHTML(t){
+    var out = [];
+    t.f.forEach(function(r){
+      if (r.aux){
+        out.push(rowHTML("<em>avoir</em> " + AUXNAME[r.aux], endsHTML(AUX.avoir[r.aux]) + PLUS + boxHTML("과거분사", "fpp")));
+        out.push(rowHTML("<em>être</em> " + AUXNAME[r.aux] + " <small style='font-weight:400'>(이동·상태 변화 동사, 모든 대명동사)</small>", endsHTML(AUX.etre[r.aux]) + PLUS + boxHTML("과거분사 <small>+ 성·수 일치</small>", "fpp")));
+      } else if (r.help){
+        out.push(rowHTML("<em>" + HELPNAME[r.help] + "</em> 현재형", endsHTML(HELP[r.help]) + (r.mid ? PLUS + boxHTML("<em>" + r.mid + "</em>", "fmid") : "") + PLUS + boxHTML("동사원형", "fpp"), r.ex));
+      } else if (r.cells){
+        out.push(rowHTML(r.lb, '<span class="fends fends-3">' + r.cells.map(function(x){ return '<span class="fend"><i>' + x[0] + '</i>' + x[1] + '</span>'; }).join("") + '</span>' + (r.tail ? PLUS + boxHTML(r.tail, "fpp") : ""), r.ex));
+      } else if (r.seq){
+        out.push(rowHTML(r.lb, r.seq.map(function(x){ return boxHTML(x[0], x[1]); }).join(PLUS), r.ex));
+      } else if (r.text){
+        out.push(rowHTML(r.lb, '<span class="ftext">' + r.text + '</span>'));
+      } else {
+        out.push(rowHTML(r.lb, boxHTML(r.base, "fbase") + PLUS + endsHTML(r.ends), r.ex));
+      }
+    });
+    (t.irr || []).forEach(function(g){
+      out.push('<div class="firr"><p class="firr-h">' + g.h + '</p><div class="firr-grid">' + g.items.map(function(p){
+        return '<span class="firr-i"><em>' + p[0] + '</em><span class="arr">→</span><b>' + p[1] + '</b></span>';
+      }).join("") + '</div></div>');
+    });
+    if (t.fnote) out.push('<p class="fnote">' + t.fnote + '</p>');
+    return out.join("");
+  }
+
+  /* ---------- rendering ---------- */
+  var cur = "passe_compose", verb = "parler";
+  var $ = function(id){ return document.getElementById(id); };
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".map .chip[data-t]"));
+  chips.forEach(function(c){ if (PONS[c.getAttribute("data-t")]) c.classList.add("has-pons"); });
+  function esc(s){ return s.replace(/&(?!nbsp;)/g,"&amp;").replace(/</g,"&lt;"); }
+
+  function renderConj(){
+    var rows = conj(cur, verb);
+    $("conj").innerHTML = rows.map(function(r){
+      return "<li>" + r.map(function(seg){
+        return seg[1] ? '<span class="' + seg[1] + '">' + esc(seg[0]) + "</span>" : esc(seg[0]);
+      }).join("") + "</li>";
+    }).join("");
+    $("conj-legend").innerHTML = '<span class="hl">형광펜</span> = 실제로 활용되는 부분' + (VERBS[verb].refl ? ' · <span class="rp">파란 글씨</span> = 재귀대명사 (주어에 맞춰 바뀜)' : '');
+    $("conj-note").innerHTML = verbNote(cur, verb);
+    Array.prototype.forEach.call(document.querySelectorAll(".vbtn"), function(b){
+      b.setAttribute("aria-pressed", b.getAttribute("data-v") === verb ? "true" : "false");
+    });
+  }
+
+  function renderDetail(){
+    var t = T[cur];
+    $("d-crumb").textContent = t.crumb;
+    $("d-title").innerHTML = t.ko + ' <span class="fr">' + t.fr + "</span>";
+    var al = $("d-alias");
+    if (t.alias){ al.textContent = t.alias; al.hidden = false; } else { al.hidden = true; }
+    $("d-formula").innerHTML = formulaHTML(t);
+    $("d-uses").innerHTML = t.uses.map(function(u){
+      return '<li><span class="u">' + u.u + '</span>' + (u.fr ? '<span class="uex"><span class="ufr">' + u.fr + '</span><span class="uko">' + u.ko + '</span></span>' : '') + '</li>';
+    }).join("");
+
+    var pr = $("d-pron");
+    if (t.pron){
+      pr.innerHTML = '<h3>대명동사로 보면</h3><p class="pr-fr">' + t.pron.fr + '</p><p class="pr-ko">' + t.pron.ko + '</p>' +
+        (t.pron.tip ? '<p class="pr-tip">' + t.pron.tip + '</p>' : '') +
+        '<button class="mini pr-go" data-v="lever" data-jump="1">활용표에서 <em>se lever</em> 보기</button>';
+      pr.hidden = false;
+    } else pr.hidden = true;
+
+    var p = pairOf(cur), noteParts = [];
+    if (p){
+      if (p.isCompound) noteParts.push("짝꿍: 조동사를 <b>" + T[p.other].ko + "</b>로 활용한 형태라서 지도에서 " + T[p.other].ko + "의 왼쪽에 있습니다.");
+      else noteParts.push("짝꿍: 조동사 <em>avoir / être</em>를 이 시제로 활용하면 <b>" + T[p.other].ko + "</b>가 됩니다.");
+    }
+    if (t.note) noteParts.unshift(t.note);
+    var n = $("d-note");
+    if (noteParts.length){ n.innerHTML = '<span class="pen">메모</span>' + noteParts.join(" "); n.hidden = false; }
+    else n.hidden = true;
+
+    var pb = $("d-pons"), pd = PONS[cur];
+    if (pd){
+      pb.innerHTML = '<div class="pons-head"><span class="pons-badge">PONS</span><span class="pons-title">문법표 보충 설명</span><span class="pons-src">' + pd.src + '</span></div>' +
+        pd.blocks.map(function(bl){
+          return '<div><h4>' + bl.h + '</h4><ul>' + bl.items.map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul></div>';
+        }).join('');
+      pb.hidden = false;
+    } else { pb.hidden = true; pb.innerHTML = ''; }
+
+    var sl = $("d-sot"), sd = SOT[cur], stx = "";
+    if (sd){
+      if (sd.txt) stx = sd.txt;
+      else if (sd.same) stx = "주절이 과거가 되어도 <b>" + t.ko + "</b>는 그대로입니다. 또 따옴표 안의 <b>" + T[sd.from].ko + "</b>가 이 시제로 바뀝니다.";
+      else if (sd.to) stx = "따옴표 안의 <b>" + t.ko + "</b>는 주절이 과거가 되면 <b>" + T[sd.to].ko + "</b>로 바뀝니다.";
+      else if (sd.from) stx = "주절이 과거가 되면 따옴표 안의 <b>" + T[sd.from].ko + "</b>가 이 시제로 바뀝니다 (과거에서 본 미래).";
+      sl.innerHTML = '<span class="lbl">시제 일치 (주절이 과거일 때)</span>' + stx + '<a href="#sot">표 보기 ↓</a>';
+      sl.hidden = false;
+    } else { sl.hidden = true; sl.innerHTML = ''; }
+
+    $("d-prac").hidden = DRILL.indexOf(cur) < 0;
+    $("d-links").innerHTML = t.links.map(function(k){ return '<button class="mini" data-t="' + k + '">' + T[k].ko + "</button>"; }).join("");
+    renderConj();
+  }
+
+  function renderMap(){
+    var p = pairOf(cur);
+    chips.forEach(function(c){
+      var k = c.getAttribute("data-t");
+      c.classList.toggle("sel", k === cur);
+      c.setAttribute("aria-pressed", k === cur ? "true" : "false");
+      c.classList.toggle("pair", !!p && k === p.other);
+    });
+  }
+
+  function smoothTo(el){
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+  }
+
+  function select(k, scroll){
+    if (!T[k]) return;
+    cur = k;
+    renderMap();
+    renderDetail();
+    if (scroll){
+      var d = $("detail"), r = d.getBoundingClientRect();
+      if (r.top > window.innerHeight * 0.7 || r.top < 0) smoothTo(d);
+    }
+  }
+
+  document.addEventListener("click", function(e){
+    if (!e.target.closest) return;
+    var el = e.target.closest("[data-t]");
+    if (el){ select(el.getAttribute("data-t"), true); return; }
+    var v = e.target.closest("[data-v]");
+    if (v){
+      verb = v.getAttribute("data-v");
+      renderConj();
+      if (v.getAttribute("data-jump")){
+        var box = $("conj-box"), r = box.getBoundingClientRect();
+        if (r.top < 0 || r.top > window.innerHeight * 0.6) smoothTo(box);
+      }
+    }
+  });
+
+  /* ---------- practice ---------- */
+  var DRILL = ["present","passe_compose","imparfait","plus_que_parfait","futur_simple","futur_anterieur","futur_proche","passe_recent","cond_present","cond_passe","subj_present","subj_passe","passe_simple"];
+  var KEYS = ["é","è","ê","à","â","ç","î","ï","ô","û","ù","ë","œ"];
+  /* o[0] is always the right answer; options are shuffled on screen */
+  var CHOOSE = [
+    {s:"Hier soir, nous ___, puis nous sommes allés nous coucher.",v:"regarder un film",ko:"어젯밤 우리는 영화를 한 편 보고 나서 잠자리에 들었다.",o:["avons regardé un film","regardions un film","regarderons un film","regardons un film"],why:"'보고 나서 잤다'처럼 끝난 사건을 차례로 늘어놓을 때는 복합과거입니다.",t:"passe_compose"},
+    {s:"Quand nous étions petits, nous ___ au foot tous les mercredis.",v:"jouer",ko:"어렸을 때 우리는 수요일마다 축구를 하곤 했다.",o:["jouions","avons joué","jouerons","jouons"],why:"<em>tous les mercredis</em>처럼 과거에 되풀이된 습관은 반과거입니다.",t:"imparfait"},
+    {s:"Nous ___ à Séoul depuis cinq ans.",v:"habiter",ko:"우리는 5년째 서울에 살고 있다.",o:["habitons","avons habité","habitions","habiterons"],why:"<em>depuis</em> + 기간으로 지금도 이어지는 일을 말할 때는 복합과거가 아니라 현재를 씁니다.",t:"present"},
+    {s:"Si j'avais le temps, je ___ plus souvent.",v:"voyager",ko:"시간이 있다면 더 자주 여행할 텐데.",o:["voyagerais","voyagerai","voyageais","aurais voyagé"],why:"<em>si</em> + 반과거 → 주절은 조건법 현재입니다. 지금 사실과 반대되는 가정입니다.",t:"cond_present"},
+    {s:"Si tu viens, on ___ au cinéma.",v:"aller",ko:"네가 오면 영화 보러 가자.",o:["ira","irait","allait","serait allé"],why:"<em>si</em> + 현재 → 주절은 단순미래입니다. 실현될 수 있는 조건입니다.",t:"futur_simple"},
+    {s:"Si elle avait su, elle ___.",v:"venir",ko:"그녀가 알았더라면 왔을 텐데.",o:["serait venue","viendrait","est venue","était venue"],why:"<em>si</em> + 대과거 → 주절은 조건법 과거입니다. <em>venir</em>는 <em>être</em>를 쓰므로 주어에 맞춰 <em>venue</em>가 됩니다.",t:"cond_passe"},
+    {s:"Il t'appellera quand il ___ à Paris.",v:"arriver",ko:"그는 파리에 도착하면 너에게 전화할 거야.",o:["arrivera","arrive","arriverait","arrivait"],why:"앞으로의 일이면 <em>quand</em> 뒤에도 미래형을 씁니다. 영어(<em>when he arrives</em>)와 다른 점입니다.",t:"futur_simple"},
+    {s:"Il faut que tu ___ tout de suite.",v:"partir",ko:"너는 지금 당장 떠나야 해.",o:["partes","pars","partiras","partirais"],why:"<em>il faut que</em> 뒤에는 접속법을 씁니다. <em>ils partent</em> → <em>part-</em> + <em>-es</em>.",t:"subj_present"},
+    {s:"J'espère qu'il ___ demain.",v:"venir",ko:"그가 내일 오면 좋겠다.",o:["viendra","vienne","viendrait","vînt"],why:"<em>espérer que</em>는 바람을 나타내지만 뒤에 직설법을 씁니다. 자주 틀리는 예외입니다.",t:"futur_simple"},
+    {s:"Je ne pense pas qu'il ___ raison.",v:"avoir",ko:"나는 그가 옳다고 생각하지 않는다.",o:["ait","a","aura","aurait"],why:"<em>penser que</em>가 부정문이 되면 접속법을 씁니다. 긍정문(<em>Je pense qu'il a raison.</em>)은 직설법입니다.",t:"subj_present"},
+    {s:"Bien qu'il ___ malade, il est venu travailler.",v:"être",ko:"그는 아픈데도 일하러 왔다.",o:["soit","est","était","serait"],why:"<em>bien que</em> 뒤에는 늘 접속법을 씁니다. 말할 때는 주절이 과거여도 접속법 현재를 씁니다.",t:"subj_present"},
+    {s:"Quand je suis arrivé au cinéma, le film ___.",v:"commencer",ko:"내가 극장에 도착했을 때 영화는 이미 시작했었다.",o:["avait commencé","a commencé","commençait","aurait commencé"],why:"과거의 기준점(도착)보다 먼저 끝난 일은 대과거입니다.",t:"plus_que_parfait"},
+    {s:"Demain à midi, nous ___ ce travail.",v:"finir",ko:"내일 정오면 우리는 이 일을 다 끝냈을 거야.",o:["aurons fini","finissons","avions fini","aurions fini"],why:"미래의 어느 시점(내일 정오)보다 먼저 끝나 있을 일은 전미래입니다.",t:"futur_anterieur"},
+    {s:"Nous ___ deux cafés, s'il vous plaît.",v:"vouloir",ko:"커피 두 잔 주시겠어요? (공손하게)",o:["voudrions","voudrons","avons voulu","veuillons"],why:"공손한 요청은 조건법 현재입니다. <em>Je voudrais …</em>가 가장 흔한 틀입니다.",t:"cond_present"},
+    {s:"Tu ___ me le dire !",v:"devoir",ko:"나한테 말했어야지!",o:["aurais dû","as dû","devras","dois"],why:"과거에 하지 않은 일을 탓하거나 후회할 때는 조건법 과거입니다 (<em>devoir</em> → <em>aurais dû</em>).",t:"cond_passe"},
+    {s:"Regarde ces nuages, il ___ !",v:"pleuvoir",ko:"저 구름 좀 봐, 곧 비가 오겠다!",o:["va pleuvoir","a plu","pleuvait","pleuvrait"],why:"눈앞의 조짐을 보고 곧 일어날 일을 말할 때는 근접미래입니다.",t:"futur_proche"},
+    {s:"Je ___ mon travail, je suis enfin libre !",v:"finir",ko:"방금 일을 끝냈어, 드디어 자유야!",o:["viens de finir","vais finir","finissais","finirai"],why:"'방금 ~했다'는 근접과거 <em>venir de</em> + 동사원형입니다.",t:"passe_recent"},
+    {s:"Ne le dérange pas, il ___.",v:"travailler",ko:"방해하지 마, 그 사람 지금 일하는 중이야.",o:["est en train de travailler","vient de travailler","a travaillé","travaillait"],why:"'지금 ~하는 중'을 강조할 때는 <em>être en train de</em> + 동사원형입니다. 현재형 <em>il travaille</em>로도 같은 뜻이 됩니다.",t:"present_prog"},
+    {s:"Après ___, il est sorti.",v:"manger",ko:"밥을 먹은 뒤 그는 나갔다.",o:["avoir mangé","manger","mangé","mangeant"],why:"<em>après</em> 뒤의 동사원형은 반드시 부정법 과거(<em>avoir / être</em> + 과거분사)입니다.",t:"inf_passe"},
+    {s:"Elle chante ___ sa douche.",v:"prendre",ko:"그녀는 샤워하면서 노래한다.",o:["en prenant","prenant","en prendre","à prendre"],why:"주어가 같은 두 동작이 동시에 일어나면('~하면서') 제롱디프(<em>en</em> + 현재분사)입니다.",t:"gerondif"},
+    {s:"Il ouvrit la porte et ___ sans un mot.",v:"sortir",ko:"그는 문을 열고 말없이 나갔다. (소설 문장)",o:["sortit","est sorti","sortait","sortira"],why:"앞의 <em>ouvrit</em>가 단순과거라서 이어지는 사건도 단순과거로 맞춥니다. 소설에서 쓰는 문어체입니다.",t:"passe_simple"},
+    {s:"Il y a trois ans, je ___ en France pour la première fois.",v:"venir",ko:"3년 전에 나는 처음으로 프랑스에 왔다.",o:["suis venu","viens","venais","viendrai"],why:"<em>il y a</em> + 기간('~ 전에')으로 한 번 일어난 일을 말할 때는 복합과거입니다. <em>venir</em>는 <em>être</em>를 씁니다.",t:"passe_compose"},
+    {s:"Si on ___ au cinéma ce soir ?",v:"aller",ko:"오늘 저녁 영화 보러 갈까?",o:["allait","va","irait","allât"],why:"<em>Si on</em> + 반과거 ?는 주절 없이 쓰는 제안 표현입니다.",t:"imparfait"},
+    {s:"Il pleuvait quand je ___.",v:"sortir",ko:"내가 나갔을 때 비가 오고 있었다.",o:["suis sorti","sortais","sortirai","sors"],why:"배경(비가 오고 있었다)은 반과거, 그 사이에 일어난 사건(나갔다)은 복합과거입니다.",t:"passe_compose"},
+    {s:"Je suis content que tu ___ là.",v:"être",ko:"네가 여기 있어서 기뻐.",o:["sois","es","seras","serais"],why:"감정(<em>être content que</em>) 뒤에는 접속법을 씁니다.",t:"subj_present"},
+    {s:"___ la porte, s'il te plaît.",v:"fermer",ko:"(친구에게) 문 좀 닫아 줘.",o:["Ferme","Fermes","Fermé","Fermer"],why:"<em>tu</em>에게 하는 명령은 현재형 tu형에서 주어를 빼고, -er 동사는 -s도 뺍니다.",t:"imp_present"}
+  ];
+  var SOTQ = [
+    {q:"« Je suis malade. »",s:"Elle a dit qu'elle ___ malade.",ko:"그녀는 아프다고 말했다.",o:["était","est","sera","a été"],why:"주절이 과거면 따옴표 안의 현재는 반과거로 바뀝니다.",t:"imparfait"},
+    {q:"« J'ai perdu mes clés. »",s:"Il a dit qu'il ___ ses clés.",ko:"그는 열쇠를 잃어버렸다고 말했다.",o:["avait perdu","a perdu","perdait","aurait perdu"],why:"따옴표 안의 복합과거는 대과거로 바뀝니다.",t:"plus_que_parfait"},
+    {q:"« Je viendrai demain. »",s:"Il a dit qu'il ___ le lendemain.",ko:"그는 다음 날 오겠다고 말했다.",o:["viendrait","viendra","venait","serait venu"],why:"단순미래는 조건법 현재로 바뀝니다. <em>demain</em>도 <em>le lendemain</em>으로 바뀝니다.",t:"cond_present"},
+    {q:"« J'aurai fini avant midi. »",s:"Elle a dit qu'elle ___ avant midi.",ko:"그녀는 정오 전에 끝내 놓겠다고 말했다.",o:["aurait fini","aura fini","avait fini","finirait"],why:"전미래는 조건법 과거로 바뀝니다.",t:"cond_passe"},
+    {q:"« Je vais déménager. »",s:"Il a dit qu'il ___ déménager.",ko:"그는 곧 이사할 거라고 말했다.",o:["allait","va","irait","est allé"],why:"근접미래는 <em>aller</em>만 반과거로 바꿉니다.",t:"futur_proche"},
+    {q:"« Je viens de rentrer. »",s:"Elle a dit qu'elle ___ de rentrer.",ko:"그녀는 막 돌아왔다고 말했다.",o:["venait","vient","viendrait","était venue"],why:"근접과거는 <em>venir</em>만 반과거로 바꿉니다.",t:"passe_recent"},
+    {q:"« Je voudrais partir. »",s:"Il a dit qu'il ___ partir.",ko:"그는 떠나고 싶다고 말했다.",o:["voudrait","voudra","veut","aurait voulu"],why:"조건법은 주절이 과거가 되어도 그대로입니다.",t:"cond_present"},
+    {q:"« Je travaillais à Lyon. »",s:"Il a dit qu'il ___ à Lyon.",ko:"그는 리옹에서 일하고 있었다고 말했다.",o:["travaillait","travaille","travaillera","travaillerait"],why:"반과거는 바뀌지 않고 그대로 반과거입니다.",t:"imparfait"},
+    {q:"« Tu viens ? »",s:"Il m'a demandé si je ___.",ko:"그는 내가 오는지 물었다.",o:["venais","viens","viendrai","suis venu"],why:"예/아니오 의문문은 <em>si</em> + 평서문 어순이 되고, 현재는 반과거로 바뀝니다.",t:"imparfait"},
+    {q:"« Où vas-tu ? »",s:"Elle m'a demandé où j'___.",ko:"그녀는 내가 어디 가는지 물었다.",o:["allais","irai","étais allé","allai"],why:"의문사 의문문은 의문사 + 평서문 어순이 되고, 현재는 반과거로 바뀝니다.",t:"imparfait"},
+    {q:"« Ferme la porte ! »",s:"Il m'a dit ___ la porte.",ko:"그는 나에게 문을 닫으라고 말했다.",o:["de fermer","fermer","que je fermais","ferme"],why:"명령문은 <em>de</em> + 동사원형으로 옮깁니다.",t:"imp_present"},
+    {q:"« Je suis prêt. »",s:"Il dit qu'il ___ prêt.",ko:"그는 준비됐다고 말한다.",o:["est","était","sera","serait"],why:"주절이 현재(<em>Il dit</em>)면 시제를 바꾸지 않습니다.",t:"present"},
+    {q:"« Nous partons ce soir. »",s:"Ils ont dit qu'ils ___ ce soir-là.",ko:"그들은 그날 저녁에 떠난다고 말했다.",o:["partaient","partent","partiront","étaient partis"],why:"현재는 반과거로, <em>ce soir</em>는 <em>ce soir-là</em>로 바뀝니다.",t:"imparfait"},
+    {q:"« Je me suis trompé. »",s:"Il a dit qu'il ___.",ko:"그는 자기가 착각했다고 말했다.",o:["s'était trompé","s'est trompé","se trompait","se serait trompé"],why:"대명동사도 같은 규칙입니다. 복합과거는 대과거로, 재귀대명사는 인칭에 맞춰 <em>se</em>로 바뀝니다.",t:"plus_que_parfait"}
+  ];
+
+  var P = {mode:"conj", tenses:["present","passe_compose","imparfait","futur_simple","cond_present","subj_present"], verbs:Object.keys(VERBS), q:null, done:false, right:0, total:0, streak:0, deck:[], idx:0};
+  var MISS_KEY = "french-tenses-miss";
+  var miss = {};
+  try { miss = JSON.parse(localStorage.getItem(MISS_KEY)) || {}; } catch (e) { miss = {}; }
+  function saveMiss(){ try { localStorage.setItem(MISS_KEY, JSON.stringify(miss)); } catch (e) {} }
+
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+  function range(n){ var a = []; for (var i = 0; i < n; i++) a.push(i); return a; }
+  function toggle(arr, k){ var i = arr.indexOf(k); if (i < 0) arr.push(k); else if (arr.length > 1) arr.splice(i, 1); }
+  function norm(s){ return s.toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s*'\s*/g, "'").replace(/\s+/g, " ").trim(); }
+  function bare(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/œ/g, "oe"); }
+  /* "(e)" and "(s)" in an answer accept the letter, the bracketed form, or nothing */
+  function reSrc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\\\(e\\\)/g, "(?:e|\\(e\\))?").replace(/\\\(s\\\)/g, "(?:s|\\(s\\))?"); }
+  function matches(list, a){ return list.some(function(c){ return new RegExp("^" + reSrc(c) + "$").test(a); }); }
+  function segHTML(row){ return row.map(function(seg){ return seg[1] ? '<span class="' + seg[1] + '">' + esc(seg[0]) + "</span>" : esc(seg[0]); }).join(""); }
+  function vname(vk){ return (VERBS[vk].refl ? "se " : "") + VERBS[vk].inf; }
+
+  function newConj(){
+    var tk, vk, rows, i, tries = 0, last = P.q;
+    do {
+      tk = pick(P.tenses); vk = pick(P.verbs); rows = conj(tk, vk); i = Math.floor(Math.random() * rows.length);
+    } while (last && last.tk === tk && last.vk === vk && ++tries < 20);
+    var row = rows[i], pron = row[0][1] ? "" : row[0][0];
+    var rest = row.slice(pron ? 1 : 0).map(function(s){ return s[0]; }).join("");
+    var acc = [norm(pron + rest), norm(rest)];
+    if (/^qu/.test(pron)) acc.push(norm(pron.replace(/^que |^qu'/, "") + rest));
+    acc.slice().forEach(function(a){ var b = a.replace(/^(qu')?il(s?) /, "$1elle$2 "); if (b !== a) acc.push(b); });
+    P.q = {kind:"conj", tk:tk, vk:vk, i:i, row:row, acc:acc};
+  }
+
+  function hintFor(q){
+    var b = T[q.tk].b, V = VERBS[q.vk];
+    if (b.c){
+      var ak = V.refl ? "etre" : V.aux;
+      return "조동사 <em>" + (ak === "etre" ? "être" : "avoir") + "</em>의 " + AUXNAME[b.c] + " + 과거분사 <em>" + V.pp + "</em>" + (ak === "etre" ? " (주어에 성·수 일치)" : "");
+    }
+    if (b.p) return "<em>" + HELPNAME[b.p] + "</em> 현재형 + " + (b.link ? "<em>" + b.link + "</em> + " : "") + "동사원형 <em>" + V.inf + "</em>" + (V.refl ? " (재귀대명사는 동사원형 앞)" : "");
+    var f = T[q.tk].f, ends = [];
+    f.forEach(function(r){ if (r.ends && ends.indexOf(r.ends[q.i]) < 0) ends.push(r.ends[q.i]); });
+    var h = (f.length === 1 ? f[0].base + " + 어미 " : "어미 ") + "<em>" + ends.join(" / ") + "</em>";
+    if (["parler","finir","lever"].indexOf(q.vk) < 0) h += " · <em>" + V.inf + "</em>는 불규칙이라 어간을 따로 외워야 합니다";
+    if (V.refl) h += " · 재귀대명사는 동사 바로 앞";
+    return h;
+  }
+
+  function renderConjQ(){
+    var q = P.q, t = T[q.tk];
+    $("pcard").innerHTML =
+      '<p class="q-crumb">활용 쓰기 · ' + t.crumb + '</p>' +
+      '<p class="q-prompt"><span class="q-verb">' + vname(q.vk) + '</span><span class="q-tense">' + t.ko + '</span><span class="q-person">' + PRON[q.i] + '</span></p>' +
+      '<p class="q-task">주어에 맞게 활용해 쓰세요. 주어는 써도 되고 빼도 됩니다.</p>' +
+      '<div class="ans-row"><input id="p-ans" class="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="여기에 입력" aria-label="답"><button class="btn" id="p-check">확인</button></div>' +
+      '<div class="keys" aria-label="악센트 글자">' + KEYS.map(function(k){ return '<button class="key" data-key="' + k + '" tabindex="-1">' + k + '</button>'; }).join("") + '</div>' +
+      '<div class="q-tools"><button class="btn ghost" id="p-hint">힌트 보기</button><button class="btn ghost" id="p-skip">모르겠어요</button></div>' +
+      '<div id="p-hintbox"></div><div id="p-fb"></div>';
+    if (!$("view-practice").hidden) $("p-ans").focus({preventScroll:true});
+  }
+
+  function checkConj(skip){
+    if (P.done || P.q.kind !== "conj") return;
+    var inp = $("p-ans"), a = norm(inp.value), res = "no";
+    if (!skip && !a){ inp.focus(); return; }
+    if (!skip){
+      if (matches(P.q.acc, a)) res = "ok";
+      else if (matches(P.q.acc.map(bare), bare(a))) res = "accent";
+    }
+    P.done = true; P.total++;
+    if (res === "ok"){ P.right++; P.streak++; }
+    else { P.streak = 0; miss[P.q.tk] = (miss[P.q.tk] || 0) + 1; saveMiss(); }
+    inp.readOnly = true;
+    inp.classList.add(res === "ok" ? "ok" : "no");
+    $("p-check").hidden = true;
+    var head = res === "ok" ? "정답입니다" : res === "accent" ? "철자는 맞았는데 악센트가 다릅니다" : skip ? "정답은 이렇습니다" : "아쉽습니다. 정답은";
+    $("p-fb").innerHTML = fbHTML(res === "ok" ? "ok" : "no", head, '<span class="right">' + segHTML(P.q.row) + '</span>', verbNote(P.q.tk, P.q.vk), P.q.tk);
+    $("p-next").focus({preventScroll:true});
+    renderSide();
+  }
+
+  function fbHTML(cls, head, extra, why, tk){
+    return '<div class="fb ' + cls + '"><span class="lbl">' + head + '</span>' + (extra || "") + (why ? '<span class="why">' + why + '</span>' : "") +
+      '<div class="fb-row"><button class="btn" id="p-next">다음 문제</button><button class="btn ghost" data-go="' + tk + '">지도에서 ' + T[tk].ko + ' 보기</button></div></div>';
+  }
+
+  function renderMC(n){
+    var it = P.q.it, sot = P.mode === "sot";
+    var sent = it.s.replace("___", '<span class="blank" id="p-blank">&nbsp;</span>' + (it.v ? ' <span class="q-inf">(' + it.v + ')</span>' : ""));
+    $("pcard").innerHTML =
+      '<p class="q-crumb">' + (sot ? "시제 일치" : "시제 고르기") + ' · ' + P.idx + ' / ' + n + '</p>' +
+      (it.q ? '<p class="q-quote"><span class="lbl">따옴표 안 (직접화법)</span>' + it.q + '</p>' : "") +
+      '<p class="q-sent">' + sent + '</p>' +
+      '<p class="q-ko">' + it.ko + '</p>' +
+      '<p class="q-task">' + (sot ? "주절에 맞게 옮긴 형태를 고르세요." : "괄호 안 동사의 알맞은 형태를 고르세요.") + ' 숫자 키 1–4로도 고를 수 있습니다.</p>' +
+      '<div class="opts">' + P.q.order.map(function(oi, k){ return '<button class="opt" data-opt="' + oi + '"><i>' + (k + 1) + '</i>' + it.o[oi] + '</button>'; }).join("") + '</div>' +
+      '<div id="p-fb"></div>';
+  }
+
+  function pickMC(oi){
+    if (P.done || P.q.kind !== "mc") return;
+    var it = P.q.it, ok = oi === 0;
+    P.done = true; P.total++;
+    if (ok){ P.right++; P.streak++; }
+    else { P.streak = 0; miss[it.t] = (miss[it.t] || 0) + 1; saveMiss(); }
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"), function(b){
+      var k = +b.getAttribute("data-opt");
+      b.disabled = true;
+      if (k === 0) b.classList.add("ok"); else if (k === oi) b.classList.add("no");
+    });
+    var bl = $("p-blank"); bl.textContent = it.o[0]; bl.classList.add("filled");
+    $("p-fb").innerHTML = fbHTML(ok ? "ok" : "no", ok ? "정답입니다" : "정답은 " + it.o[0], "", it.why, it.t);
+    $("p-next").focus({preventScroll:true});
+    renderSide();
+  }
+
+  function renderDone(n){
+    var r = P.total ? P.right / P.total : 0;
+    var msg = r >= 0.9 ? "거의 다 맞혔습니다. 다른 연습도 해 보세요."
+      : r >= 0.6 ? "옆의 '자주 틀린 시제'를 눌러 지도에서 다시 읽어 보세요."
+      : "지도에서 그 시제의 '언제 쓰나'를 먼저 읽고 다시 풀어 보세요.";
+    $("pcard").innerHTML =
+      '<p class="q-crumb">' + (P.mode === "sot" ? "시제 일치" : "시제 고르기") + ' · ' + n + '문제 끝</p>' +
+      '<p class="done-big"><b>' + P.right + '</b><span> / ' + P.total + '</span></p>' +
+      '<p class="q-task">' + msg + '</p>' +
+      '<div class="fb-row"><button class="btn" id="p-again">다시 섞어서 풀기</button></div>';
+    $("p-again").focus({preventScroll:true});
+  }
+
+  function renderSide(){
+    $("pscore").innerHTML = '<div><b>' + P.right + '</b><span>맞힌 문제</span></div><div><b>' + P.total + '</b><span>푼 문제</span></div><div><b>' + P.streak + '</b><span>연속 정답</span></div>';
+    if (P.mode === "conj"){
+      $("pset").innerHTML =
+        '<h3>연습할 시제</h3><div class="picks">' + DRILL.map(function(k){
+          return '<button class="pick" data-pt="' + k + '" aria-pressed="' + (P.tenses.indexOf(k) >= 0) + '">' + T[k].ko + (k === "passe_simple" ? " · 문어" : "") + '</button>';
+        }).join("") + '</div>' +
+        '<h3 style="margin-top:16px">동사</h3><div class="picks">' + Object.keys(VERBS).map(function(k){
+          return '<button class="pick fr" data-pv="' + k + '" aria-pressed="' + (P.verbs.indexOf(k) >= 0) + '">' + vname(k) + '</button>';
+        }).join("") + '</div>';
+    } else {
+      $("pset").innerHTML = '<p class="p-note">' + (P.mode === "sot" ? SOTQ.length : CHOOSE.length) + '문제를 섞어서 냅니다. 답을 고르면 이유가 나오고, 버튼 하나로 지도에서 그 시제를 열 수 있습니다.</p>';
+    }
+    var ks = Object.keys(miss).filter(function(k){ return T[k] && miss[k] > 0; }).sort(function(a, b){ return miss[b] - miss[a]; }).slice(0, 5);
+    $("pweak").innerHTML = '<h3>자주 틀린 시제</h3>' + (ks.length
+      ? '<ul class="weak-list">' + ks.map(function(k){ return '<li><button class="weak-i" data-go="' + k + '"><span>' + T[k].ko + '</span><span class="cnt">' + miss[k] + '번</span></button></li>'; }).join("") + '</ul><button class="linkbtn" id="p-clear">기록 지우기</button>'
+      : '<p class="p-note">틀린 문제의 시제가 여기에 모입니다. 누르면 지도에서 그 시제를 엽니다. 기록은 이 브라우저에만 남습니다.</p>');
+  }
+
+  function nextQ(){
+    P.done = false;
+    if (P.mode === "conj"){ newConj(); renderConjQ(); }
+    else {
+      var list = P.mode === "choose" ? CHOOSE : SOTQ;
+      if (P.idx >= P.deck.length){ P.q = {kind:"done"}; renderDone(list.length); }
+      else { P.q = {kind:"mc", it:list[P.deck[P.idx++]], order:shuffle([0,1,2,3])}; renderMC(list.length); }
+    }
+    renderSide();
+  }
+
+  function setMode(m){
+    P.mode = m; P.right = P.total = P.streak = 0; P.q = null;
+    if (m !== "conj"){ P.deck = shuffle(range((m === "choose" ? CHOOSE : SOTQ).length)); P.idx = 0; }
+    Array.prototype.forEach.call(document.querySelectorAll(".mode"), function(b){
+      b.setAttribute("aria-pressed", b.getAttribute("data-mode") === m ? "true" : "false");
+    });
+    nextQ();
+  }
+
+  function insertKey(ch){
+    var el = $("p-ans");
+    if (!el || el.readOnly) return;
+    var s = el.selectionStart == null ? el.value.length : el.selectionStart, e = el.selectionEnd == null ? s : el.selectionEnd;
+    el.value = el.value.slice(0, s) + ch + el.value.slice(e);
+    el.focus();
+    el.setSelectionRange(s + ch.length, s + ch.length);
+  }
+
+  /* ---------- views: #tense-map (default) / #practice ---------- */
+  function showView(){
+    var prac = location.hash === "#practice";
+    $("view-map").hidden = prac;
+    $("view-practice").hidden = !prac;
+    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(a){
+      if ((a.getAttribute("href") === "#practice") === prac) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    if (prac && !P.q) setMode(P.mode);
+    if ($("tabs").getBoundingClientRect().top < 0) $("tabs").scrollIntoView({block:"start"});
+  }
+  function goMap(k){
+    if (location.hash !== "#tense-map") location.hash = "tense-map";
+    showView();
+    select(k, false);
+    smoothTo($("detail"));
+  }
+  window.addEventListener("hashchange", showView);
+
+  $("d-prac").addEventListener("click", function(){
+    P.tenses = [cur];
+    setMode("conj");
+    location.hash = "practice";
+  });
+
+  var VP = $("view-practice");
+  VP.addEventListener("mousedown", function(e){ if (e.target.closest && e.target.closest("[data-key]")) e.preventDefault(); });
+  VP.addEventListener("click", function(e){
+    var t = e.target, el;
+    if (!t.closest) return;
+    if ((el = t.closest("[data-mode]"))) return setMode(el.getAttribute("data-mode"));
+    if ((el = t.closest("[data-pt]"))){ toggle(P.tenses, el.getAttribute("data-pt")); P.right = P.total = P.streak = 0; return nextQ(); }
+    if ((el = t.closest("[data-pv]"))){ toggle(P.verbs, el.getAttribute("data-pv")); P.right = P.total = P.streak = 0; return nextQ(); }
+    if ((el = t.closest("[data-opt]"))) return pickMC(+el.getAttribute("data-opt"));
+    if ((el = t.closest("[data-key]"))) return insertKey(el.getAttribute("data-key"));
+    if ((el = t.closest("[data-go]"))) return goMap(el.getAttribute("data-go"));
+    if (t.closest("#p-check")) return checkConj(false);
+    if (t.closest("#p-skip")) return checkConj(true);
+    if (t.closest("#p-hint")){ $("p-hintbox").innerHTML = '<p class="hint-box">' + hintFor(P.q) + '</p>'; return; }
+    if (t.closest("#p-next")) return nextQ();
+    if (t.closest("#p-again")) return setMode(P.mode);
+    if (t.closest("#p-clear")){ miss = {}; saveMiss(); renderSide(); }
+  });
+  VP.addEventListener("keydown", function(e){
+    if (e.target.id !== "p-ans" || e.key !== "Enter" || e.isComposing) return;
+    e.preventDefault();
+    if (P.done) nextQ(); else checkConj(false);
+  });
+  document.addEventListener("keydown", function(e){
+    if (VP.hidden || !P.q || P.q.kind !== "mc" || P.done) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || /^(input|textarea)$/i.test(e.target.tagName)) return;
+    var n = parseInt(e.key, 10);
+    if (n >= 1 && n <= 4){ e.preventDefault(); pickMC(P.q.order[n - 1]); }
+  });
+
+  select(cur, false);
+  showView();
+})();
+</script>
+
+</body>
+</html>
