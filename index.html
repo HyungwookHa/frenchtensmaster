@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="프랑스어 시제와 법을 한 장에 놓은 지도와 연습 문제">
+<meta name="description" content="프랑스어 시제와 법을 한 장에 놓은 지도">
 <title>프랑스어 시제 지도</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +28,14 @@
   --green:#1F8A4C;
   --green-soft:#EBF6EF;
   --green-ink:#14532D;
+  --fr-bleu:#000091;
+  --fr-blanc:#FFFFFF;
+  --fr-rouge:#E1000F;
+  --on-flag:#FFFFFF;
+  --on-blanc:#1A1D24;
+  --dela:#7F2425;
+  --dela-soft:#F8EEEE;
+  --dela-ink:#7F2425;
   --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --f-head:"Gowun Batang","AppleMyungjo","Batang",serif;
   --f-fr:"Newsreader","Iowan Old Style",Georgia,serif;
@@ -38,6 +46,9 @@
     --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
     --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --hl:rgba(250,204,21,.32);
     --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
+    --fr-blanc:#E9EAEE;
+
+    --dela-soft:rgba(127,36,37,.22); --dela-ink:#E7A9AA;
     color-scheme:dark;
   }
 }
@@ -46,6 +57,9 @@
   --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
   --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --hl:rgba(250,204,21,.32);
   --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
+  --fr-blanc:#E9EAEE;
+
+  --dela-soft:rgba(127,36,37,.22); --dela-ink:#E7A9AA;
   color-scheme:dark;
 }
 
@@ -54,7 +68,23 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body)
 em{font-family:var(--f-fr);font-style:italic;font-size:1.06em}
 b{font-weight:600}
 
-.page{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:40px 72px;display:flex;flex-direction:column;gap:28px}
+.page{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:66px 72px;display:flex;flex-direction:column;gap:28px}
+
+/* ---------- site nav: 3 topic banners on one line = bleu · blanc · rouge ---------- */
+.site-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;border-bottom:3px solid var(--ink);margin-top:-8px}
+.sn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 6px 7px;text-decoration:none;line-height:1.3;text-align:center;min-width:0}
+.sn:first-child{border-top-left-radius:6px}
+.sn:last-child{border-top-right-radius:6px}
+.sn b{font-family:var(--f-head);font-weight:700;font-size:15px}
+.sn small{font-family:var(--f-fr);font-style:italic;font-size:12px;opacity:.82}
+.sn-bleu{background:var(--fr-bleu);color:var(--on-flag)}
+.sn-blanc{background:var(--fr-blanc);color:var(--on-blanc);box-shadow:inset 0 1px 0 var(--rule)}
+.sn-rouge{background:var(--fr-rouge);color:var(--on-flag)}
+.sn[aria-current="page"]{padding-top:16px;padding-bottom:9px}
+.sn[aria-current="page"] b{font-size:17px}
+a.sn:hover b{text-decoration:underline;text-underline-offset:3px}
+.sn[aria-disabled="true"]{cursor:default}
+.sn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;position:relative;z-index:2}
 
 /* ---------- header ---------- */
 .top{display:flex;flex-direction:column;gap:6px;max-width:68ch}
@@ -69,6 +99,7 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .lg-circ{width:16px;height:16px;border:1.5px solid var(--ink);border-radius:50%}
 .lg-arrow{width:26px;height:10px}
 .lg-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.lg-dela{width:22px;height:14px;border-radius:3px;border:1.5px solid var(--dela);background:var(--dela-soft)}
 .lg-sel{width:24px;height:16px;border-radius:4px;background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue)}
 .lg-pair{width:24px;height:16px;border-radius:4px;border:1.5px dashed var(--blue)}
 .jumps{margin:-14px 0 0;font-size:13.5px}
@@ -352,6 +383,17 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .pons h4{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--green-ink)}
 .pons ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.6}
 .pons li::marker{color:var(--green)}
+/* Delatour box (#7F2425) */
+.dela{border:1.5px solid var(--dela);background:var(--dela-soft);border-radius:10px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px}
+.dela-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.dela-badge{font-family:var(--f-fr);font-weight:600;font-size:12.5px;letter-spacing:.1em;color:var(--on-flag);background:var(--dela);border-radius:4px;padding:2px 7px;line-height:1.3}
+.dela-title{font-weight:600;font-size:14.5px;color:var(--dela-ink)}
+.dela h4{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--dela-ink)}
+.dela ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.6}
+.dela li::marker{color:var(--dela)}
+.dela .x{color:var(--red);font-weight:600}
+.dela-cite{margin:6px 0 0;font-size:12px;color:var(--ink-3)}
+.dela-cite i{font-style:italic}
 .sot-line{margin:0;padding:10px 14px;border:1px solid var(--rule);border-left:3px solid var(--blue);border-radius:6px;background:var(--sheet);font-size:14.5px;line-height:1.6}
 .sot-line .lbl{display:block;font-size:12.5px;font-weight:600;color:var(--blue);margin-bottom:2px}
 .sot-line a{color:var(--blue);font-weight:600;font-size:13.5px;margin-left:6px;white-space:nowrap}
@@ -422,101 +464,8 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 
 footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px}
 
-/* ---------- tabs: 지도 / 연습 ---------- */
-.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--ink);margin-top:-8px;scroll-margin-top:12px}
-.tab{display:flex;align-items:baseline;gap:8px;padding:8px 16px 9px;margin-bottom:-1.5px;border:1.5px solid transparent;border-bottom:0;border-radius:8px 8px 0 0;color:var(--ink-3);text-decoration:none;font-family:var(--f-head);font-weight:700;font-size:17px}
-.tab small{font-family:var(--f-fr);font-style:italic;font-weight:400;font-size:13px}
-.tab:hover{color:var(--ink)}
-.tab[aria-current="page"]{color:var(--ink);background:var(--sheet);border-color:var(--ink)}
-.tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-@media (max-width:420px){.tab small{display:none}}
 .view{display:flex;flex-direction:column;gap:28px}
 [hidden]{display:none !important}
-.d-prac{align-self:flex-start;margin-top:6px;color:var(--blue);border-color:var(--blue);font-weight:600}
-
-/* ---------- practice ---------- */
-.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.mode{appearance:none;-webkit-appearance:none;font:inherit;text-align:left;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
-.mode b{font-size:15px}
-.mode span{font-size:12.5px;color:var(--ink-3)}
-.mode:hover{border-color:var(--ink-3)}
-.mode[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue);background:var(--blue-soft)}
-.mode:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-@media (max-width:560px){.mode span{display:none}.mode{padding:9px 10px;text-align:center}}
-
-.p-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
-@media (max-width:860px){.p-grid{grid-template-columns:minmax(0,1fr)}}
-.pcard{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:24px 22px;display:flex;flex-direction:column;gap:18px;min-width:0}
-@media (max-width:560px){.pcard{padding:18px 14px}}
-.q-crumb{margin:0;font-size:13px;color:var(--ink-3)}
-.q-prompt{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:0}
-.q-verb{font-family:var(--f-fr);font-style:italic;font-size:clamp(30px,5vw,40px);line-height:1.1}
-.q-tense{font-family:var(--f-head);font-weight:700;font-size:22px;color:var(--blue)}
-.q-person{font-family:var(--f-fr);font-size:18px;border:1.5px solid var(--ink);border-radius:999px;padding:0 12px}
-.q-task{margin:0;font-size:14px;color:var(--ink-2)}
-.ans-row{display:flex;gap:8px}
-.ans{flex:1;min-width:0;font-family:var(--f-fr);font-size:22px;padding:9px 14px;border:1.5px solid var(--ink);border-radius:8px;background:var(--paper);color:var(--ink)}
-.ans::placeholder{color:var(--ink-3);font-size:17px}
-.ans:focus{outline:2px solid var(--blue);outline-offset:1px}
-.ans.ok{border-color:var(--green);background:var(--green-soft)}
-.ans.no{border-color:var(--red);background:var(--red-soft)}
-.btn{appearance:none;-webkit-appearance:none;font:inherit;font-weight:600;font-size:15px;padding:10px 18px;border-radius:8px;border:1.5px solid var(--ink);background:var(--ink);color:var(--sheet);cursor:pointer;white-space:nowrap}
-.btn:hover{opacity:.88}
-.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
-.btn.ghost:hover{border-color:var(--ink-3);opacity:1}
-.btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.keys{display:flex;flex-wrap:wrap;gap:4px}
-.key{appearance:none;-webkit-appearance:none;font-family:var(--f-fr);font-size:17px;min-width:38px;height:38px;border:1px solid var(--rule);border-radius:6px;background:var(--sheet);color:var(--ink);cursor:pointer}
-.key:hover{background:var(--hover)}
-.q-tools{display:flex;flex-wrap:wrap;gap:8px}
-.hint-box{margin:0;font-size:14px;color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:7px;padding:8px 12px}
-.fb{border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:14.5px}
-.fb.ok{background:var(--green-soft)}
-.fb.no{background:var(--red-soft)}
-.fb .lbl{font-weight:600}
-.fb.ok .lbl{color:var(--green-ink)}
-.fb.no .lbl{color:var(--red)}
-.fb .right{font-family:var(--f-fr);font-size:20px}
-.fb .why{color:var(--ink-2)}
-.fb-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-
-.q-quote{margin:0;font-family:var(--f-fr);font-size:18px;padding:8px 12px;border-left:3px solid var(--blue);background:var(--blue-soft);border-radius:0 6px 6px 0}
-.q-quote .lbl{display:block;font-family:var(--f-body);font-size:12px;font-weight:600;color:var(--blue)}
-.q-sent{margin:0;font-family:var(--f-fr);font-size:clamp(20px,3vw,25px);line-height:1.55}
-.blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--ink);text-align:center;padding:0 4px;line-height:1.25}
-.blank.filled{border-color:var(--green);color:var(--green)}
-.q-inf{font-size:.72em;color:var(--ink-3)}
-.q-ko{margin:-8px 0 0;color:var(--ink-2);font-size:14.5px}
-.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-@media (max-width:480px){.opts{grid-template-columns:minmax(0,1fr)}}
-.opt{appearance:none;-webkit-appearance:none;font-family:var(--f-fr);font-size:18px;text-align:left;padding:11px 14px;border:1.5px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:baseline;min-width:0;overflow-wrap:anywhere}
-.opt i{font-style:normal;font-family:var(--f-body);font-size:12px;color:var(--ink-3)}
-.opt:hover:not(:disabled){border-color:var(--ink-3);background:var(--hover)}
-.opt.ok{border-color:var(--green);background:var(--green-soft)}
-.opt.no{border-color:var(--red);background:var(--red-soft)}
-.opt:disabled{cursor:default}
-.opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.done-big{margin:0;font-family:var(--f-fr);font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
-.done-big span{font-size:28px;color:var(--ink-3)}
-
-.pside{display:flex;flex-direction:column;gap:22px;min-width:0}
-.pside h3{margin:0 0 8px;font-size:12.5px;font-weight:600;color:var(--ink-3);letter-spacing:.06em}
-.score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);padding-top:12px}
-.score div{display:flex;flex-direction:column}
-.score b{font-family:var(--f-fr);font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
-.score span{font-size:12px;color:var(--ink-3)}
-.picks{display:flex;flex-wrap:wrap;gap:5px}
-.pick{appearance:none;-webkit-appearance:none;font:inherit;font-size:13px;padding:4px 10px;border:1px solid var(--rule);border-radius:999px;background:transparent;color:var(--ink-2);cursor:pointer}
-.pick:hover{border-color:var(--ink-3)}
-.pick[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
-.pick.fr{font-family:var(--f-fr);font-size:14.5px}
-.pick:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.p-note{margin:0;font-size:13px;color:var(--ink-3)}
-.weak-list{display:flex;flex-direction:column;gap:4px;margin:0;padding:0;list-style:none}
-.weak-i{appearance:none;-webkit-appearance:none;font:inherit;font-size:14px;width:100%;display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--sheet);color:var(--ink);cursor:pointer;text-align:left}
-.weak-i:hover{border-color:var(--ink-3)}
-.weak-i .cnt{color:var(--red);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.linkbtn{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin-top:8px;font:inherit;font-size:12.5px;color:var(--ink-3);text-decoration:underline;cursor:pointer}
 
 /* ---------- theme toggle (top right) ---------- */
 .theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
@@ -531,8 +480,19 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 </style>
 
 <script>
-/* apply the saved theme before first paint */
-(function(){ try { var t = localStorage.getItem("french-tenses-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();
+/* apply the saved theme before first paint. The choice is kept three ways so it survives moving
+   between pages even where storage is blocked: ?theme= on topic links, window.name, localStorage. */
+(function(){
+  var t = null, K = "french-tenses-theme";
+  try { var m = /[?&]theme=(light|dark)\b/.exec(location.search); if (m) t = m[1]; } catch (e) {}
+  if (!t) { try { var n = /(?:^|;)ft-theme=(light|dark)/.exec(window.name || ""); if (n) t = n[1]; } catch (e) {} }
+  if (!t) { try { t = localStorage.getItem(K); } catch (e) {} }
+  if (t === "light" || t === "dark") {
+    document.documentElement.setAttribute("data-theme", t);
+    try { localStorage.setItem(K, t); } catch (e) {}
+    try { window.name = (window.name || "").replace(/(?:^|;)ft-theme=(light|dark)/g, "") + ";ft-theme=" + t; } catch (e) {}
+  }
+})();
 </script>
 </head>
 <body>
@@ -541,16 +501,16 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
 </button>
 <div class="page">
+  <nav class="site-nav" aria-label="주제">
+    <a class="sn sn-bleu" href="index.html" aria-current="page"><b>시제·법</b><small>les temps</small></a>
+    <a class="sn sn-blanc" href="pronoms.html"><b>대명사</b><small>les pronoms</small></a>
+    <span class="sn sn-rouge" aria-disabled="true"><b>관계사</b><small>준비 중</small></span>
+  </nav>
   <header class="top">
     <p class="eyebrow">Les temps et les modes</p>
     <h1>프랑스어 시제 지도</h1>
-    <p class="lede">프랑스어의 시제와 법을 한 장에 놓은 지도입니다. 가로는 과거에서 미래로 가는 시간, 세로는 법(직설법·조건법·접속법·명령법)이고, 맨 아래는 인칭이 없는 부정법과 분사입니다. 칸을 누르면 그 칸이 파란 칸으로 바뀌고, 아래에 만드는 법, 쓰임과 예문, 대명동사 예, 활용표가 나옵니다. 함께 생기는 파란 점선은 그 시제의 짝꿍(복합형과 그 조동사의 시제)이고, 시제 일치와는 다른 관계입니다. 초록 점이 있는 칸은 PONS 문법표에서 가져온 보충 설명이 초록 상자로 함께 나옵니다. 다 읽었다면 「연습」 탭에서 활용 쓰기, 시제 고르기, 시제 일치 문제로 확인해 보세요.</p>
+    <p class="lede">프랑스어의 시제와 법을 한 장에 놓은 지도입니다. 가로는 과거에서 미래로 가는 시간, 세로는 법(직설법·조건법·접속법·명령법)이고, 맨 아래는 인칭이 없는 부정법과 분사입니다. 칸을 누르면 그 칸이 파란 칸으로 바뀌고, 아래에 만드는 법, 쓰임과 예문, 대명동사 예, 활용표가 나옵니다. 함께 생기는 파란 점선은 그 시제의 짝꿍(복합형과 그 조동사의 시제)이고, 시제 일치와는 다른 관계입니다. 초록 점이 있는 칸은 PONS 문법표에서 가져온 보충 설명이 초록 상자로 함께 나옵니다. 모든 칸에는 Delatour 문법서(Sorbonne)의 설명이 쪽 번호와 함께 붉은 상자로 나옵니다.</p>
   </header>
-
-  <nav class="tabs" id="tabs" aria-label="보기">
-    <a class="tab" href="#tense-map" aria-current="page">지도 <small>la carte</small></a>
-    <a class="tab" href="#practice">연습 <small>exercices</small></a>
-  </nav>
 
   <div class="view" id="view-map">
 
@@ -560,6 +520,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     <li><svg class="lg-arrow" viewBox="0 0 26 10" aria-hidden="true"><path d="M1 5H23M18 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>미래까지 담당</li>
     <li><span class="lit">문어</span>글에서만 쓰는 형태</li>
     <li><span class="lg-dot" aria-hidden="true"></span>초록 점: PONS 보충 설명 있음</li>
+    <li><span class="lg-dela" aria-hidden="true"></span>붉은 상자: Delatour 문법서 설명 (모든 칸)</li>
     <li><span class="lg-sel" aria-hidden="true"></span>파란 칸: 지금 보고 있는 시제</li>
     <li><span class="lg-pair" aria-hidden="true"></span>파란 점선: 짝꿍 (복합형 ↔ 그 조동사의 시제)</li>
   </ul>
@@ -705,7 +666,6 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <p class="d-crumb" id="d-crumb"></p>
       <h2 class="d-title" id="d-title"></h2>
       <p class="d-alias" id="d-alias" hidden></p>
-      <button class="mini d-prac" id="d-prac" hidden>이 시제 활용 연습하기 →</button>
     </div>
     <div class="d-info">
       <div><h3>만드는 법</h3><div class="formula" id="d-formula"></div></div>
@@ -714,6 +674,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <p class="d-note" id="d-note" hidden></p>
       <p class="sot-line" id="d-sot" hidden></p>
       <div class="pons" id="d-pons" hidden></div>
+      <div class="dela" id="d-dela" hidden></div>
       <div><h3>같이 보기</h3><div class="links" id="d-links"></div></div>
     </div>
     <div class="conj-box" id="conj-box">
@@ -809,6 +770,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
         <li>이 시제 이동은 다른 종속절에도 똑같이 적용됨: <em>Je pense qu'on va visiter le Louvre.</em> (현재) → <em>Je pensais qu'on allait visiter le Louvre.</em> (반과거)</li>
       </ul></div>
     </div>
+    <div class="dela" id="dela-sot"></div>
   </section>
 
   <h2 class="rules-title">지도에 숨어 있는 규칙</h2>
@@ -833,8 +795,8 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
           </tbody>
         </table>
       </div>
-      <p class="small">인칭이 있는 법의 7쌍에 명령법·부정법·분사의 3쌍이 더해져, 단순형 10개에 복합형 10개가 하나씩 짝지어집니다. 대명동사는 어느 복합시제든 조동사가 늘 <em>être</em>입니다 (<em>je me suis levé, je m'étais levé, je me serai levé …</em>).</p>
-      <p class="small">부정문은 어느 복합시제든 <em>ne … pas</em>가 조동사를 감쌉니다: <em>je n'avais pas fini · je n'aurai pas fini · je ne serais pas venu</em>.</p>
+      <p class="small">직설법·조건법·접속법의 7쌍에 명령법·부정법·분사의 3쌍이 더해져, 단순형 10개에 복합형 10개가 하나씩 짝지어집니다. 대명동사는 어느 복합시제든 조동사가 늘 <em>être</em>입니다 (<em>je me suis levé, je m'étais levé, je me serai levé …</em>).</p>
+      <p class="small">인칭이 있는 복합시제의 부정문은 <em>ne … pas</em>가 조동사를 감쌉니다: <em>je n'avais pas fini · je n'aurai pas fini · je ne serais pas venu</em>. 부정법 과거는 예외로, 보통 둘 다 조동사 앞에 둡니다: <em>ne pas avoir fini</em>.</p>
     </article>
 
     <article class="rule red">
@@ -900,7 +862,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
         <thead><tr><th>개념</th><th>예</th><th>넣지 않은 이유</th></tr></thead>
         <tbody>
           <tr class="grp"><td colspan="3">드물게 쓰는 형태</td></tr>
-          <tr><td>복복합과거 (passé surcomposé)</td><td class="fr">Quand il a eu fini, il est parti.<br><span class="ko">그는 다 끝내자 떠났다.</span></td><td>일부 지역의 구어에서 전과거 대신 쓰는 정도로 드묾</td></tr>
+          <tr><td>복복합과거 (passé surcomposé)</td><td class="fr">Quand il a eu fini, il est parti.<br><span class="ko">그는 다 끝내자 떠났다.</span></td><td>표준 구어에서 <em>quand, dès que, après que</em> 같은 시간 종속절에 드물게 씀 (문어의 전과거 자리). 독립절에서 쓰는 것은 남프랑스·스위스 등의 지역 용법</td></tr>
           <tr><td>그 밖의 복복합 시제 (대과거·전미래 등)</td><td class="fr">j'avais eu fini · j'aurai eu fini</td><td>매우 드묾</td></tr>
           <tr><td>조건법 과거 제2형</td><td class="fr">J'eusse aimé partir.<br><span class="ko">떠나고 싶었는데.</span></td><td>접속법 대과거와 모양이 같아 그 칸에서 설명만 함</td></tr>
           <tr><td>제롱디프 과거</td><td class="fr">en ayant fini</td><td>제롱디프 칸 메모에서 언급만 함</td></tr>
@@ -922,23 +884,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 
   </div>
 
-  <section class="view" id="view-practice" aria-label="연습" hidden>
-    <div class="modes" role="group" aria-label="연습 종류">
-      <button class="mode" data-mode="conj" aria-pressed="true"><b>활용 쓰기</b><span>동사를 직접 활용해 입력</span></button>
-      <button class="mode" data-mode="choose" aria-pressed="false"><b>시제 고르기</b><span>문맥에 맞는 시제 고르기</span></button>
-      <button class="mode" data-mode="sot" aria-pressed="false"><b>시제 일치</b><span>간접화법으로 옮기기</span></button>
-    </div>
-    <div class="p-grid">
-      <div class="pcard" id="pcard" aria-live="polite"></div>
-      <aside class="pside">
-        <div class="score" id="pscore"></div>
-        <div id="pset"></div>
-        <div id="pweak"></div>
-      </aside>
-    </div>
-  </section>
-
-  <footer>활용표 동사 10개: parler, finir, se lever, aller, être, avoir, faire, prendre, venir, pouvoir · 초록 상자: PONS 「Grammatik Französisch – Auf einen Blick」 2~4장의 시제 내용을 한국어로 정리</footer>
+  <footer>활용표 동사 10개: parler, finir, se lever, aller, être, avoir, faire, prendre, venir, pouvoir · 초록 상자: PONS 「Grammatik Französisch – Auf einen Blick」 2~4장과 6장의 시제 관련 내용을 한국어로 정리<br>붉은 상자: Yvonne Delatour et al., <i>Nouvelle grammaire du français</i> (Paris: Hachette Français Langue Étrangère, 2004), ISBN 978-2-01-155846-6. 해당 쪽의 내용을 한국어로 정리하고 예문은 책에서 짧게 인용</footer>
 </div>
 
 <script>
@@ -997,7 +943,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
         {lb:"1군 <em>-er</em>",base:"동사원형 − <em>er</em>",ends:["-e","-es","-e","-ons","-ez","-ent"],ex:"parler → je parle, nous parlons"},
         {lb:"2군 <em>-ir</em>",base:"동사원형 − <em>ir</em>",ends:["-is","-is","-it","-issons","-issez","-issent"],ex:"finir → je finis, nous finissons"},
         {lb:"3군 (대부분)",base:"어간",ends:["-s","-s","-t","-ons","-ez","-ent"],ex:"prendre → je prends · venir → je viens · 예외: ils font·vont·sont·ont, vous faites·dites·êtes"}],
-      fnote:"3군은 동사마다 어간이 달라서 따로 익혀야 합니다. offrir·ouvrir는 1군 어미(-e, -es, -e), pouvoir·vouloir는 -x, -x, -t를 씁니다.",
+      fnote:"3군은 동사마다 어간이 달라서 따로 익혀야 합니다. -dre로 끝나는 동사는 il형에 -t를 붙이지 않습니다: il prend, il rend (단 -indre, -soudre 동사는 -t: il peint, il résout). offrir·ouvrir는 1군 어미(-e, -es, -e), pouvoir·vouloir는 -x, -x, -t를 씁니다.",
       irr:[{h:"자주 쓰는 불규칙 (je형)",items:[["être","je suis"],["avoir","j'ai"],["aller","je vais"],["faire","je fais"],["prendre","je prends"],["venir","je viens"],["pouvoir","je peux"]]}],
       uses:[
         {u:"지금의 상태나 행동 (영어의 현재진행 뜻까지 포함)",fr:"Elle travaille en ce moment.",ko:"그녀는 지금 일하는 중이다."},
@@ -1048,13 +994,14 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       fnote:"예: j'ai parlé · je suis allé(e) · je me suis levé(e)",
       uses:[
         {u:"과거에 끝난 일: 언제 했는지 딱 떨어지는 \"점\"",fr:"Hier, j'ai vu un film.",ko:"어제 영화 한 편 봤다."},
+        {u:"길게 이어졌어도 끝난 기간이면 복합과거 (끝이 있느냐가 반과거와의 기준)",fr:"Mon père a longtemps travaillé à l'étranger.",ko:"아버지는 오랫동안 외국에서 일하셨다."},
         {u:"이야기에서 사건을 하나씩 앞으로 진행시킴 (배경은 반과거)",fr:"Il est entré, il a pris son manteau et il est reparti.",ko:"그는 들어와서 외투를 챙겨 다시 나갔다."},
-        {u:"<em>être</em>를 쓰는 동사 (이동·상태 변화 동사, 모든 대명동사)는 과거분사가 주어와 성·수 일치",fr:"Elle est partie à 8 heures.",ko:"그녀는 8시에 떠났다."},
+        {u:"<em>être</em>를 쓰는 동사 (이동·상태 변화 동사, 모든 대명동사)는 과거분사가 주어와 성·수 일치. 단, 대명동사는 재귀대명사가 간접목적어이거나 직접목적어가 뒤에 오면 일치하지 않음",fr:"Elle est partie à 8 heures.",ko:"그녀는 8시에 떠났다."},
         {u:"부정문: <em>ne … pas</em>가 조동사를 감싸고, 과거분사는 그 밖에 옴",fr:"Je n'ai pas mangé. / Elle n'est pas venue.",ko:"나는 안 먹었다. / 그녀는 오지 않았다."},
         {u:"의문문: 억양·<em>est-ce que</em>는 평서문 어순 그대로, 도치는 주어를 조동사 뒤로",fr:"Tu as mangé&nbsp;? / Est-ce que tu as mangé&nbsp;? / As-tu mangé&nbsp;?",ko:"너 먹었어?"},
         {u:"대명사는 조동사 앞, 짧은 부사(<em>déjà, encore, bien, beaucoup</em>)는 조동사와 과거분사 사이",fr:"Je l'ai déjà vu. / Je ne l'ai pas encore vu.",ko:"나는 그걸 이미 봤다. / 나는 그걸 아직 못 봤다."},
         {u:"<em>il y a</em> + 기간: \"~ 전에\" 한 번 일어난 일 (<em>depuis</em> + 현재와 구분). 단, 부정문은 <em>depuis</em>와도 복합과거",fr:"Je suis arrivé il y a trois ans. / Je ne l'ai pas vu depuis un mois.",ko:"3년 전에 왔다. / 한 달째 그를 못 봤다."}],
-      pron:{fr:"Elle <b>s'est levée</b> tôt ce matin.",ko:"그녀는 오늘 아침 일찍 일어났다.",tip:"대명동사는 항상 <em>être</em>, 과거분사는 주어에 일치 (levée). 부정문: <em>Elle ne s'est pas levée.</em> 단, 뒤에 직접목적어가 오면 일치하지 않음: <em>Elle s'est lavé les mains.</em>"},
+      pron:{fr:"Elle <b>s'est levée</b> tôt ce matin.",ko:"그녀는 오늘 아침 일찍 일어났다.",tip:"대명동사는 항상 <em>être</em>, 과거분사는 주어에 일치 (levée). 부정문: <em>Elle ne s'est pas levée.</em> 단, 뒤에 직접목적어가 오면 일치하지 않음: <em>Elle s'est lavé les mains.</em> 재귀대명사가 간접목적어(<em>parler à, sourire à</em>)일 때도 일치하지 않음: <em>Ils se sont parlé. Elles se sont souri.</em>"},
       note:"지도에서 반과거와 분수처럼 위아래로 놓은 것은 같은 과거 칸을 사건(복합과거)과 배경(반과거)이 나눠 쓴다는 뜻입니다. 문어에서는 복합과거만 단순과거로 바뀝니다.",
       links:["imparfait","passe_simple","passe_recent","plus_que_parfait"]},
 
@@ -1112,7 +1059,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     futur_simple:{ko:"단순미래",fr:"Futur simple",crumb:"직설법 · 구어 · 단순시제",b:{s:"futur"},
       f:[{base:"동사원형 <small>(-re는 e를 뺌)</small>",ends:["-ai","-as","-a","-ons","-ez","-ont"],ex:"parler → je parlerai · prendre → je prendrai"}],
       irr:[{h:"불규칙 어간",items:[["être","ser-"],["avoir","aur-"],["aller","ir-"],["faire","fer-"],["venir","viendr-"],["pouvoir","pourr-"],["voir","verr-"],["vouloir","voudr-"],["devoir","devr-"],["savoir","saur-"]]}],
-      fnote:"어미는 <em>avoir</em> 현재형(ai, as, a, avons, avez, ont)에서 따온 모양입니다.",
+      fnote:"어미는 <em>avoir</em> 현재형(ai, as, a, avons, avez, ont)에서 따온 모양입니다. 철자가 바뀌는 -er 동사는 그 변화를 따릅니다: <em>acheter → j'achèterai, appeler → j'appellerai</em>. <em>envoyer → j'enverrai</em>는 불규칙입니다.",
       uses:[
         {u:"미래의 일, 예측",fr:"Demain, il fera beau.",ko:"내일은 날씨가 좋을 것이다."},
         {u:"약속·결심",fr:"Je t'appellerai ce soir.",ko:"오늘 저녁에 전화할게."},
@@ -1264,7 +1211,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 
     gerondif:{ko:"제롱디프",fr:"Gérondif",crumb:"분사 (인칭 없음) · en + 현재분사",b:{nf:"ger"},
       f:[{seq:[["<em>en</em>","fmid"],["현재분사","fpp"]],ex:"en parlant · en finissant · en se levant"}],
-      fnote:"현재분사와 모양이 같고 앞에 en만 붙습니다. 성·수 변화가 없습니다.",
+      fnote:"현재분사와 모양이 같고 앞에 en만 붙습니다. 성·수 변화가 없습니다. 주절과 주어가 같을 때만 씁니다: <em>En fermant la porte, j'ai entendu le téléphone.</em> (✗ <em>En fermant la porte, le téléphone a sonné.</em>)",
       uses:[
         {u:"동시 동작: ~하면서",fr:"Il chante en prenant sa douche.",ko:"그는 샤워하면서 노래한다."},
         {u:"방법·수단: ~함으로써",fr:"C'est en forgeant qu'on devient forgeron.",ko:"쇠를 두드려야 대장장이가 된다. (하다 보면 는다)"},
@@ -1289,6 +1236,19 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       note:"과거분사는 지도 위 모든 복합시제(복합과거, 대과거, 전미래 …)의 재료라서 '먼저 끝난 일' 칸, 즉 현재분사의 왼쪽에 둡니다.",
       links:["passe_compose","inf_passe","part_present"]}
   };
+
+  /* ---------- Delatour, Nouvelle grammaire du français (2004): built from delatour-tense-notes.json.
+     p = printed page numbers of the block (Chicago short note, no "p."). ---------- */
+  var DELA = {"present_prog":[{"h":"책에서의 위치","p":"100, 118–119","items":["Delatour는 <em>être en train de</em>를 시제로 따로 세우지 않고, 동작의 <b>상(aspect)</b>을 나타내는 반조동사(semi-auxiliaire)로 다룸","상 = 동작이 어떻게 전개되는지(시작·진행·끝)를 나타내는 것"]},{"h":"진행 (déroulement)","p":"100","items":["<em>être en train de, continuer à</em> + 동사원형: <em>Ne dérange pas Stanislas&nbsp;! Il est en train de travailler.</em> 스타니슬라스 방해하지 마, 지금 일하는 중이야"]},{"h":"같은 무리의 다른 표현","p":"100","items":["시작: <em>se mettre à, commencer à/de, être sur le point de</em>: <em>En entendant cette histoire, tout le monde s'est mis à rire.</em> · <em>Il était sur le point de se coucher lorsque nous sommes arrivés.</em>","끝: <em>finir de, cesser de, arrêter de</em>: <em>Tu peux prendre le journal. J'ai fini de le lire.</em>","<em>cesser de, arrêter de</em>가 부정이면 오히려 지속을 나타냄: <em>Il n'arrête pas de fumer.</em> (= 계속 피운다)"]},{"h":"현재형과의 관계","p":"100, 118, 121","items":["현재형만으로도 진행 중인 동작을 나타냄: <em>Les enfants jouent au ballon dans le parc.</em>","같은 현재형이 지속과 지금 이 순간을 모두 나타낼 수 있음: <em>Il écrit pour le journal Libération.</em> (기자다) / <em>Il écrit une lettre à son amie.</em> (지금 쓰는 중)","<em>être en train de</em>의 시제 변화(반과거 <em>j'étais en train de</em> 등)나 구어·문어 구분은 책에 따로 나오지 않음"]}],"plus_que_parfait":[{"h":"만들기","p":"127","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 반과거 + 과거분사: <em>Il avait parlé.</em> / <em>Il était sorti.</em>","Delatour는 대과거·전과거·복복합과거를 '과거 속 이전 시제'(<em>temps de l'antériorité dans le passé</em>)로 묶음. 셋 다 복합시제이고 완료의 가치를 가짐"]},{"h":"쓰임","p":"128","items":["다른 과거 사실보다 먼저 일어난 과거 사실. 기준이 복합과거: <em>J'ai beaucoup aimé le roman que tu m'avais conseillé de lire.</em> · 반과거: <em>Les randonneurs avaient marché plusieurs heures et ils mouraient de soif.</em> · 단순과거: <em>Il crut qu'elle avait lu ce roman car elle en parlait très bien.</em>","현재를 기준으로 한 먼 이전도 가능: <em>Marc n'est pas là ce soir&nbsp;! Pourtant il m'avait dit qu'il viendrait.</em> · <em>Où sont mes clés&nbsp;? C'est bizarre, je les avais posées sur cette table.</em>","<em>si</em>와 함께 과거 사실의 비현실: <em>Si nous avions eu plus de temps, nous nous serions arrêtés pour visiter Dijon.</em> · <em>Ah&nbsp;! si tu avais suivi mes conseils&nbsp;!</em> · <em>Il m'a regardé comme si j'avais dit une bêtise.</em>"]},{"h":"시간절에서","p":"128, 257","items":["<em>quand, aussitôt que, après que</em> 등이 이끄는 시간절의 대과거는 <b>반과거</b> 주절에 대해서만 이전을 나타냄 (반복되는 습관): <em>Quand il était arrivé dans son hôtel, il n'oubliait jamais de téléphoner à sa femme.</em>","거의 즉시 동시인 습관은 반과거: ✗ <em>Dès qu'il avait fait beau, nous faisions de la planche à voile.</em> → <em>Dès qu'il faisait beau, nous faisions de la planche à voile.</em>"]},{"h":"시제 일치","p":"134, 224","items":["주절이 과거면 복합과거 → 대과거: <em>Je crois qu'il est parti.</em> → <em>Je croyais qu'il était parti.</em>","대과거는 그대로: <em>Il m'a dit&nbsp;: « J'étais fatigué parce que je m'étais couché tard. »</em> → <em>Il m'a dit qu'il était fatigué parce qu'il s'était couché tard.</em>"]}],"passe_compose":[{"h":"만들기","p":"124","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 현재 + 과거분사: <em>j'ai parlé</em>, <em>je suis sorti</em>"]},{"h":"avoir냐 être냐","p":"97–99","items":["대부분의 동사는 <em>avoir</em>. <em>avoir</em>와 <em>être</em> 자신도 <em>avoir</em>: <em>Tu as eu de la chance.</em> · <em>Il a été malade la semaine dernière.</em>","<em>être</em>를 쓰는 것: 장소 이동·변화 동사 <em>aller, arriver, descendre, entrer, monter, partir, passer, retourner, sortir, tomber, venir</em>와 상태 동사 넷 <em>devenir, rester, naître, mourir</em>","모든 대명동사도 <em>être</em>: <em>Je me suis dépêché pour arriver à l'heure au bureau.</em>","<em>venir</em>의 합성어: <em>intervenir, parvenir, revenir</em>는 <em>être</em>, <em>prévenir</em>는 <em>avoir</em> (<em>Il a prévenu ses parents de son retard.</em>), <em>convenir</em>는 보통 <em>avoir</em>이고 격식체에서는 <em>être</em>","그 밖의 이동 동사는 <em>avoir</em> (<em>marcher, danser, sauter, glisser</em> 등): ✗ <em>Je suis couru très vite.</em> → <em>J'ai couru très vite.</em>"]},{"h":"직접목적어가 있으면 avoir","p":"98–99","items":["<em>(r)entrer, descendre, monter, passer, retourner, sortir</em>는 직접목적어가 있으면 <em>avoir</em>: <em>Les clients de la chambre 201 sont déjà montés.</em> / <em>Le portier de l'hôtel a monté leurs bagages dans la chambre.</em> · <em>À quelle heure êtes-vous sortis de la salle de réunion&nbsp;?</em> / <em>J'ai sorti tous mes livres.</em>","조동사가 바뀌면 뜻도 바뀜: <em>J'ai passé du temps à préparer ce canard à l'orange.</em> 시간을 들였다 / <em>Je suis passé par l'avenue Victor Hugo.</em> 그 길로 지나갔다 · <em>Le jardinier a retourné la terre.</em> 땅을 갈아엎었다 / <em>Elle est retournée dans le laboratoire.</em> 다시 갔다"]},{"h":"쓰임","p":"124–125","items":["가깝든 멀든 과거의 정해진 순간에 완료된 일","한 번의 사건: <em>Napoléon est né en Corse en 1769.</em>","연속된 사건 (<em>alors, puis, ensuite, après, tout à coup</em> 등과 자주): <em>…il a tendu le micro au jeune champion et il lui a posé beaucoup de questions. Puis, il a pris des photos.</em>","반복: <em>J'ai vu ce film quatre fois.</em>","한정된 기간 (길어도 끝났으면 복합과거): <em>Elle a fait son choix en cinq minutes.</em> · <em>Mon père a longtemps travaillé à l'étranger comme conseiller militaire.</em> ✗ <em>Mon père travaillait longtemps à l'étranger.</em>","결과가 현재까지 이어지는 이전의 일: <em>Ils ont acheté une grande maison&nbsp;: ils ont encore beaucoup de travaux à y faire.</em>","대화·편지 등 일상 의사소통의 시제. 단순과거는 글에서만 씀"]},{"h":"시제 일치","p":"134, 157","items":["주절이 과거면 복합과거 → 대과거: <em>Je crois qu'il est parti.</em> → <em>Je croyais qu'il était parti.</em>","주절이 복합과거이고 내용이 말하는 지금도 사실이면 일치를 안 해도 됨 (아래 「시제 일치」의 붉은 상자 참고)","과거분사 일치는 「과거분사」 칸 참고"]}],"imparfait":[{"h":"만들기","p":"122","items":["모든 동사가 규칙적: 현재 1인칭 복수(nous)의 어간 + <em>-ais, -ais, -ait, -ions, -iez, -aient</em>","<em>nous chant-ons → je chant-ais</em> · <em>nous finiss-ons → je finiss-ais</em> · <em>nous voul-ons → je voul-ais</em>","예외는 <em>être</em> 하나: <em>j'étais, tu étais…</em>"]},{"h":"쓰임","p":"123","items":["현재처럼 진행 중인 동작을 나타내며, 시간상 경계가 정해져 있지 않음","묘사·해설·설명: <em>En 1990, je faisais mes études de médecine à Montpellier.</em> (공부의 시작·끝을 말하지 않음) · <em>…il était en déplacement à l'étranger.</em> (기간 불명)","습관 (시간 표현과 자주 함께): <em>Autrefois, la bibliothèque n'était pas ouverte le dimanche.</em> · <em>Pendant les vacances, nous faisions toujours de longues balades à vélo.</em>","<em>si</em>와 함께면 과거가 아니라 현재 사실의 가정·비현실: <em>Si nous avions une voiture, nous pourrions aller visiter les châteaux de la Loire.</em> · <em>Ah&nbsp;! si j'étais plus jeune&nbsp;!</em> · <em>Madame Rodier s'habille comme si elle avait vingt ans.</em>","공손하게 말을 누그러뜨림: <em>Excusez-moi de vous déranger&nbsp;; je voulais vous demander un renseignement.</em>"]},{"h":"반과거냐 복합과거냐","p":"125","items":["동시에 일어난 두 일 중 진행 중인 쪽은 반과거, 특정 순간에 끝난 쪽은 복합과거: <em>La foule sortait du cinéma quand l'orage a éclaté.</em>","반과거는 행동의 배경(무대)을 만듦: <em>Il pleuvait quand nous sommes sortis du cinéma.</em>","습관이라도 기간이 막연하면 반과거, 정해진 기간이면 복합과거: <em>Dans ma jeunesse, je jouais régulièrement au tennis.</em> / <em>Cet été, j'ai joué très régulièrement au tennis.</em>","묘사는 반과거, 한정된 기간은 복합과거: <em>Il habitait à Alger quand il y a eu le tremblement de terre de 2003.</em> / <em>Il a habité pendant plusieurs années à Alger.</em>","시간 표시가 없으면 반과거, 특정 순간을 가리키면 복합과거: <em>Je vous croyais en vacances.</em> / <em>On a entendu un choc épouvantable. J'ai cru qu'il y avait eu un accident.</em> · <em>Je ne savais pas qu'ils avaient trois enfants.</em> / <em>Hier à l'examen, je n'ai pas su répondre à la question n° 4.</em>"]},{"h":"시제 일치","p":"134, 224","items":["주절이 과거면 현재 → 반과거: <em>Je crois qu'il est là.</em> → <em>Je croyais qu'il était là.</em>","반과거는 그대로 반과거"]}],"passe_recent":[{"h":"만들기","p":"99, 126","items":["<em>venir</em>의 현재 또는 반과거 + <em>de</em> + 동사원형: <em>Il vient de partir.</em> / <em>Il venait de partir.</em>","Delatour는 근접미래(<em>aller</em> + 원형)와 함께 '시간을 나타내는 반조동사'로 분류함"]},{"h":"쓰임","p":"105, 126","items":["막 끝난 일: <em>Il est 20 heures. Le magasin vient de fermer.</em> 저녁 8시다. 가게가 방금 문을 닫았다","과거 맥락에서는 <em>venir</em>를 반과거로: <em>Le magasin venait de fermer ses portes quand je suis arrivé pour faire mes courses.</em>","수동형: <em>Cette loi vient d'être votée par les députés.</em>"]},{"h":"혼동 주의","p":"100","items":["<em>de</em> 없이 <em>venir</em> + 동사원형이면 이동: <em>On a sonné. C'est le technicien qui vient réparer le lave-linge.</em> 세탁기를 고치러 온 기사다"]},{"h":"시제 일치","p":"134","items":["주절이 과거면 <em>venir</em>를 반과거로: <em>Je crois qu'il vient de partir.</em> → <em>Je croyais qu'il venait de partir.</em>"]}],"present":[{"h":"만들기: 어간과 어미","p":"120–121","items":["어간 수: 1군은 1개, 2군은 2개, 3군은 1~3개","어미는 세 체계. 단수가 <em>-e, -es, -e</em> / <em>-s, -s, -t</em>(또는 <em>-d</em>) / <em>-x, -x, -t</em>이고, 복수는 모두 <em>-ons, -ez, -ent</em>","1군(-er): 어간 + <em>-e, -es, -e, -ons, -ez, -ent</em>: <em>je chant-e, nous chant-ons, ils chant-ent</em>","2군(-ir): 단수 <em>-s, -s, -t</em>, 복수에서 어간이 <em>-iss-</em>로 늘어남: <em>je fini-s, il fini-t, nous finiss-ons, ils finiss-ent</em>"]},{"h":"3군 (-ir, -oir, -re)","p":"121, 312–313, 315–317","items":["어간 1개: 1군 어미를 씀: <em>ouvrir → j'ouvr-e, tu ouvr-es</em>","어간 2개: <em>-s, -s, -t/-d, -ons, -ez, -ent</em>: <em>écrire → j'écri-s / nous écriv-ons</em> · <em>savoir → je sai-s / nous sav-ons</em>. 3인칭 단수 <em>-d</em>는 <em>-endre, -andre, -ondre, -erdre, -ordre</em> 동사","어간 3개 (단수 / nous·vous / ils): <em>recevoir → je reçoi-s, nous recev-ons, ils reçoiv-ent</em> · <em>venir → je vien-s, nous ven-ons, ils vienn-ent</em> · <em>vouloir → je veu-x, nous voul-ons, ils veul-ent</em>","단수 <em>-x, -x, -t</em>는 <em>pouvoir, valoir, vouloir</em>"]},{"h":"쓰임","p":"121–122","items":["말하는 순간 진행 중인 동작: <em>Les enfants jouent au ballon dans le parc.</em> 아이들이 공원에서 공놀이를 하고 있다","묘사: <em>Les fenêtres de la maison donnent sur un jardin qui descend vers la rivière.</em>","현재형 자체에는 시간 경계가 없고, 시간 표현이 붙으면 다음을 나타냄","과거에 시작해 지금까지 이어지는 일 (<em>depuis</em>): <em>John est à Paris depuis plusieurs mois.</em> 존은 몇 달째 파리에 있다","곧 일어날 일: <em>Dépêchez-vous&nbsp;! Le film commence dans quelques minutes.</em> · <em>L'hiver prochain, nous allons à Chamonix faire du ski.</em>","습관·반복: <em>Tous les dimanches, nous faisons une marche en forêt.</em>","분석·요약 (영화·책 내용 소개): <em>Dans Le Père Goriot, Balzac peint un amour paternel passionné.</em>","일반적 진리·속담: <em>L'eau gèle à 0 °C.</em> · <em>L'argent ne fait pas le bonheur.</em>","<em>si</em> 가정: <em>Si vous voulez la voir, vous devrez faire la queue&nbsp;!</em>","명령 대신: <em>En partant, tu fermes bien la porte à clé, s'il te plaît&nbsp;!</em> (= <em>ferme bien</em>)"]},{"h":"서술의 현재 (présent de narration)","p":"122","items":["과거 이야기 속에서 현재를 쓰면 사건이 생생해짐: <em>En 1789, la France était en pleine crise… Le 14 juillet, le peuple s'empare de la Bastille.</em>"]}],"futur_proche":[{"h":"만들기","p":"131","items":["<em>aller</em>의 현재 + 동사원형: <em>Je vais partir.</em>"]},{"h":"쓰임","p":"131","items":["아주 가까운 미래: <em>Le ciel est noir&nbsp;; il va pleuvoir.</em> 하늘이 시커멓다. 비가 오겠다 · <em>Le gouvernement va prendre des mesures d'urgence…</em>","먼 미래라도 확실한 일로 제시: <em>Dans trois ans, nous allons célébrer le millénaire de notre ville.</em>","의도·계획 대 예측 같은 구분은 책에 없음"]},{"h":"근접미래 가치를 가진 다른 반조동사","p":"99, 131","items":["<em>devoir</em> + 동사원형 (확실한 예정): <em>Mon père doit se faire opérer mardi.</em> · <em>Nos amis Lacombe doivent arriver à la gare de l'Est à 21 h.</em>","<em>être sur le point de</em> + 동사원형 (아주 임박): <em>L'avion est sur le point de décoller.</em>"]},{"h":"혼동 주의","p":"100, 138","items":["이동 동사 <em>aller</em>와 구분: <em>Il va rentrer dans cinq minutes.</em> (근접미래) / <em>Tu pars&nbsp;? Oui, je vais acheter des timbres.</em> (사러 간다, 이동)","접속법에는 미래도 근접미래도 없음: ✗ <em>Je suis content qu'il aille venir ce soir.</em> → <em>…qu'il vienne ce soir.</em>"]},{"h":"과거 속 근접미래","p":"99, 105, 133","items":["<em>aller, devoir, être sur le point de</em>를 반과거로: <em>Il dit qu'il va m'aider.</em> → <em>Il a dit qu'il allait m'aider.</em>","✗ <em>Il a dit qu'il irait sortir.</em> → <em>Il a dit qu'il allait sortir.</em> · ✗ <em>J'attendais le train qui devrait arriver à midi.</em> → <em>…qui devait arriver à midi.</em>","<em>J'allais prendre ma douche quand le téléphone a sonné.</em>","수동형: <em>Cette loi va être votée par les députés.</em>"]}],"futur_anterieur":[{"h":"만들기","p":"131","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 단순미래 + 과거분사: <em>J'aurai parlé.</em> / <em>Je serai sorti.</em>"]},{"h":"쓰임","p":"132","items":["미래나 명령보다 먼저 끝날 일: <em>Une fois que vous aurez rempli ce formulaire d'inscription, vous le renverrez à l'adresse indiquée.</em> · <em>Quand tu auras lu le journal, passe-le-moi&nbsp;!</em>","✗ <em>Quand j'ai fini ce travail, je sortirai.</em> → <em>Quand j'aurai fini ce travail, je sortirai.</em>","단독으로: 미래의 어느 시점에 이미 끝나 있을 확실한 일 (보통 시간 표현과): <em>Dans un mois, Marie aura accouché d'une petite fille.</em> · <em>Cendrillon promet à sa marraine qu'elle sera rentrée avant minuit.</em>","비교: <em>Il remettra son rapport à la fin de la semaine.</em> (단순한 시간 표시) / <em>Il aura remis son rapport à la fin de la semaine.</em> (그때면 끝나 있을 것이 확실)","추측: <em>Paul n'est pas encore arrivé&nbsp;; il aura oublié notre rendez-vous.</em> 폴이 아직 안 왔네, 약속을 잊었나 보다"]},{"h":"시간절에서","p":"257–258","items":["주절이 단순미래면 시간절은 전미래 (조동사의 시제 = 주절의 시제): <em>Dès que la petite Rosalie aura pris son bain, son père lui donnera son biberon.</em>","<em>après que</em> + 직설법: <em>Il faudra tout remettre en place après que les invités seront partis.</em>"]},{"h":"과거 속 전미래","p":"133","items":["과거 맥락에서는 조건법 과거와 같은 꼴: <em>On annonce que les deux présidents recevront les journalistes après qu'ils auront signé l'accord…</em> → <em>On a annoncé que les deux présidents recevraient les journalistes après qu'ils auraient signé l'accord…</em>"]}],"futur_simple":[{"h":"만들기","p":"130","items":["대부분 동사원형에서 만들고(3군 일부 제외), 어미는 모든 동사가 <em>-ai, -as, -a, -ons, -ez, -ont</em>. 어미 앞에는 항상 <em>-r-</em>","1·2군: 원형 + 어미: <em>je chanter-ai</em>, <em>je finir-ai</em>","3군 -re: 끝의 <em>-e</em>를 빼고: <em>je mettr-ai</em>, <em>je prendr-ai</em>","3군 -ir: 원형 + 어미 (<em>je partir-ai, j'ouvrir-ai</em>). 단 <em>venir, tenir</em>와 그 합성어는 특수 어간: <em>je viendr-ai, je tiendr-ai</em>","3군 -oir: 어간 + <em>-r-</em> + 어미, 대부분 불규칙: <em>je devr-ai, je recevr-ai</em>"]},{"h":"원형에서 만들지 않는 미래","p":"130, 315, 317","items":["<em>avoir → j'aurai, être → je serai, aller → j'irai, faire → je ferai, savoir → je saurai, pouvoir → je pourrai, vouloir → je voudrai, valoir → je vaudrai, voir → je verrai</em>","1군 일부는 원형의 철자가 바뀜: <em>appeler → j'appellerai</em>. <em>envoyer → j'enverrai</em>는 불규칙"]},{"h":"쓰임","p":"130–131","items":["가깝거나 먼 미래, 흔히 시간 표현과 함께: <em>« Des orages éclateront dans la soirée », annonce la météo.</em> · <em>Dans cinquante ans, quel sera l'état de notre planète&nbsp;?</em>","명령 대신 써서 명령을 누그러뜨림: <em>Vous prendrez ce médicament deux fois par jour pendant une semaine.</em> (= <em>prenez</em>) · <em>Pour demain vous ferez l'exercice n° 5 page 12.</em>"]},{"h":"주의","p":"256, 281","items":["<em>quand</em> 시간절도 미래면 미래: ✗ <em>Tu liras ce livre quand tu as le temps.</em> → <em>Tu liras ce livre quand tu auras le temps.</em>","<em>si</em> 뒤에는 절대 미래를 쓰지 않음: ✗ <em>S'il fera beau, on ira se promener en forêt.</em> → <em>S'il fait beau, on ira se promener en forêt.</em>"]},{"h":"과거 속 미래","p":"132","items":["과거 맥락에서는 조건법 현재와 같은 꼴: <em>Nous sommes le 15 décembre. Ce sera bientôt Noël.</em> → <em>Nous étions le 15 décembre. Ce serait bientôt Noël.</em>","✗ <em>Il disait qu'il le fera.</em> → <em>Il disait qu'il le ferait.</em>","<em>Le vendeur dit qu'il nous préviendra…</em> → <em>Le vendeur a dit qu'il nous préviendrait…</em>"]}],"passe_anterieur":[{"h":"만들기","p":"128","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 단순과거 + 과거분사: <em>J'eus parlé.</em> / <em>Je fus sorti.</em>"]},{"h":"쓰임","p":"128, 258","items":["글에서만 씀. 시간 종속절에서 단순과거 바로 직전에 끝난 일 (즉시 이전): <em>Dès qu'il eut prononcé ces mots, un concert de protestations s'éleva dans la foule.</em> 그가 이 말을 하자마자 군중 속에서 항의가 쏟아졌다","<em>À peine Clara fut-elle sortie que la pluie se mit à tomber avec violence.</em>","함께 쓰는 접속사: <em>dès que, aussitôt que, après que, quand, lorsque, une fois que, à peine… que</em>","시간절 시제표에서는 '드문 용법'으로 분류: <em>Dès que l'orage eut cessé, un bel arc-en-ciel apparut.</em>"]},{"h":"구분","p":"105, 129, 136","items":["같은 상황을 복합과거로 말하면 복복합과거(passé surcomposé): <em>Dès qu'il a eu prononcé ces mots, un concert de protestations s'est élevé dans la foule.</em>","접속법 대과거와 꼴이 비슷함: <em>il eut parlé</em> (전과거) / <em>qu'il eût parlé</em> (접속법 대과거). 책은 조동사 쪽의 <em>il eut / qu'il eût</em> 구분을 짚어 둠","수동형: <em>eut été votée</em>"]}],"passe_simple":[{"h":"만들기","p":"126, 312–313","items":["글에서만 쓰는 시제. 모든 인칭이 같은 어간","1군: <em>-ai, -as, -a, -âmes, -âtes, -èrent</em>: <em>je chant-ai, il chant-a, ils chant-èrent</em>","2군: <em>-is, -is, -it, -îmes, -îtes, -irent</em>: <em>je fin-is, il fin-it, ils fin-irent</em>","3군 i형 (2군과 같은 어미): <em>partir → je part-is, il part-it, ils part-irent</em> · <em>voir → je v-is, il v-it, ils v-irent</em>","3군 u형: <em>-us, -us, -ut, -ûmes, -ûtes, -urent</em>: <em>vouloir → je voul-us, il voul-ut, ils voul-urent</em> · <em>courir → je cour-us</em>","<em>venir, tenir</em>와 합성어: <em>je vins / je tins, il vint, nous vînmes, vous vîntes, ils vinrent</em>","<em>être</em>: <em>fus, fus, fut, fûmes, fûtes, furent</em> · <em>avoir</em>: <em>eus, eus, eut, eûmes, eûtes, eurent</em>"]},{"h":"쓰임","p":"127","items":["복합과거와 같은 가치(한 번의 사건, 한정된 기간, 연속된 사건). 단 '현재와 이어지는 이전'의 가치는 없음: <em>Le peintre Matisse naquit en 1869 et mourut en 1954.</em>","이야기 속에서 반과거와의 관계도 복합과거와 같음. 차이는 복합과거가 일을 말하는 지금과 이어 주는 데 비해, 단순과거는 현재와 접점이 없는 먼 과거에 둔다는 것","그래서 문학(소설, 이야기, 동화, 전기 등)에서, 주로 3인칭으로 씀 (『레 미제라블』 인용 예)","현재 맥락에서 써서 역사적 무게를 줄 수도 있음: <em>On dit que Mozart composa l'ouverture de Don Juan en une nuit.</em>"]},{"h":"혼동 주의","p":"136","items":["접속법 반과거와 구분: <em>Il eut / qu'il eût</em> · <em>Il parla / qu'il parlât</em>"]}],"cond_passe":[{"h":"만들기","p":"141","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 조건법 현재 + 과거분사: <em>j'aurais lu, elle serait partie, vous vous seriez assis</em>","격식체에만 나오는 두 번째 형태: 접속법 대과거와 같은 꼴. <em>Il eût voulu</em> = <em>il aurait voulu</em>"]},{"h":"쓰임 (조건법-법)","p":"142–143, 282","items":["후회: <em>J'aurais bien voulu aller à Londres ce week-end mais il n'y avait plus de places dans l'Eurostar.</em>","확인되지 않은 과거 정보: <em>L'incendie aurait été provoqué par une cigarette jetée dans une poubelle.</em> (= 아마 그랬을 것이다)","공손: <em>J'aurais voulu avoir quelques renseignements sur les vols « charter » à destination de la Martinique.</em>","놀람: <em>Quoi&nbsp;! Il y aurait encore eu un accident à ce carrefour&nbsp;!</em>","비난: <em>pouvoir, devoir</em> + 원형, <em>valoir mieux</em> + 원형 / <em>que</em> + 접속법: <em>Tu aurais pu me prévenir&nbsp;!</em> · <em>Vous auriez dû la faire renouveler depuis longtemps.</em> · <em>Il aurait mieux valu dire la vérité tout de suite.</em>","<em>si</em> + 대과거의 주절 (과거에 이루어지지 못한 일): <em>Si j'avais eu ton adresse, je t'aurais envoyé une carte postale de Grèce.</em>","<em>si</em> + 반과거와도 짝을 이룸 (지금도 계속되는 조건): <em>Si je parlais allemand, j'aurais pu renseigner ce touriste dimanche dernier.</em>"]},{"h":"과거 속 전미래 (조건법-시제)","p":"144","items":["<em>Le Premier ministre déclare qu'il prendra une décision quand il aura consulté toutes les parties intéressées.</em> → <em>Le Premier ministre a déclaré qu'il prendrait une décision quand il aurait consulté toutes les parties intéressées.</em>"]}],"cond_present":[{"h":"조건법이란","p":"141","items":["가능성(éventuel)·비현실·상상을 나타내는 법이면서, '과거 속 미래'라는 시제 가치도 가짐","법으로서: <em>Une réunion des chefs d'État européens aurait lieu en décembre.</em> (가능성) · 시제로서: <em>Le professeur a annoncé qu'il y aurait un examen à la fin de la semaine.</em> (과거 속 미래)","시제는 현재와 과거 둘"]},{"h":"만들기","p":"141","items":["단순미래의 어간 + 반과거 어미 <em>-ais, -ais, -ait, -ions, -iez, -aient</em>: <em>je saur-ais, tu finir-ais, il viendr-ait, nous manger-ions, vous pourr-iez, ils jouer-aient</em>","조건법 특유의 <em>-r-</em>에 주의: <em>je mettrais</em> (조건법) / <em>je mettais</em> (반과거) · <em>je préparerais / je préparais</em>"]},{"h":"쓰임 (조건법-법)","p":"142–144","items":["바람: <em>Félix et Béatrice aimeraient avoir un deuxième enfant.</em>","확인되지 않은 정보·추정 (언론에서 아주 흔함): <em>D'après les sondages, ce parti obtiendrait une large majorité aux prochaines élections.</em> (= 아마 얻을 것이다)","상상: <em>On serait deux astronautes. Moi, je serais le pilote&nbsp;; toi, tu sortirais dans l'espace.</em> (아이들 놀이)","누그러뜨림 (공손·제안): <em>Pourriez-vous me rendre un service, s'il vous plaît&nbsp;?</em> · <em>On pourrait aller au cinéma ce soir&nbsp;; qu'est-ce que tu en penses&nbsp;?</em>","놀람: <em>Paul se marierait. Ça alors&nbsp;!</em>","조언: <em>devoir</em> + 원형, <em>faire mieux de</em> + 원형, <em>valoir mieux</em> + 원형 / <em>que</em> + 접속법: <em>Pour te détendre, tu devrais faire un peu de sport.</em> · <em>Tu ferais mieux de sortir.</em> · <em>Il vaudrait mieux vous reposer.</em>","직설법보다 덜 확실한 뉘앙스: <em>Je connais une jeune fille qui acceptera de garder vos enfants.</em> (확실) / <em>…qui accepterait de garder vos enfants.</em> (아마)","<em>si</em> + 반과거의 주절: <em>Nous verrions nos amis Legrand plus souvent s'ils habitaient à Paris.</em>","<em>au cas où, quand bien même</em> 뒤: <em>Au cas où cette écharpe ne plairait pas à votre mère, vous pourriez revenir l'échanger.</em> · <em>Quand bien même tu me jurerais que c'est vrai, je ne te croirais pas.</em>"]},{"h":"과거 속 미래 (조건법-시제)","p":"144","items":["주절이 과거(복합과거, 반과거, 대과거, 단순과거)면 미래 → 조건법 현재: <em>Niels promet à la maîtresse qu'il ne se battra plus avec ses camarades.</em> → <em>Niels a promis à la maîtresse qu'il ne se battrait plus avec ses camarades.</em>"]},{"h":"주의","p":"212, 282","items":["<em>si</em> 뒤에는 절대 조건법을 쓰지 않음: ✗ <em>S'il ferait beau, on irait se promener en forêt.</em> → <em>S'il faisait beau, on irait se promener en forêt.</em>","<em>que</em> 보어절에서 직설법 대신 써서 가정의 뉘앙스를 줌: <em>Je pense qu'un livre lui fera très plaisir.</em> (확신) / <em>Je pense qu'un livre lui ferait très plaisir.</em> (가정)"]}],"subj_pqp":[{"h":"만들기","p":"136","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 접속법 반과거 + 과거분사: <em>que j'eusse fait / que nous eussions fait</em> · <em>que je fusse venu / que nous fussions venus</em>"]},{"h":"쓰임","p":"139–141","items":["격식체에서만. 주절이 과거일 때 <b>이전·완료</b>: <em>On s'étonnait qu'il ne fût pas encore arrivé.</em> (격식체) / <em>On s'étonnait qu'il ne soit pas encore arrivé.</em> (일상어)","<em>Elle regrettait / Elle regretta qu'il eût oublié le rendez-vous.</em>","문학 예 (Proust): <em>…avant que je n'y eusse goûté.</em>","격식체에서 조건법 과거나 직설법 대과거의 가치도 가짐: <em>« Quel homme eût été Balzac, s'il eût su écrire&nbsp;! »</em> (Flaubert) = <em>Quel homme aurait été Balzac s'il avait su écrire&nbsp;!</em>","그래서 조건법 과거의 '두 번째 형태'와 꼴이 같음"]}],"subj_passe":[{"h":"만들기","p":"136","items":["조동사 <em>avoir</em> 또는 <em>être</em>의 접속법 현재 + 과거분사: <em>que j'aie travaillé / que nous ayons travaillé</em> · <em>que je sois parti / que nous soyons partis</em>"]},{"h":"쓰임","p":"138–140","items":["<b>이전</b>: 종속절의 일이 주절보다 먼저. 주절은 현재·과거·미래·조건법 어느 것이든: <em>Les Français regrettent / regrettaient que leur équipe ait perdu le match dimanche dernier.</em> · <em>Bien qu'elle ait déjà joué hier, notre équipe rejouera demain.</em>","<b>완료</b>: 미래의 시간 한계까지 끝나 있을 일 (보통 시간 표현과): <em>Il faut que nous ayons quitté l'hôtel avant 11 heures.</em> · <em>Le professeur de maths aimerait que nous ayons terminé le programme quinze jours avant l'examen.</em>","일상어에서는 주절이 과거여도 접속법 대과거 대신 이 시제를 씀: <em>On s'étonnait qu'il ne soit pas encore arrivé.</em>","접속법의 시제 일치는 아래 「시제 일치」의 붉은 상자 참고"]}],"subj_imparfait":[{"h":"만들기","p":"136, 312–313","items":["단순과거를 바탕으로 + <em>-sse, -sses, -t, -ssions, -ssiez, -ssent</em>: <em>je parla(i) → que je parla-sse, qu'il parlâ-t</em> · <em>je fini(s) → que je fini-sse, qu'il finî-t</em> · <em>je voulu(s) → que je voulu-sse, qu'il voulû-t</em> · <em>je vi(s) → que je vi-sse, qu'il vî-t</em>","3인칭 단수에는 곡절 악센트(^)가 붙음","<em>être</em>: <em>que je fusse, que tu fusses, qu'il fût, que nous fussions, que vous fussiez, qu'ils fussent</em> · <em>avoir</em>: <em>que j'eusse, que tu eusses, qu'il eût, que nous eussions, que vous eussiez, qu'ils eussent</em>","단순과거와 혼동 주의: <em>Il eut / qu'il eût</em> · <em>Il parla / qu'il parlât</em>"]},{"h":"쓰임","p":"139–140","items":["격식체에서 접속법 시제 일치를 지킬 때만 씀: 주절이 과거면 <b>동시·이후</b>는 접속법 반과거","<em>Le préfet de police a ordonné que la foule se disperse.</em> (일상어) / <em>Le préfet de police ordonna que la foule se dispersât.</em> (격식체)","<em>Il était content / Il fut content que son amie restât avec lui.</em>","문학 예 (Camus, 『페스트』): <em>« Quoique cette brusque retraite de la maladie fût inespérée, nos concitoyens ne se hâtèrent pas de se réjouir. »</em>"]}],"subj_present":[{"h":"접속법이란","p":"135","items":["말하는 이가 사실을 평가·해석하는 '주관성의 법'. 주로 종속절에서 씀","<em>Je viens d'apprendre que Marc est malade.</em> (사실 → 직설법) / <em>Je suis désolé que Marc soit malade.</em> (주관적 평가 → 접속법)","시제는 넷: 현재·반과거(단순), 과거·대과거(복합). 일상에서 쓰는 건 현재와 과거뿐이고, 반과거·대과거는 격식체·문학"]},{"h":"만들기","p":"135–136, 312–313","items":["현재 3인칭 복수(ils)의 어간 + <em>-e, -es, -e, -ions, -iez, -ent</em>: <em>ils parl-ent → que je parl-e / que nous parl-ions</em> · <em>ils finiss-ent → que je finiss-e</em> · <em>ils mett-ent → que je mett-e</em>","어간이 둘인 동사: <em>je, tu, il, ils</em>는 ils 어간, <em>nous, vous</em>는 nous 어간: <em>que je prenn-e, qu'ils prenn-ent</em> / <em>que nous pren-ions, que vous pren-iez</em>. <em>venir, tenir, prendre</em>와 그 합성어, <em>voir, boire, recevoir, croire</em> 등","불규칙 어간: <em>faire → que je fass-e</em> · <em>savoir → que je sach-e</em> · <em>pouvoir → que je puiss-e</em> · <em>aller → que j'aill-e</em> (<em>que nous all-ions</em>) · <em>vouloir → que je veuill-e</em> (<em>que nous voul-ions</em>) · <em>valoir → que je vaill-e</em> (<em>que nous val-ions</em>) · <em>falloir → qu'il faill-e</em>","<em>avoir, être</em>는 부록 활용표에 따로 있음: <em>que j'aie… qu'ils aient</em>, <em>que je sois… qu'ils soient</em>"]},{"h":"시제 가치","p":"138","items":["현재는 주절과 <b>동시</b>이거나 주절보다 <b>이후</b>: <em>Je suis étonné que Carlos ne connaisse pas ce célèbre joueur de football.</em> · <em>Tous les Brésiliens souhaitent que leur équipe gagne le prochain match.</em>","주절이 현재·미래·조건법·과거 어느 것이든 현재를 씀. 오늘날 일상어에서는 접속법 시제 일치를 거의 지키지 않음: <em>J'étais étonné que Carlos ne connaisse pas ce célèbre joueur de football.</em>","접속법에는 미래도 근접미래도 없음: ✗ <em>Je suis content qu'il aille venir ce soir.</em> → <em>…qu'il vienne ce soir.</em>"]},{"h":"어디에 쓰나","p":"137","items":["보어절: <em>Il faut que j'aille chez le dentiste.</em> · 시간절: <em>Rentrons avant qu'il pleuve&nbsp;!</em> · 목적절: <em>…pour que le violoniste puisse commencer son récital.</em> · 대립절: <em>…bien qu'il soit très occupé.</em> · 조건·원인·결과절과 관계절에도","단독으로 3인칭 명령 (<em>que</em> + 접속법): <em>Émilien a mal à la tête. Qu'il prenne de l'aspirine&nbsp;!</em> · 굳은 표현: <em>Vive la République&nbsp;!</em> · <em>Que le meilleur gagne&nbsp;!</em> · <em>Soit&nbsp;!</em>"]},{"h":"que 보어절에서 접속법을 부르는 뜻","p":"213–216","items":["의지·의무·조언: <em>vouloir, demander, proposer que</em> · <em>il faut que, il est préférable que, il vaudrait mieux que</em>","감정·판단: <em>regretter, détester, s'inquiéter que</em> · <em>c'est incroyable que, il suffit que, ça m'étonne que</em> · <em>être désolé, déçu que</em> · <em>quel dommage que, avoir besoin que</em>","가능성·의심: <em>douter que</em> · <em>il se peut que, il arrive que</em>"]},{"h":"직설법과 헷갈리는 경우","p":"150, 216, 218–219","items":["의견 동사(<em>croire, penser, espérer, trouver, avoir l'impression, être sûr</em> 등)가 부정이거나 도치 의문이면 보통 접속법: <em>Les sauveteurs ne sont pas certains qu'il y ait encore des survivants.</em> · <em>Croyez-vous que la situation politique puisse évoluer&nbsp;?</em>","다만 접속법이 더 격식 있는 말투라서, 일상어에서는 <em>Je ne crois pas qu'elle viendra.</em>도 씀","<em>espérer</em>(직설) / <em>souhaiter</em>(접속): <em>Jean espère qu'on viendra le voir à l'hôpital.</em> / <em>Jean souhaite qu'on vienne le voir à l'hôpital.</em>","<em>probable</em>(직설) / <em>possible</em>(접속) · <em>il paraît</em>(직설) / <em>il semble</em>(접속) · <em>il me semble</em>(직설) / <em>il semble</em>(접속) · <em>se douter</em>(직설) / <em>douter</em>(접속)","<em>que</em> 종속절이 문장 맨 앞에 오면 항상 접속법: <em>Que ce cinéaste soit un grand artiste, tout le monde le reconnaît.</em>","주어가 같으면 원형으로 (접속법 자리면 의무): ✗ <em>Je veux que je parte demain.</em> → <em>Je veux partir demain.</em>"]}],"imp_passe":[{"h":"만들기","p":"146","items":["조동사의 명령법 현재 + 과거분사: <em>Sois rentré&nbsp;! Soyons rentrés&nbsp;! Soyez rentrés&nbsp;!</em> · <em>Aie fini&nbsp;! Ayons fini&nbsp;! Ayez fini&nbsp;!</em>"]},{"h":"쓰임","p":"147","items":["드물게 씀. 미래의 정해진 시점 전에 끝나 있어야 할 일 (보통 시간 표현과): <em>Sois parti d'ici au plus tard à midi&nbsp;!</em> 늦어도 정오까지는 여기서 떠나 있어라 · <em>Ayez fini tout votre travail avant samedi&nbsp;!</em>"]}],"imp_present":[{"h":"명령법이란","p":"145","items":["명령의 여러 뉘앙스(금지, 조언, 부탁 등)를 나타내는 법: <em>Assieds-toi&nbsp;!</em> · <em>Fais bien attention&nbsp;!</em> · <em>Ne bougez pas&nbsp;!</em>","인칭은 셋뿐(2인칭 단수, 1·2인칭 복수)이고 주어 대명사가 없음. 3인칭은 접속법으로: <em>Que personne ne sorte&nbsp;!</em> · <em>Qu'ils entrent&nbsp;!</em>","시제는 현재와 과거 둘. 책은 명령문 끝의 느낌표도 짚어 둠"]},{"h":"만들기","p":"145–146","items":["직설법 현재의 해당 인칭 형태를 그대로: <em>tu fais → fais&nbsp;!, nous faisons → faisons&nbsp;!, vous faites → faites&nbsp;!</em> · <em>finis&nbsp;!, finissons&nbsp;!, finissez&nbsp;!</em>","tu형이 <em>-es</em>로 끝나면 <em>-e</em>로: <em>tu travailles → travaille&nbsp;!</em> · <em>tu ouvres → ouvre&nbsp;!</em>","<em>aller</em>: <em>tu vas → va&nbsp;!</em>","<em>en, y</em>가 뒤따르면 발음 때문에 <em>-s</em>를 붙임: <em>Vas-y&nbsp;!</em> · <em>Donnes-en&nbsp;!</em>"]},{"h":"불규칙","p":"146–147","items":["세 동사만 불규칙: <em>avoir → aie, ayons, ayez</em> · <em>être → sois, soyons, soyez</em> · <em>savoir → sache, sachons, sachez</em>","<em>vouloir</em>는 <em>veuillez</em> 하나만 씀 (공손): <em>Veuillez vous asseoir, Madame&nbsp;!</em> · 공문 편지의 <em>Veuillez agréer, Madame / Monsieur, l'expression de ma considération distinguée.</em>"]},{"h":"대명동사","p":"146","items":["<em>Lève-toi&nbsp;! Levons-nous&nbsp;! Levez-vous&nbsp;!</em> · <em>Assieds-toi&nbsp;! Asseyons-nous&nbsp;! Asseyez-vous&nbsp;!</em> 동사와 대명사 사이에 하이픈"]},{"h":"쓰임","p":"146","items":["문맥에 따라 명령·금지·바람·부탁: <em>Nous allons être en retard. Dépêchons-nous&nbsp;!</em> (명령) · <em>Attention&nbsp;! Ne touchez pas à ça.</em> (금지) · <em>Passez de bonnes vacances&nbsp;!</em> (바람) · <em>Mon stylo ne marche plus. Prête-m'en un, s'il te plaît&nbsp;!</em> (부탁)","바로 다음이나 먼 미래를 가리킴: <em>Ferme la porte&nbsp;!</em> · <em>Quand vous serez arrivés à Bruxelles, téléphonez-nous&nbsp;!</em>","<em>donc</em>으로 강조: <em>Venez donc dîner à la maison&nbsp;!</em> · <em>Tais-toi donc&nbsp;!</em>"]},{"h":"명령법 말고 명령을 나타내는 형태","p":"122, 131, 137, 151, 224","items":["직설법 현재 <em>tu fermes bien la porte</em> · 단순미래 <em>Vous prendrez ce médicament…</em> · 원형 <em>Ne pas gêner la fermeture automatique des portes.</em> · <em>que</em> + 접속법 (3인칭)","간접화법에서는 주절 시제와 상관없이 <em>de</em> + 원형: <em>Il a répété aux élèves d'arriver à l'heure le jour de l'examen.</em>"]}],"inf_passe":[{"h":"만들기","p":"113, 148, 157","items":["조동사의 원형 + 과거분사: <em>avoir chanté, avoir réfléchi, avoir entendu, être venu</em>","대명형 <em>s'être levé, s'être aperçu</em> · 수동형 <em>avoir été affiché, avoir été ouvert</em> · 부정 <em>ne pas avoir compris</em>","혼동 주의: <em>Alice est fière d'être arrivée première à la compétition de natation.</em> (능동의 원형 과거) / <em>Ce livre vient d'être traduit en japonais.</em> (수동의 원형 현재)","과거분사 일치 규칙을 따름: <em>Après être allés au cinéma, nous avons pris une bière.</em> · <em>Après nous être arrêtés quelques instants, nous avons repris notre marche.</em>"]},{"h":"쓰임","p":"149–150","items":["주절보다 <b>이전</b>: <em>Olivier est content d'avoir reçu des nouvelles de son amie.</em> · <em>Après avoir entendu ce chanteur en concert, Isabelle a acheté tous ses disques.</em>","미래의 시간 한계까지 <b>완료</b>: <em>Catherine est sûre d'être rentrée chez elle avant midi.</em> · <em>Le peintre craint de ne pas avoir fini les travaux à la date prévue.</em>","<em>après</em> + 원형 과거가 <em>après que</em> + 종속절보다 훨씬 자주 쓰임: <em>Vous remettrez le dictionnaire à sa place après l'avoir consulté.</em> (= <em>après que vous l'aurez consulté</em>)"]}],"inf_present":[{"h":"부정법이란","p":"148–149","items":["인칭 없는 법. 동사 가치와 명사 가치를 가짐: <em>Lire attentivement le mode d'emploi de l'appareil.</em> (= <em>lisez</em>) / <em>Lire est un moyen de faire des progrès en français.</em> (= <em>la lecture</em>)","형태는 단순형(현재)과 복합형(과거) 둘. 대명형 <em>se lever</em>, 수동형 <em>être affiché</em>","명사가 된 원형 (남성): <em>le déjeuner, le dîner, le souvenir, le pouvoir, le rire</em>"]},{"h":"부정","p":"148","items":["부정어가 모두 동사 앞: <em>ne pas entrer, ne plus fumer, ne jamais se tromper</em>"]},{"h":"시제 가치","p":"149","items":["현재 원형은 보통 주절과 동시: <em>Il veut / voulait / voudra venir avec nous.</em>","주절보다 뒤의 일일 수도 있음: <em>Cet été, Monique a travaillé pour payer ses études.</em>"]},{"h":"기능","p":"149","items":["주어: <em>Fumer nuit gravement à la santé.</em> · 명사·형용사 보어: <em>Le malade n'a pas le droit de sortir.</em> <em>Êtes-vous prêt à partir&nbsp;?</em> · 동사 보어: <em>J'aime danser.</em> <em>La petite Camille commence à parler.</em> · 상황보어: <em>Réfléchissez bien avant de prendre votre décision.</em>"]},{"h":"원형으로 바꾸기","p":"150, 219","items":["주절과 종속절의 주어가 같을 때, 종속절이 접속법이면 원형으로 바꾸는 게 의무: ✗ <em>Je veux que je parte demain.</em> → <em>Je veux partir demain.</em>","직설법이면 선택: <em>J'espère partir demain.</em> / <em>J'espère que je partirai demain.</em>","접속사도 같은 주어면 의무적으로 바꿈: <em>sans que → sans</em>, <em>pour que → pour</em>, <em>afin que → afin de</em>, <em>de peur que → de peur de</em>, <em>de crainte que → de crainte de</em>, <em>avant que → avant de</em>, <em>en attendant que → en attendant de</em>, <em>le temps que → le temps de</em>","<em>bien que, quoique</em>는 원형으로 못 바꿈. <em>à condition que, à moins que</em>는 선택","주절의 보어와 종속절 주어가 같은 사람이어도 원형: <em>Il m'a demandé d'aller chez lui demain soir.</em> · ✗ <em>Je te souhaite que tu réussisses.</em> → <em>Je te souhaite de réussir.</em>"]},{"h":"원형절과 그 밖의 쓰임","p":"151","items":["지각동사 <em>écouter, entendre, regarder, voir, sentir</em>와 <em>laisser, faire, envoyer, emmener</em> 뒤의 원형은 자기 주어를 가짐: <em>Nous regardions les avions s'éloigner dans la nuit.</em>","지시·조언 (사용 설명서, 안내문, 요리법): <em>Laver les pommes, les éplucher puis les faire cuire au four pendant trente minutes.</em>","의문·감탄에서 의심·바람·분개: <em>Que faire&nbsp;? Qui croire&nbsp;? Où aller&nbsp;?</em> · <em>Ah&nbsp;! Partir, vivre loin d'ici. Quel rêve&nbsp;!</em> · <em>Lui, avoir menti&nbsp;! C'est impossible&nbsp;!</em>","간접의문·관계절 (주어가 같을 때): <em>Je ne sais pas à qui m'adresser.</em> · <em>Cet étudiant cherche quelqu'un avec qui partager son appartement.</em>"]}],"part_passe":[{"h":"만들기","p":"155","items":["1군: 어간 + <em>-é</em> (<em>manger → mangé</em>) · 2군: 어간 + <em>-i</em> (<em>finir → fini, réussi</em>)","3군은 불규칙이 많음: <em>partir → parti, ouvrir → ouvert, mettre → mis, peindre → peint, dire → dit, savoir → su</em>"]},{"h":"동사로 쓸 때","p":"155–156","items":["<em>avoir, être</em>와 복합시제를 만듦: <em>Elle a parlé, il est sorti, il s'était trompé, avoir choisi</em>","<em>être</em>와 수동태를 만듦: <em>Elle est invitée / elle a été invitée.</em>","단독으로 명사·대명사에 걸림: <em>…un appartement habité par une vieille dame.</em> · <em>Surprise par sa réaction, elle n'a pas su quoi lui dire.</em>","복합형(조동사의 현재분사 + 과거분사)은 주절보다 이전: <em>Les élèves ayant obtenu la mention très bien au baccalauréat entrent sans examen dans cette école.</em> (= <em>qui ont obtenu</em>). <em>étant</em>은 자주 생략: <em>Restée handicapée à la suite d'un accident, elle a fait aménager son appartement.</em>","분사절 (자기 주어, 주로 원인·때, 주로 글에서): <em>L'usine de la ville ayant fermé, plus de cent personnes sont maintenant au chômage.</em> · <em>La nuit venue, il n'y a plus personne dans les rues de cette petite ville de province.</em>"]},{"h":"형용사로 쓸 때","p":"156–157","items":["<em>une porte ouverte, un oiseau mort, une boisson glacée, des légumes surgelés</em>","과거분사(수동 의미)와 동사적 형용사(능동 의미)를 구분: <em>amusé / amusant, choqué / choquant, déçu / décevant, énervé / énervant, bouleversé / bouleversant</em> · <em>Les spectateurs étaient très émus par le film.</em> / <em>C'était un film très émouvant.</em>"]},{"h":"일치","p":"157–158","items":["단독: 걸리는 명사에 일치: <em>une montre achetée en Suisse</em>","<em>être</em>와: 주어에 일치: <em>Elle est sortie après le déjeuner.</em> · <em>Nous avons été très intéressés par cette émission.</em> · <em>Ils se sont perdus dans la forêt.</em>","<em>avoir</em>와: 주어에는 절대 일치하지 않고, 직접목적어가 동사 앞에 오면 그것에 일치. 인칭대명사: <em>Ces poires sont délicieuses&nbsp;; je les ai achetées au marché.</em> · 관계대명사 <em>que</em>: <em>Les lettres que J.-P. Sartre a écrites à S. de Beauvoir…</em> · 앞에 온 명사: <em>Combien de disques as-tu achetés&nbsp;?</em> <em>Quelle peur j'ai eue&nbsp;!</em>","일치 때문에 발음이 바뀌기도 함: <em>il l'a mis</em> (le garçon) / <em>il l'a mise</em> (la fille)","<em>en</em>에는 일치하지 않음: <em>Des poires&nbsp;? J'en ai acheté.</em>","<em>me, te, nous, vous</em>는 직접·간접 둘 다 될 수 있음: <em>Il nous a écoutés.</em> (직접 → 일치) / <em>Il nous a parlé.</em> (간접 → 불일치)"]},{"h":"일치의 특수한 경우","p":"158","items":["비인칭 동사는 항상 불변: <em>J'ai mal supporté la chaleur qu'il a fait cet été.</em> · <em>Quelle tempête il y a eu cette nuit&nbsp;!</em>","<em>faire</em> + 원형, <em>laisser</em> + 원형은 불변: <em>je l'ai fait réparer</em> · <em>les jouets qu'il a laissé traîner par terre</em>","<em>voir, regarder, entendre, écouter, sentir, envoyer</em> + 원형: 앞의 직접목적어가 원형의 주어이기도 하면 일치: <em>L'actrice que j'ai vue jouer était merveilleuse.</em> / <em>La pièce que j'ai vu jouer était de Ionesco.</em>"]},{"h":"대명동사의 일치","p":"112–113","items":["재귀·상호: 조동사 앞의 직접목적어 대명사에 일치: <em>Les voyageurs se sont levés très tôt.</em> · <em>Marie et Lucie se sont rencontrées à la cafétéria du campus.</em>","직접목적어 명사가 뒤에 오면 불일치: <em>Caroline s'est lavée.</em> / <em>Caroline s'est lavé les mains.</em>","<em>se</em>가 간접목적어면 불일치: <em>Jacques et Paul se sont téléphoné hier soir.</em> · <em>…se sont succédé à la présidence</em> · <em>Elle s'est rendu compte qu'il était déjà midi.</em> · <em>Ils se sont vus</em> / <em>Ils ne se sont pas parlé.</em>","대명동사로만 쓰는 동사, 뜻이 바뀌는 대명동사, 수동 의미의 대명동사는 주어에 일치: <em>la vieille dame s'est évanouie</em> · <em>elle s'est mise à étudier le chinois</em> · <em>La pratique du sport s'est développée au XXe siècle.</em>"]},{"h":"수동태","p":"104–107","items":["능동의 직접목적어 → 주어, 능동의 주어 → <em>par</em> + 행위자, 동사 → <em>être</em> + 과거분사. <em>être</em>가 능동 동사의 시제를 받고, 과거분사는 항상 주어에 일치","시제는 <em>être</em>로 나타냄: <em>La loi est votée / sera votée / aura été votée / a été votée / était votée / avait été votée / fut votée / eut été votée</em> · 조건법 <em>serait / aurait été votée</em> · 접속법 <em>soit / ait été votée</em> · <em>va être votée / vient d'être votée</em>","부사는 보통 조동사와 과거분사 사이: <em>La décision sera bientôt prise.</em>","직접타동사만 수동이 됨 (<em>téléphoner à qqn</em>은 불가): ✗ <em>J'ai été demandé de venir par le directeur.</em> → <em>Le directeur m'a demandé de venir.</em> · ✗ <em>J'ai été offert un foulard.</em> → <em>On m'a offert un foulard.</em>","행위자가 중요하지 않거나 뻔하면 뺌. 능동의 주어가 <em>on</em>이면 행위자 없는 수동: <em>On a interdit le stationnement sur les trottoirs.</em> → <em>Le stationnement a été interdit sur les trottoirs.</em> 행위자가 인칭대명사면 수동을 피함","<em>par</em> 대신 <em>de</em>: 묘사 동사 (<em>accompagné, composé, couvert, décoré, entouré, fait, garni, orné, planté, précédé, rempli</em> 등, 특히 행위자가 무생물): <em>Le parc était entouré d'un très haut mur.</em> · 감정 동사 (<em>admiré, adoré, aimé, apprécié, craint, estimé, haï, méprisé, redouté, respecté</em> 등): <em>Le dictateur était craint de toute la population.</em>","같은 동사가 본뜻이면 <em>par</em>, 비유적 뜻이면 <em>de</em>: <em>Cet arbre a été touché par la foudre.</em> / <em>Je suis très touché de votre gentillesse.</em>","혼동 주의: <em>Elle est sortie.</em> (능동 복합과거) / <em>Elle est invitée.</em> (수동 현재)"]}],"part_present":[{"h":"만들기","p":"152","items":["현재 1인칭 복수(nous)의 어간 + <em>-ant</em>: <em>nous regardons → regardant</em> · <em>nous agissons → agissant</em> · <em>nous faisons → faisant</em>","불규칙 셋: <em>être → étant</em> · <em>avoir → ayant</em> · <em>savoir → sachant</em>"]},{"h":"동사로 쓸 때","p":"153","items":["주로 글에서 씀. 명사·대명사에 걸리지만 형태는 변하지 않음: ✗ <em>des gens portants des pancartes</em> → <em>des gens portant des pancartes</em>","자체 시간 가치가 없고 주절의 시제를 따름: <em>Voulant bronzer, elle se met / elle s'est mis / elle se mettra de la crème.</em>","부정·보어를 가질 수 있음: <em>Ne voulant pas bronzer, elle reste à l'ombre.</em>","관계절 가치: <em>Les personnes ayant un ticket bleu doivent se présenter au contrôle.</em> (= <em>qui ont</em>)","상황절 가치 (원인, 때): <em>Ne sachant pas comment vous joindre, je n'ai pas pu vous prévenir de mon retour.</em> (원인)","분사의 의미상 주어는 주절의 주어와 같아야 함: ✗ <em>Étant absent tout le week-end, ils n'ont pas pu me prévenir.</em> → <em>Étant absent tout le week-end, je n'ai pas pu être prévenu.</em>","분사절 (자기 주어를 가짐, 문장 앞, 쉼표, 주로 원인): <em>La neige n'arrêtant pas de tomber, la circulation était très difficile.</em>"]},{"h":"동사적 형용사 (adjectif verbal)","p":"153, 155","items":["형용사가 된 현재분사는 성·수 일치: <em>des livres intéressants, une rue très passante, une entrée payante</em>","비교: <em>Elle mène une vie fatigante.</em> (형용사) / <em>Ce traitement médical la fatiguant beaucoup, elle a dû arrêter de travailler.</em> (분사)","철자가 다른 짝: <em>convainquant / convaincant, différant / différent, provoquant / provocant, précédant / précédent, négligeant / négligent</em>","명사가 된 것: <em>un commerçant, un passant, un manifestant</em> · ✗ <em>un livre ennuyant</em> → <em>un livre ennuyeux</em>"]}],"gerondif":[{"h":"만들기","p":"154","items":["<em>en</em> + 현재분사"]},{"h":"쓰임","p":"154","items":["일상어에서 현재분사보다 훨씬 자주 씀","<b>같은 주어</b>가 하는 두 동작이 동시에 일어남을 나타냄","✗ <em>En fermant la porte, le téléphone a sonné.</em> (전화기가 문을 닫는 꼴) → <em>En fermant la porte, j'ai entendu le téléphone sonner.</em>"]},{"h":"상황보어로서의 뜻","p":"154","items":["때 (가장 흔함): <em>Mercredi, en sortant de la bibliothèque, j'ai rencontré deux camarades d'université.</em> · <em>Elle aime travailler en écoutant de la musique.</em>","지속을 강조할 때 <em>tout en</em>: <em>Elle aime travailler tout en écoutant de la musique.</em>","원인: <em>L'enfant a pris froid en sortant sans bonnet ni écharpe.</em>","방법: <em>Luc s'est mis en colère. Il est parti en claquant la porte.</em>","조건: <em>En arrivant de bonne heure le premier jour des soldes, vous ferez de bonnes affaires.</em>","대립 (<em>tout</em> 필수): <em>Tout en travaillant beaucoup pour ses examens, il fait souvent la fête.</em>"]},{"h":"혼동 주의","p":"154","items":["<em>J'ai aperçu Paul sortant du métro.</em> (분사: 나온 사람은 Paul) / <em>J'ai aperçu Paul en sortant du métro.</em> (제롱디프: 나온 사람은 나)","✗ <em>J'ai passé un an en apprenant le français.</em> → <em>J'ai passé un an à apprendre le français.</em>"]}]};
+  var DELA_SOT = [{"h":"원칙 (직설법)","p":"133–134","items":["주절의 동사가 과거(반과거, 복합과거, 단순과거, 대과거)면 종속절 동사도 과거 시제여야 함","✗ <em>Ma mère me disait toujours que je dois faire des études…</em> → <em>Ma mère me disait toujours que je devais faire des études pour être indépendant.</em> · ✗ <em>Il travaillait dans le jardin parce qu'il fait beau.</em> → <em>…parce qu'il faisait beau.</em>"]},{"h":"표: Je crois → Je croyais / J'ai cru","p":"134","items":["<em>qu'il est parti</em> → <em>qu'il était parti</em> (복합과거 → 대과거)","<em>qu'il vient de partir</em> → <em>qu'il venait de partir</em> (근접과거 → <em>venir</em> 반과거)","<em>qu'il est là</em> → <em>qu'il était là</em> (현재 → 반과거)","<em>qu'il sera là</em> → <em>qu'il serait là</em> (단순미래 → 과거 속 미래 = 조건법 현재 꼴)","<em>qu'il va être là</em> → <em>qu'il allait être là</em> (근접미래 → <em>aller</em> 반과거)","<em>qu'il sera parti</em> → <em>qu'il serait parti</em> (전미래 → 과거 속 전미래 = 조건법 과거 꼴)"]},{"h":"일치를 안 해도 되는 경우","p":"134","items":["주절이 복합과거이고 말하는 지금도 그 내용이 사실이면, 일치하지 않는 것도 허용됨 (원칙은 일치)","종속절이 일반적 진리일 때: <em>Le professeur expliquait aux élèves que la Terre tourne autour d'elle-même et autour du Soleil.</em>"]},{"h":"간접화법","p":"223–224","items":["전달 동사가 현재나 미래면 시제는 그대로: <em>Il me dit qu'il n'a pas bien noté ce que je viens d'expliquer.</em>","전달 동사가 과거(복합과거, 단순과거, 반과거, 대과거)면: 현재 → 반과거 · 복합과거 → 대과거 · 단순미래 → 과거 속 미래(조건법 현재 꼴) · 전미래 → 과거 속 전미래(조건법 과거 꼴) · 근접미래 → <em>aller</em> 반과거 + 원형 · 근접과거 → <em>venir</em> 반과거 + <em>de</em> + 원형","반과거·대과거는 그대로: <em>Il m'a dit qu'il était fatigué parce qu'il s'était couché tard.</em>","접속법은 그대로 (일상어에서는 접속법 시제 일치를 안 하므로): <em>Elle m'a dit qu'il fallait que j'aille à la Poste pour signaler mon changement d'adresse.</em>","조건법도 그대로: <em>Elle m'a dit qu'il faudrait repeindre la chambre des enfants.</em>","명령법은 전달 동사의 시제와 상관없이 <em>de</em> + 원형: <em>Le médecin m'a conseillé de ne pas consommer d'alcool pendant la durée du traitement.</em>","예: <em>Antoinette dit qu'elle a rencontré l'homme de sa vie, qu'elle vient de se fiancer, qu'elle va se marier.</em> → <em>Antoinette a dit qu'elle avait rencontré l'homme de sa vie, qu'elle venait de se fiancer, qu'elle allait se marier.</em>"]},{"h":"시간 표현 바꾸기","p":"225","items":["전달 동사가 과거면: <em>aujourd'hui → ce jour-là</em> · <em>hier → la veille</em> · <em>demain → le lendemain</em> · <em>avant-hier → l'avant-veille</em> · <em>après-demain → le surlendemain</em> · <em>dimanche prochain → le dimanche suivant</em> · <em>dimanche dernier → le dimanche précédent</em> · <em>il y a trois jours → trois jours plus tôt / avant</em> · <em>dans trois jours → trois jours plus tard / après</em> · <em>en ce moment → à ce moment-là</em> · <em>ici → là</em>","그 시점이 지금과 가까우면 시간 표현은 그대로 두되 시제 일치는 지킴: <em>Ce matin, le gardien m'a dit que la piscine était fermée pour travaux jusqu'à demain.</em>"]},{"h":"접속법의 시제 일치","p":"140","items":["일상어: 주절이 무엇이든 동시·이후는 접속법 현재, 이전은 접속법 과거. <em>Il est / sera / serait / était / a été content que vous soyez là.</em> · <em>Il était content que vous veniez le lundi suivant.</em> · <em>Elle regrettait / a regretté que tu aies oublié le rendez-vous.</em>","격식체(과거 맥락): 동시·이후는 접속법 반과거, 이전은 접속법 대과거. <em>Il était / fut content que son amie restât avec lui.</em> · <em>Elle regrettait / regretta qu'il eût oublié le rendez-vous.</em>"]},{"h":"시간절의 이전","p":"258","items":["<em>quand, lorsque, dès que, aussitôt que, une fois que, après que</em> + 복합시제. 조동사의 시제 = 주절의 시제","<em>a pris</em> (복합과거) / <em>donne</em> (현재) · <em>avait pris</em> (대과거) / <em>donnait</em> (반과거) · <em>aura pris</em> (전미래) / <em>donnera</em> (단순미래)","드문 용법: 전과거 / 단순과거 (<em>Dès que l'orage eut cessé, un bel arc-en-ciel apparut.</em>) · 복복합과거 / 복합과거"]}];
+  function delaHTML(blocks){
+    return '<div class="dela-head"><span class="dela-badge">DELATOUR</span><span class="dela-title">문법서 보충 설명</span></div>' +
+      blocks.map(function(bl){
+        return '<div class="dela-blk"><h4>' + bl.h + '</h4><ul>' + bl.items.map(function(i){ return '<li>' + i.replace(/✗/g, '<span class="x" aria-label="틀린 문장">✗</span>') + '</li>'; }).join('') + '</ul>' +
+          '<p class="dela-cite">출처: Delatour et al., <i>Nouvelle grammaire du français</i>, ' + bl.p + '.</p></div>';
+      }).join('');
+  }
+  var dsot = document.getElementById("dela-sot"); if (dsot) dsot.innerHTML = delaHTML(DELA_SOT);
 
   /* ---------- PONS sheet additions (only where they add something) ---------- */
   var PONS = {
@@ -1331,10 +1291,10 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       {h:"쓰임",items:["주로 문학 텍스트에서, 대부분 3인칭 단수·복수로 씀. 뜻은 복합과거와 같음"]},
       {h:"3인칭으로 알아 두면 좋은 형태",items:[
         "규칙: <em>entrer → il entra, ils entrèrent</em> · <em>choisir → il choisit, ils choisirent</em> · <em>rendre → il rendit, ils rendirent</em>",
-        "불규칙: <em>avoir → il eut, ils eurent</em> · <em>être → il fut, ils furent</em> · <em>aller → il alla, ils allèrent</em> · <em>faire → il fit, ils firent</em>"]}
+        "불규칙: <em>avoir → il eut, ils eurent</em> · <em>être → il fut, ils furent</em> · <em>faire → il fit, ils firent</em>","<em>aller → il alla, ils allèrent</em>: 다른 시제에서는 불규칙 동사지만 단순과거는 1군 규칙형과 같음"]}
     ]},
     futur_simple:{src:"2장 오른쪽 단 · 3장 왼쪽 단 · 4장 왼쪽 단",blocks:[
-      {h:"어간이 바뀌는 -er 동사",items:["현재형 je형에 -rai, -ras, -ra, -rons, -rez, -ront: <em>acheter → j'achète → j'achèterai</em>"]},
+      {h:"어간이 바뀌는 -er 동사",items:["현재형 je형에 -rai, -ras, -ra, -rons, -rez, -ront: <em>acheter → j'achète → j'achèterai</em> (예외: <em>envoyer → j'enverrai</em>)"]},
       {h:"근접미래와의 차이",items:["단순미래는 <b>예측</b>, 근접미래는 <b>의도</b>에 가까움. 말할 때는 근접미래를 더 많이 씀"]},
       {h:"간접화법 (주절이 과거일 때)",items:["단순미래 → 조건법 현재: <em>Il disait&nbsp;: « Je partirai au Canada. »</em> → <em>Il disait qu'il partirait au Canada.</em>"]}
     ]},
@@ -1360,7 +1320,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
         "접속사: <em>bien que</em> (~인데도), <em>pour que / afin que</em> (~하도록), <em>sans que</em> (~하지 않고), <em>jusqu'à ce que</em> (~할 때까지)",
         "부정된 생각·의견: <em>ne pas croire, ne pas penser, ne pas être sûr(e) que</em>"]},
       {h:"주의: 직설법을 쓰는 경우",items:[
-        "<em>espérer que</em> 뒤는 직설법: <em>J'espère qu'il va arriver.</em>",
+        "긍정문의 <em>espérer que</em> 뒤는 직설법: <em>J'espère qu'il va arriver.</em> (부정문이나 도치 의문문에서는 보통 접속법: 아래 붉은 상자 참고)",
         "긍정의 <em>penser que</em>도 직설법: <em>Je pense que tu as raison.</em> / 부정이면 접속법: <em>Je ne pense pas que tu aies raison.</em>"]}
     ]},
     imp_present:{src:"3장 가운데 단 · 6장 왼쪽 단",blocks:[
@@ -1368,9 +1328,8 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
         "현재형 1인칭 단수(je형) → tu 명령형, 현재형 1·2인칭 복수 → nous·vous 명령형",
         "<em>parler → parle, parlons, parlez</em> · <em>choisir → choisis, choisissons, choisissez</em> · <em>prendre → prends, prenons, prenez</em>"]},
       {h:"불규칙",items:[
-        "<em>avoir → aie, ayons, ayez</em> · <em>être → sois, soyons, soyez</em> · <em>faire → fais, faisons, faites</em>",
+        "<em>avoir → aie, ayons, ayez</em> · <em>être → sois, soyons, soyez</em> · <em>faire → fais, faisons, faites</em> (Delatour는 불규칙을 <em>avoir, être, savoir</em> 셋으로 보고, <em>faire</em>는 현재형 그대로라 규칙으로 봄)",
         "<em>aller → va, allons, allez</em> (y 앞에서는 <em>vas-y</em>)"]},
-      {h:"쓰임",items:["독일어 명령법과 같은 방식으로 쓴다고만 설명함 (명령·지시·권유)"]},
       {h:"긍정 명령의 대명사 (6장)",items:["강세형 대명사가 동사 뒤: <em>Donne-moi ton adresse.</em> 주소 줘 / 부정이면 앞: <em>Ne me donne pas ton adresse.</em>"]}
     ]},
     inf_present:{src:"4장 가운데 단 · 6장 왼쪽·가운데 단",blocks:[
@@ -1380,7 +1339,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
         "부정은 활용된 동사를 감싸고, 대명사는 그대로 동사원형 앞: <em>Non, je ne vais pas lui téléphoner.</em>"]}
     ]},
     part_present:{src:"3장 · 가운데 단 위",blocks:[
-      {h:"만들기",items:["현재형 1인칭 복수(nous)의 어간 + -ant: <em>nous restons → restant</em>","<em>avoir → ayant, être → étant, faire → faisant</em>"]},
+      {h:"만들기",items:["현재형 1인칭 복수(nous)의 어간 + -ant: <em>nous restons → restant</em>","<em>avoir → ayant, être → étant, faire → faisant</em> (Delatour는 불규칙을 <em>être, avoir, savoir → sachant</em> 셋으로 보고, <em>faisant</em>은 <em>nous faisons</em>에서 나온 규칙형으로 봄)"]},
       {h:"쓰임",items:["주로 공문서 같은 글에서 관계절(qui …)을 대신함: <em>Les personnes choisissant la randonnée ont rendez-vous à 9 heures.</em> (= qui choisissent) 하이킹을 고른 분들은 9시에 모입니다"]}
     ]},
     gerondif:{src:"3장 · 가운데 단",blocks:[
@@ -1638,6 +1597,9 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       pb.hidden = false;
     } else { pb.hidden = true; pb.innerHTML = ''; }
 
+    var db = $("d-dela"), dd = DELA[cur];
+    if (dd && dd.length){ db.innerHTML = delaHTML(dd); db.hidden = false; } else { db.hidden = true; db.innerHTML = ""; }
+
     var sl = $("d-sot"), sd = SOT[cur], stx = "";
     if (sd){
       if (sd.txt) stx = sd.txt;
@@ -1648,7 +1610,6 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       sl.hidden = false;
     } else { sl.hidden = true; sl.innerHTML = ''; }
 
-    $("d-prac").hidden = DRILL.indexOf(cur) < 0;
     $("d-links").innerHTML = t.links.map(function(k){ return '<button class="mini" data-t="' + k + '">' + T[k].ko + "</button>"; }).join("");
     renderConj();
   }
@@ -1694,288 +1655,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     }
   });
 
-  /* ---------- practice ---------- */
-  var DRILL = ["present","passe_compose","imparfait","plus_que_parfait","futur_simple","futur_anterieur","futur_proche","passe_recent","cond_present","cond_passe","subj_present","subj_passe","passe_simple"];
-  var KEYS = ["é","è","ê","à","â","ç","î","ï","ô","û","ù","ë","œ"];
-  /* o[0] is always the right answer; options are shuffled on screen */
-  var CHOOSE = [
-    {s:"Hier soir, nous ___, puis nous sommes allés nous coucher.",v:"regarder un film",ko:"어젯밤 우리는 영화를 한 편 보고 나서 잠자리에 들었다.",o:["avons regardé un film","regardions un film","regarderons un film","regardons un film"],why:"'보고 나서 잤다'처럼 끝난 사건을 차례로 늘어놓을 때는 복합과거입니다.",t:"passe_compose"},
-    {s:"Quand nous étions petits, nous ___ au foot tous les mercredis.",v:"jouer",ko:"어렸을 때 우리는 수요일마다 축구를 하곤 했다.",o:["jouions","avons joué","jouerons","jouons"],why:"<em>tous les mercredis</em>처럼 과거에 되풀이된 습관은 반과거입니다.",t:"imparfait"},
-    {s:"Nous ___ à Séoul depuis cinq ans.",v:"habiter",ko:"우리는 5년째 서울에 살고 있다.",o:["habitons","avons habité","habitions","habiterons"],why:"<em>depuis</em> + 기간으로 지금도 이어지는 일을 말할 때는 복합과거가 아니라 현재를 씁니다.",t:"present"},
-    {s:"Si j'avais le temps, je ___ plus souvent.",v:"voyager",ko:"시간이 있다면 더 자주 여행할 텐데.",o:["voyagerais","voyagerai","voyageais","aurais voyagé"],why:"<em>si</em> + 반과거 → 주절은 조건법 현재입니다. 지금 사실과 반대되는 가정입니다.",t:"cond_present"},
-    {s:"Si tu viens, on ___ au cinéma.",v:"aller",ko:"네가 오면 영화 보러 가자.",o:["ira","irait","allait","serait allé"],why:"<em>si</em> + 현재 → 주절은 단순미래입니다. 실현될 수 있는 조건입니다.",t:"futur_simple"},
-    {s:"Si elle avait su, elle ___.",v:"venir",ko:"그녀가 알았더라면 왔을 텐데.",o:["serait venue","viendrait","est venue","était venue"],why:"<em>si</em> + 대과거 → 주절은 조건법 과거입니다. <em>venir</em>는 <em>être</em>를 쓰므로 주어에 맞춰 <em>venue</em>가 됩니다.",t:"cond_passe"},
-    {s:"Il t'appellera quand il ___ à Paris.",v:"arriver",ko:"그는 파리에 도착하면 너에게 전화할 거야.",o:["arrivera","arrive","arriverait","arrivait"],why:"앞으로의 일이면 <em>quand</em> 뒤에도 미래형을 씁니다. 영어(<em>when he arrives</em>)와 다른 점입니다.",t:"futur_simple"},
-    {s:"Il faut que tu ___ tout de suite.",v:"partir",ko:"너는 지금 당장 떠나야 해.",o:["partes","pars","partiras","partirais"],why:"<em>il faut que</em> 뒤에는 접속법을 씁니다. <em>ils partent</em> → <em>part-</em> + <em>-es</em>.",t:"subj_present"},
-    {s:"J'espère qu'il ___ demain.",v:"venir",ko:"그가 내일 오면 좋겠다.",o:["viendra","vienne","viendrait","vînt"],why:"<em>espérer que</em>는 바람을 나타내지만 뒤에 직설법을 씁니다. 자주 틀리는 예외입니다.",t:"futur_simple"},
-    {s:"Je ne pense pas qu'il ___ raison.",v:"avoir",ko:"나는 그가 옳다고 생각하지 않는다.",o:["ait","a","aura","aurait"],why:"<em>penser que</em>가 부정문이 되면 접속법을 씁니다. 긍정문(<em>Je pense qu'il a raison.</em>)은 직설법입니다.",t:"subj_present"},
-    {s:"Bien qu'il ___ malade, il est venu travailler.",v:"être",ko:"그는 아픈데도 일하러 왔다.",o:["soit","est","était","serait"],why:"<em>bien que</em> 뒤에는 늘 접속법을 씁니다. 말할 때는 주절이 과거여도 접속법 현재를 씁니다.",t:"subj_present"},
-    {s:"Quand je suis arrivé au cinéma, le film ___.",v:"commencer",ko:"내가 극장에 도착했을 때 영화는 이미 시작했었다.",o:["avait commencé","a commencé","commençait","aurait commencé"],why:"과거의 기준점(도착)보다 먼저 끝난 일은 대과거입니다.",t:"plus_que_parfait"},
-    {s:"Demain à midi, nous ___ ce travail.",v:"finir",ko:"내일 정오면 우리는 이 일을 다 끝냈을 거야.",o:["aurons fini","finissons","avions fini","aurions fini"],why:"미래의 어느 시점(내일 정오)보다 먼저 끝나 있을 일은 전미래입니다.",t:"futur_anterieur"},
-    {s:"Nous ___ deux cafés, s'il vous plaît.",v:"vouloir",ko:"커피 두 잔 주시겠어요? (공손하게)",o:["voudrions","voudrons","avons voulu","veuillons"],why:"공손한 요청은 조건법 현재입니다. <em>Je voudrais …</em>가 가장 흔한 틀입니다.",t:"cond_present"},
-    {s:"Tu ___ me le dire !",v:"devoir",ko:"나한테 말했어야지!",o:["aurais dû","as dû","devras","dois"],why:"과거에 하지 않은 일을 탓하거나 후회할 때는 조건법 과거입니다 (<em>devoir</em> → <em>aurais dû</em>).",t:"cond_passe"},
-    {s:"Regarde ces nuages, il ___ !",v:"pleuvoir",ko:"저 구름 좀 봐, 곧 비가 오겠다!",o:["va pleuvoir","a plu","pleuvait","pleuvrait"],why:"눈앞의 조짐을 보고 곧 일어날 일을 말할 때는 근접미래입니다.",t:"futur_proche"},
-    {s:"Je ___ mon travail, je suis enfin libre !",v:"finir",ko:"방금 일을 끝냈어, 드디어 자유야!",o:["viens de finir","vais finir","finissais","finirai"],why:"'방금 ~했다'는 근접과거 <em>venir de</em> + 동사원형입니다.",t:"passe_recent"},
-    {s:"Ne le dérange pas, il ___.",v:"travailler",ko:"방해하지 마, 그 사람 지금 일하는 중이야.",o:["est en train de travailler","vient de travailler","a travaillé","travaillait"],why:"'지금 ~하는 중'을 강조할 때는 <em>être en train de</em> + 동사원형입니다. 현재형 <em>il travaille</em>로도 같은 뜻이 됩니다.",t:"present_prog"},
-    {s:"Après ___, il est sorti.",v:"manger",ko:"밥을 먹은 뒤 그는 나갔다.",o:["avoir mangé","manger","mangé","mangeant"],why:"<em>après</em> 뒤의 동사원형은 반드시 부정법 과거(<em>avoir / être</em> + 과거분사)입니다.",t:"inf_passe"},
-    {s:"Elle chante ___ sa douche.",v:"prendre",ko:"그녀는 샤워하면서 노래한다.",o:["en prenant","prenant","en prendre","à prendre"],why:"주어가 같은 두 동작이 동시에 일어나면('~하면서') 제롱디프(<em>en</em> + 현재분사)입니다.",t:"gerondif"},
-    {s:"Il ouvrit la porte et ___ sans un mot.",v:"sortir",ko:"그는 문을 열고 말없이 나갔다. (소설 문장)",o:["sortit","est sorti","sortait","sortira"],why:"앞의 <em>ouvrit</em>가 단순과거라서 이어지는 사건도 단순과거로 맞춥니다. 소설에서 쓰는 문어체입니다.",t:"passe_simple"},
-    {s:"Il y a trois ans, je ___ en France pour la première fois.",v:"venir",ko:"3년 전에 나는 처음으로 프랑스에 왔다.",o:["suis venu","viens","venais","viendrai"],why:"<em>il y a</em> + 기간('~ 전에')으로 한 번 일어난 일을 말할 때는 복합과거입니다. <em>venir</em>는 <em>être</em>를 씁니다.",t:"passe_compose"},
-    {s:"Si on ___ au cinéma ce soir ?",v:"aller",ko:"오늘 저녁 영화 보러 갈까?",o:["allait","va","irait","allât"],why:"<em>Si on</em> + 반과거 ?는 주절 없이 쓰는 제안 표현입니다.",t:"imparfait"},
-    {s:"Il pleuvait quand je ___.",v:"sortir",ko:"내가 나갔을 때 비가 오고 있었다.",o:["suis sorti","sortais","sortirai","sors"],why:"배경(비가 오고 있었다)은 반과거, 그 사이에 일어난 사건(나갔다)은 복합과거입니다.",t:"passe_compose"},
-    {s:"Je suis content que tu ___ là.",v:"être",ko:"네가 여기 있어서 기뻐.",o:["sois","es","seras","serais"],why:"감정(<em>être content que</em>) 뒤에는 접속법을 씁니다.",t:"subj_present"},
-    {s:"___ la porte, s'il te plaît.",v:"fermer",ko:"(친구에게) 문 좀 닫아 줘.",o:["Ferme","Fermes","Fermé","Fermer"],why:"<em>tu</em>에게 하는 명령은 현재형 tu형에서 주어를 빼고, -er 동사는 -s도 뺍니다.",t:"imp_present"}
-  ];
-  var SOTQ = [
-    {q:"« Je suis malade. »",s:"Elle a dit qu'elle ___ malade.",ko:"그녀는 아프다고 말했다.",o:["était","est","sera","a été"],why:"주절이 과거면 따옴표 안의 현재는 반과거로 바뀝니다.",t:"imparfait"},
-    {q:"« J'ai perdu mes clés. »",s:"Il a dit qu'il ___ ses clés.",ko:"그는 열쇠를 잃어버렸다고 말했다.",o:["avait perdu","a perdu","perdait","aurait perdu"],why:"따옴표 안의 복합과거는 대과거로 바뀝니다.",t:"plus_que_parfait"},
-    {q:"« Je viendrai demain. »",s:"Il a dit qu'il ___ le lendemain.",ko:"그는 다음 날 오겠다고 말했다.",o:["viendrait","viendra","venait","serait venu"],why:"단순미래는 조건법 현재로 바뀝니다. <em>demain</em>도 <em>le lendemain</em>으로 바뀝니다.",t:"cond_present"},
-    {q:"« J'aurai fini avant midi. »",s:"Elle a dit qu'elle ___ avant midi.",ko:"그녀는 정오 전에 끝내 놓겠다고 말했다.",o:["aurait fini","aura fini","avait fini","finirait"],why:"전미래는 조건법 과거로 바뀝니다.",t:"cond_passe"},
-    {q:"« Je vais déménager. »",s:"Il a dit qu'il ___ déménager.",ko:"그는 곧 이사할 거라고 말했다.",o:["allait","va","irait","est allé"],why:"근접미래는 <em>aller</em>만 반과거로 바꿉니다.",t:"futur_proche"},
-    {q:"« Je viens de rentrer. »",s:"Elle a dit qu'elle ___ de rentrer.",ko:"그녀는 막 돌아왔다고 말했다.",o:["venait","vient","viendrait","était venue"],why:"근접과거는 <em>venir</em>만 반과거로 바꿉니다.",t:"passe_recent"},
-    {q:"« Je voudrais partir. »",s:"Il a dit qu'il ___ partir.",ko:"그는 떠나고 싶다고 말했다.",o:["voudrait","voudra","veut","aurait voulu"],why:"조건법은 주절이 과거가 되어도 그대로입니다.",t:"cond_present"},
-    {q:"« Je travaillais à Lyon. »",s:"Il a dit qu'il ___ à Lyon.",ko:"그는 리옹에서 일하고 있었다고 말했다.",o:["travaillait","travaille","travaillera","travaillerait"],why:"반과거는 바뀌지 않고 그대로 반과거입니다.",t:"imparfait"},
-    {q:"« Tu viens ? »",s:"Il m'a demandé si je ___.",ko:"그는 내가 오는지 물었다.",o:["venais","viens","viendrai","suis venu"],why:"예/아니오 의문문은 <em>si</em> + 평서문 어순이 되고, 현재는 반과거로 바뀝니다.",t:"imparfait"},
-    {q:"« Où vas-tu ? »",s:"Elle m'a demandé où j'___.",ko:"그녀는 내가 어디 가는지 물었다.",o:["allais","irai","étais allé","allai"],why:"의문사 의문문은 의문사 + 평서문 어순이 되고, 현재는 반과거로 바뀝니다.",t:"imparfait"},
-    {q:"« Ferme la porte ! »",s:"Il m'a dit ___ la porte.",ko:"그는 나에게 문을 닫으라고 말했다.",o:["de fermer","fermer","que je fermais","ferme"],why:"명령문은 <em>de</em> + 동사원형으로 옮깁니다.",t:"imp_present"},
-    {q:"« Je suis prêt. »",s:"Il dit qu'il ___ prêt.",ko:"그는 준비됐다고 말한다.",o:["est","était","sera","serait"],why:"주절이 현재(<em>Il dit</em>)면 시제를 바꾸지 않습니다.",t:"present"},
-    {q:"« Nous partons ce soir. »",s:"Ils ont dit qu'ils ___ ce soir-là.",ko:"그들은 그날 저녁에 떠난다고 말했다.",o:["partaient","partent","partiront","étaient partis"],why:"현재는 반과거로, <em>ce soir</em>는 <em>ce soir-là</em>로 바뀝니다.",t:"imparfait"},
-    {q:"« Je me suis trompé. »",s:"Il a dit qu'il ___.",ko:"그는 자기가 착각했다고 말했다.",o:["s'était trompé","s'est trompé","se trompait","se serait trompé"],why:"대명동사도 같은 규칙입니다. 복합과거는 대과거로, 재귀대명사는 인칭에 맞춰 <em>se</em>로 바뀝니다.",t:"plus_que_parfait"}
-  ];
-
-  var P = {mode:"conj", tenses:["present","passe_compose","imparfait","futur_simple","cond_present","subj_present"], verbs:Object.keys(VERBS), q:null, done:false, right:0, total:0, streak:0, deck:[], idx:0};
-  var MISS_KEY = "french-tenses-miss";
-  var miss = {};
-  try { miss = JSON.parse(localStorage.getItem(MISS_KEY)) || {}; } catch (e) { miss = {}; }
-  function saveMiss(){ try { localStorage.setItem(MISS_KEY, JSON.stringify(miss)); } catch (e) {} }
-
-  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
-  function range(n){ var a = []; for (var i = 0; i < n; i++) a.push(i); return a; }
-  function toggle(arr, k){ var i = arr.indexOf(k); if (i < 0) arr.push(k); else if (arr.length > 1) arr.splice(i, 1); }
-  function norm(s){ return s.toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s*'\s*/g, "'").replace(/\s+/g, " ").trim(); }
-  function bare(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/œ/g, "oe"); }
-  /* "(e)" and "(s)" in an answer accept the letter, the bracketed form, or nothing */
-  function reSrc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\\\(e\\\)/g, "(?:e|\\(e\\))?").replace(/\\\(s\\\)/g, "(?:s|\\(s\\))?"); }
-  function matches(list, a){ return list.some(function(c){ return new RegExp("^" + reSrc(c) + "$").test(a); }); }
-  function segHTML(row){ return row.map(function(seg){ return seg[1] ? '<span class="' + seg[1] + '">' + esc(seg[0]) + "</span>" : esc(seg[0]); }).join(""); }
-  function vname(vk){ return (VERBS[vk].refl ? "se " : "") + VERBS[vk].inf; }
-
-  function newConj(){
-    var tk, vk, rows, i, tries = 0, last = P.q;
-    do {
-      tk = pick(P.tenses); vk = pick(P.verbs); rows = conj(tk, vk); i = Math.floor(Math.random() * rows.length);
-    } while (last && last.tk === tk && last.vk === vk && ++tries < 20);
-    var row = rows[i], pron = row[0][1] ? "" : row[0][0];
-    var rest = row.slice(pron ? 1 : 0).map(function(s){ return s[0]; }).join("");
-    var acc = [norm(pron + rest), norm(rest)];
-    if (/^qu/.test(pron)) acc.push(norm(pron.replace(/^que |^qu'/, "") + rest));
-    acc.slice().forEach(function(a){ var b = a.replace(/^(qu')?il(s?) /, "$1elle$2 "); if (b !== a) acc.push(b); });
-    P.q = {kind:"conj", tk:tk, vk:vk, i:i, row:row, acc:acc};
-  }
-
-  function hintFor(q){
-    var b = T[q.tk].b, V = VERBS[q.vk];
-    if (b.c){
-      var ak = V.refl ? "etre" : V.aux;
-      return "조동사 <em>" + (ak === "etre" ? "être" : "avoir") + "</em>의 " + AUXNAME[b.c] + " + 과거분사 <em>" + V.pp + "</em>" + (ak === "etre" ? " (주어에 성·수 일치)" : "");
-    }
-    if (b.p) return "<em>" + HELPNAME[b.p] + "</em> 현재형 + " + (b.link ? "<em>" + b.link + "</em> + " : "") + "동사원형 <em>" + V.inf + "</em>" + (V.refl ? " (재귀대명사는 동사원형 앞)" : "");
-    var f = T[q.tk].f, ends = [];
-    f.forEach(function(r){ if (r.ends && ends.indexOf(r.ends[q.i]) < 0) ends.push(r.ends[q.i]); });
-    var h = (f.length === 1 ? f[0].base + " + 어미 " : "어미 ") + "<em>" + ends.join(" / ") + "</em>";
-    if (["parler","finir","lever"].indexOf(q.vk) < 0) h += " · <em>" + V.inf + "</em>는 불규칙이라 어간을 따로 외워야 합니다";
-    if (V.refl) h += " · 재귀대명사는 동사 바로 앞";
-    return h;
-  }
-
-  function renderConjQ(){
-    var q = P.q, t = T[q.tk];
-    $("pcard").innerHTML =
-      '<p class="q-crumb">활용 쓰기 · ' + t.crumb + '</p>' +
-      '<p class="q-prompt"><span class="q-verb">' + vname(q.vk) + '</span><span class="q-tense">' + t.ko + '</span><span class="q-person">' + PRON[q.i] + '</span></p>' +
-      '<p class="q-task">주어에 맞게 활용해 쓰세요. 주어는 써도 되고 빼도 됩니다.</p>' +
-      '<div class="ans-row"><input id="p-ans" class="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="여기에 입력" aria-label="답"><button class="btn" id="p-check">확인</button></div>' +
-      '<div class="keys" aria-label="악센트 글자">' + KEYS.map(function(k){ return '<button class="key" data-key="' + k + '" tabindex="-1">' + k + '</button>'; }).join("") + '</div>' +
-      '<div class="q-tools"><button class="btn ghost" id="p-hint">힌트 보기</button><button class="btn ghost" id="p-skip">모르겠어요</button></div>' +
-      '<div id="p-hintbox"></div><div id="p-fb"></div>';
-    if (!$("view-practice").hidden) $("p-ans").focus({preventScroll:true});
-  }
-
-  function checkConj(skip){
-    if (P.done || P.q.kind !== "conj") return;
-    var inp = $("p-ans"), a = norm(inp.value), res = "no";
-    if (!skip && !a){ inp.focus(); return; }
-    if (!skip){
-      if (matches(P.q.acc, a)) res = "ok";
-      else if (matches(P.q.acc.map(bare), bare(a))) res = "accent";
-    }
-    P.done = true; P.total++;
-    if (res === "ok"){ P.right++; P.streak++; }
-    else { P.streak = 0; miss[P.q.tk] = (miss[P.q.tk] || 0) + 1; saveMiss(); }
-    inp.readOnly = true;
-    inp.classList.add(res === "ok" ? "ok" : "no");
-    $("p-check").hidden = true;
-    var head = res === "ok" ? "정답입니다" : res === "accent" ? "철자는 맞았는데 악센트가 다릅니다" : skip ? "정답은 이렇습니다" : "아쉽습니다. 정답은";
-    $("p-fb").innerHTML = fbHTML(res === "ok" ? "ok" : "no", head, '<span class="right">' + segHTML(P.q.row) + '</span>', verbNote(P.q.tk, P.q.vk), P.q.tk);
-    $("p-next").focus({preventScroll:true});
-    renderSide();
-  }
-
-  function fbHTML(cls, head, extra, why, tk){
-    return '<div class="fb ' + cls + '"><span class="lbl">' + head + '</span>' + (extra || "") + (why ? '<span class="why">' + why + '</span>' : "") +
-      '<div class="fb-row"><button class="btn" id="p-next">다음 문제</button><button class="btn ghost" data-go="' + tk + '">지도에서 ' + T[tk].ko + ' 보기</button></div></div>';
-  }
-
-  function renderMC(n){
-    var it = P.q.it, sot = P.mode === "sot";
-    var sent = it.s.replace("___", '<span class="blank" id="p-blank">&nbsp;</span>' + (it.v ? ' <span class="q-inf">(' + it.v + ')</span>' : ""));
-    $("pcard").innerHTML =
-      '<p class="q-crumb">' + (sot ? "시제 일치" : "시제 고르기") + ' · ' + P.idx + ' / ' + n + '</p>' +
-      (it.q ? '<p class="q-quote"><span class="lbl">따옴표 안 (직접화법)</span>' + it.q + '</p>' : "") +
-      '<p class="q-sent">' + sent + '</p>' +
-      '<p class="q-ko">' + it.ko + '</p>' +
-      '<p class="q-task">' + (sot ? "주절에 맞게 옮긴 형태를 고르세요." : "괄호 안 동사의 알맞은 형태를 고르세요.") + ' 숫자 키 1–4로도 고를 수 있습니다.</p>' +
-      '<div class="opts">' + P.q.order.map(function(oi, k){ return '<button class="opt" data-opt="' + oi + '"><i>' + (k + 1) + '</i>' + it.o[oi] + '</button>'; }).join("") + '</div>' +
-      '<div id="p-fb"></div>';
-  }
-
-  function pickMC(oi){
-    if (P.done || P.q.kind !== "mc") return;
-    var it = P.q.it, ok = oi === 0;
-    P.done = true; P.total++;
-    if (ok){ P.right++; P.streak++; }
-    else { P.streak = 0; miss[it.t] = (miss[it.t] || 0) + 1; saveMiss(); }
-    Array.prototype.forEach.call(document.querySelectorAll(".opt"), function(b){
-      var k = +b.getAttribute("data-opt");
-      b.disabled = true;
-      if (k === 0) b.classList.add("ok"); else if (k === oi) b.classList.add("no");
-    });
-    var bl = $("p-blank"); bl.textContent = it.o[0]; bl.classList.add("filled");
-    $("p-fb").innerHTML = fbHTML(ok ? "ok" : "no", ok ? "정답입니다" : "정답은 " + it.o[0], "", it.why, it.t);
-    $("p-next").focus({preventScroll:true});
-    renderSide();
-  }
-
-  function renderDone(n){
-    var r = P.total ? P.right / P.total : 0;
-    var msg = r >= 0.9 ? "거의 다 맞혔습니다. 다른 연습도 해 보세요."
-      : r >= 0.6 ? "옆의 '자주 틀린 시제'를 눌러 지도에서 다시 읽어 보세요."
-      : "지도에서 그 시제의 '언제 쓰나'를 먼저 읽고 다시 풀어 보세요.";
-    $("pcard").innerHTML =
-      '<p class="q-crumb">' + (P.mode === "sot" ? "시제 일치" : "시제 고르기") + ' · ' + n + '문제 끝</p>' +
-      '<p class="done-big"><b>' + P.right + '</b><span> / ' + P.total + '</span></p>' +
-      '<p class="q-task">' + msg + '</p>' +
-      '<div class="fb-row"><button class="btn" id="p-again">다시 섞어서 풀기</button></div>';
-    $("p-again").focus({preventScroll:true});
-  }
-
-  function renderSide(){
-    $("pscore").innerHTML = '<div><b>' + P.right + '</b><span>맞힌 문제</span></div><div><b>' + P.total + '</b><span>푼 문제</span></div><div><b>' + P.streak + '</b><span>연속 정답</span></div>';
-    if (P.mode === "conj"){
-      $("pset").innerHTML =
-        '<h3>연습할 시제</h3><div class="picks">' + DRILL.map(function(k){
-          return '<button class="pick" data-pt="' + k + '" aria-pressed="' + (P.tenses.indexOf(k) >= 0) + '">' + T[k].ko + (k === "passe_simple" ? " · 문어" : "") + '</button>';
-        }).join("") + '</div>' +
-        '<h3 style="margin-top:16px">동사</h3><div class="picks">' + Object.keys(VERBS).map(function(k){
-          return '<button class="pick fr" data-pv="' + k + '" aria-pressed="' + (P.verbs.indexOf(k) >= 0) + '">' + vname(k) + '</button>';
-        }).join("") + '</div>';
-    } else {
-      $("pset").innerHTML = '<p class="p-note">' + (P.mode === "sot" ? SOTQ.length : CHOOSE.length) + '문제를 섞어서 냅니다. 답을 고르면 이유가 나오고, 버튼 하나로 지도에서 그 시제를 열 수 있습니다.</p>';
-    }
-    var ks = Object.keys(miss).filter(function(k){ return T[k] && miss[k] > 0; }).sort(function(a, b){ return miss[b] - miss[a]; }).slice(0, 5);
-    $("pweak").innerHTML = '<h3>자주 틀린 시제</h3>' + (ks.length
-      ? '<ul class="weak-list">' + ks.map(function(k){ return '<li><button class="weak-i" data-go="' + k + '"><span>' + T[k].ko + '</span><span class="cnt">' + miss[k] + '번</span></button></li>'; }).join("") + '</ul><button class="linkbtn" id="p-clear">기록 지우기</button>'
-      : '<p class="p-note">틀린 문제의 시제가 여기에 모입니다. 누르면 지도에서 그 시제를 엽니다. 기록은 이 브라우저에만 남습니다.</p>');
-  }
-
-  function nextQ(){
-    P.done = false;
-    if (P.mode === "conj"){ newConj(); renderConjQ(); }
-    else {
-      var list = P.mode === "choose" ? CHOOSE : SOTQ;
-      if (P.idx >= P.deck.length){ P.q = {kind:"done"}; renderDone(list.length); }
-      else { P.q = {kind:"mc", it:list[P.deck[P.idx++]], order:shuffle([0,1,2,3])}; renderMC(list.length); }
-    }
-    renderSide();
-  }
-
-  function setMode(m){
-    P.mode = m; P.right = P.total = P.streak = 0; P.q = null;
-    if (m !== "conj"){ P.deck = shuffle(range((m === "choose" ? CHOOSE : SOTQ).length)); P.idx = 0; }
-    Array.prototype.forEach.call(document.querySelectorAll(".mode"), function(b){
-      b.setAttribute("aria-pressed", b.getAttribute("data-mode") === m ? "true" : "false");
-    });
-    nextQ();
-  }
-
-  function insertKey(ch){
-    var el = $("p-ans");
-    if (!el || el.readOnly) return;
-    var s = el.selectionStart == null ? el.value.length : el.selectionStart, e = el.selectionEnd == null ? s : el.selectionEnd;
-    el.value = el.value.slice(0, s) + ch + el.value.slice(e);
-    el.focus();
-    el.setSelectionRange(s + ch.length, s + ch.length);
-  }
-
-  /* ---------- views: #tense-map (default) / #practice ---------- */
-  function showView(){
-    var prac = location.hash === "#practice";
-    $("view-map").hidden = prac;
-    $("view-practice").hidden = !prac;
-    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(a){
-      if ((a.getAttribute("href") === "#practice") === prac) a.setAttribute("aria-current", "page");
-      else a.removeAttribute("aria-current");
-    });
-    if (prac && !P.q) setMode(P.mode);
-    if ($("tabs").getBoundingClientRect().top < 0) $("tabs").scrollIntoView({block:"start"});
-  }
-  function goMap(k){
-    if (location.hash !== "#tense-map") location.hash = "tense-map";
-    showView();
-    select(k, false);
-    smoothTo($("detail"));
-  }
-  window.addEventListener("hashchange", showView);
-
-  $("d-prac").addEventListener("click", function(){
-    P.tenses = [cur];
-    setMode("conj");
-    location.hash = "practice";
-  });
-
-  var VP = $("view-practice");
-  VP.addEventListener("mousedown", function(e){ if (e.target.closest && e.target.closest("[data-key]")) e.preventDefault(); });
-  VP.addEventListener("click", function(e){
-    var t = e.target, el;
-    if (!t.closest) return;
-    if ((el = t.closest("[data-mode]"))) return setMode(el.getAttribute("data-mode"));
-    if ((el = t.closest("[data-pt]"))){ toggle(P.tenses, el.getAttribute("data-pt")); P.right = P.total = P.streak = 0; return nextQ(); }
-    if ((el = t.closest("[data-pv]"))){ toggle(P.verbs, el.getAttribute("data-pv")); P.right = P.total = P.streak = 0; return nextQ(); }
-    if ((el = t.closest("[data-opt]"))) return pickMC(+el.getAttribute("data-opt"));
-    if ((el = t.closest("[data-key]"))) return insertKey(el.getAttribute("data-key"));
-    if ((el = t.closest("[data-go]"))) return goMap(el.getAttribute("data-go"));
-    if (t.closest("#p-check")) return checkConj(false);
-    if (t.closest("#p-skip")) return checkConj(true);
-    if (t.closest("#p-hint")){ $("p-hintbox").innerHTML = '<p class="hint-box">' + hintFor(P.q) + '</p>'; return; }
-    if (t.closest("#p-next")) return nextQ();
-    if (t.closest("#p-again")) return setMode(P.mode);
-    if (t.closest("#p-clear")){ miss = {}; saveMiss(); renderSide(); }
-  });
-  VP.addEventListener("keydown", function(e){
-    if (e.target.id !== "p-ans" || e.key !== "Enter" || e.isComposing) return;
-    e.preventDefault();
-    if (P.done) nextQ(); else checkConj(false);
-  });
-  document.addEventListener("keydown", function(e){
-    if (VP.hidden || !P.q || P.q.kind !== "mc" || P.done) return;
-    if (e.ctrlKey || e.metaKey || e.altKey || /^(input|textarea)$/i.test(e.target.tagName)) return;
-    var n = parseInt(e.key, 10);
-    if (n >= 1 && n <= 4){ e.preventDefault(); pickMC(P.q.order[n - 1]); }
-  });
-
   select(cur, false);
-  showView();
 })();
 </script>
 
@@ -1994,8 +1674,18 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     var next = current() === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", next);
     try { localStorage.setItem(KEY, next); } catch (e) {}
+    try { window.name = (window.name || "").replace(/(?:^|;)ft-theme=(light|dark)/g, "") + ";ft-theme=" + next; } catch (e) {}
     sync();
   });
+  /* links to the other topic page carry the chosen theme, so it survives even where storage is blocked */
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var h = a.getAttribute("href");
+    if (!/^(index|pronoms)\.html/.test(h)) return;
+    var t = root.getAttribute("data-theme"), parts = h.split("#"), path = parts[0].split("?")[0];
+    a.setAttribute("href", path + (t === "light" || t === "dark" ? "?theme=" + t : "") + (parts[1] ? "#" + parts[1] : ""));
+  }, true);
   if (mq){ if (mq.addEventListener) mq.addEventListener("change", sync); else if (mq.addListener) mq.addListener(sync); }
   sync();
 })();
