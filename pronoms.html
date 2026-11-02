@@ -211,7 +211,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   <nav class="site-nav" aria-label="주제">
     <a class="sn sn-bleu" href="index.html"><b>시제·법</b><small>les temps</small></a>
     <a class="sn sn-blanc" href="pronoms.html" aria-current="page"><b>대명사</b><small>les pronoms</small></a>
-    <span class="sn sn-rouge" aria-disabled="true"><b>관계사</b><small>준비 중</small></span>
+    <a class="sn sn-rouge" href="relatifs.html"><b>관계사</b><small>les relatifs</small></a>
   </nav>
 
   <header class="top">
@@ -461,7 +461,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     var a = e.target.closest ? e.target.closest("a[href]") : null;
     if (!a) return;
     var h = a.getAttribute("href");
-    if (!/^(index|pronoms)\.html/.test(h)) return;
+    if (!/^(index|pronoms|relatifs)\.html/.test(h)) return;
     var t = root.getAttribute("data-theme"), parts = h.split("#"), path = parts[0].split("?")[0];
     a.setAttribute("href", path + (t === "light" || t === "dark" ? "?theme=" + t : "") + (parts[1] ? "#" + parts[1] : ""));
   }, true);
