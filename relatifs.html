@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="프랑스어 관계사를 역할과 선행사 종류로 나눈 지도">
+<title>프랑스어 관계사 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Same tokens as index.html. Top: relative pronoun table (role x antecedent, after Delatour p.211);
+   tapping a cell rewrites the 3-step demo and the Delatour box below. No exercises on this page. */
+:root{
+  --paper:#F3F5F8;
+  --sheet:#FFFFFF;
+  --ink:#1A1D24;
+  --ink-2:#4B5260;
+  --ink-3:#858C9A;
+  --rule:#D9DEE6;
+  --hover:#EDF0F5;
+  --red:#D2283C;
+  --red-soft:#FCEBED;
+  --blue:#2A52C4;
+  --blue-soft:#E3EAFC;
+  --green:#1F8A4C;
+  --green-soft:#EBF6EF;
+  --green-ink:#14532D;
+  --fr-bleu:#000091;
+  --fr-blanc:#FFFFFF;
+  --fr-rouge:#E1000F;
+  --on-flag:#FFFFFF;
+  --on-blanc:#1A1D24;
+  --dela:#7F2425;
+  --dela-soft:#F8EEEE;
+  --dela-ink:#7F2425;
+  --hl:rgba(255,204,30,.55);
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-head:"Gowun Batang","AppleMyungjo","Batang",serif;
+  --f-fr:"Newsreader","Iowan Old Style",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111318; --sheet:#181B22; --ink:#E7E9EE; --ink-2:#B3B9C5; --ink-3:#777E8C;
+    --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
+    --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17);
+    --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
+    --fr-blanc:#E9EAEE;
+
+    --dela-soft:rgba(127,36,37,.22); --dela-ink:#E7A9AA; --hl:rgba(250,204,21,.32);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111318; --sheet:#181B22; --ink:#E7E9EE; --ink-2:#B3B9C5; --ink-3:#777E8C;
+  --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
+  --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17);
+  --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
+  --fr-blanc:#E9EAEE;
+
+  --dela-soft:rgba(127,36,37,.22); --dela-ink:#E7A9AA; --hl:rgba(250,204,21,.32);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+em{font-family:var(--f-fr);font-style:italic;font-size:1.06em}
+b{font-weight:600}
+.page{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:66px 72px;display:flex;flex-direction:column;gap:28px}
+
+/* ---------- site nav: 3 topic banners on one line = bleu · blanc · rouge ---------- */
+.site-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;border-bottom:3px solid var(--ink);margin-top:-8px}
+.sn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 6px 7px;text-decoration:none;line-height:1.3;text-align:center;min-width:0}
+.sn:first-child{border-top-left-radius:6px}
+.sn:last-child{border-top-right-radius:6px}
+.sn b{font-family:var(--f-head);font-weight:700;font-size:15px}
+.sn small{font-family:var(--f-fr);font-style:italic;font-size:12px;opacity:.82}
+.sn-bleu{background:var(--fr-bleu);color:var(--on-flag)}
+.sn-blanc{background:var(--fr-blanc);color:var(--on-blanc);box-shadow:inset 0 1px 0 var(--rule)}
+.sn-rouge{background:var(--fr-rouge);color:var(--on-flag)}
+.sn[aria-current="page"]{padding-top:16px;padding-bottom:9px}
+.sn[aria-current="page"] b{font-size:17px}
+a.sn:hover b{text-decoration:underline;text-underline-offset:3px}
+.sn[aria-disabled="true"]{cursor:default}
+.sn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;position:relative;z-index:2}
+
+/* ---------- header ---------- */
+.top{display:flex;flex-direction:column;gap:6px;max-width:68ch}
+.eyebrow{font-family:var(--f-fr);font-style:italic;color:var(--ink-3);font-size:16px;margin:0}
+h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);line-height:1.25;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{margin:4px 0 0;color:var(--ink-2)}
+
+/* ---------- triangle sheet ---------- */
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:24px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.tri-row{display:flex;align-items:center;gap:18px;margin-bottom:26px}
+.tri{position:relative;flex:1 1 auto;max-width:560px;height:230px}
+.tri svg.edge{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tri svg.edge polygon{fill:var(--hover);stroke:var(--ink-3);stroke-width:1.5}
+.col{position:absolute;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px}
+.c1{left:9%}.c2{left:27%}.c3{left:45%}.c4{left:61%}.c5{left:75%}
+.pr{appearance:none;-webkit-appearance:none;font-family:var(--f-fr);font-size:19px;line-height:1.2;color:var(--red);background:transparent;border:0;border-radius:6px;padding:2px 6px;cursor:pointer;white-space:nowrap;transition:background-color .15s, box-shadow .15s}
+.pr:hover{background:var(--hover)}
+.pr:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.pr.sel{background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue);color:var(--ink)}
+.pr .n{display:none}
+.verb{flex:none;display:flex;align-items:center;gap:10px}
+.verb .plus{font-size:22px;color:var(--ink-3)}
+.verb .box{border:1.5px solid var(--ink);border-radius:8px;padding:8px 12px;font-size:14px;font-weight:600;line-height:1.4}
+.verb .box em{display:block;font-weight:400;font-size:13.5px;color:var(--ink-2)}
+.nums{position:absolute;left:0;right:0;top:calc(100% + 6px);height:20px}
+.nums span{position:absolute;transform:translateX(-50%);font-size:13px;font-weight:600;color:var(--ink-3)}
+.tri-legend{list-style:none;margin:0;padding:12px 0 0;border-top:1px dashed var(--rule);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 22px;font-size:13.5px;color:var(--ink-2)}
+.tri-legend b{color:var(--ink);font-weight:600;margin-right:4px}
+.tri-legend em{color:var(--red)}
+.hint{margin:0;font-size:13px;color:var(--ink-3)}
+@media (max-width:600px){
+  .sheet{padding:18px 12px 16px}
+  .tri-row{flex-direction:column;align-items:stretch;gap:32px;margin-bottom:4px}
+  .tri{height:210px;width:100%}
+  .verb{align-self:flex-end}
+  .pr{font-size:17px;padding:2px 4px}
+}
+
+/* ---------- detail panel ---------- */
+.detail{display:flex;flex-direction:column;gap:14px;border-top:2px solid var(--ink);padding-top:16px;scroll-margin-top:16px;min-height:120px}
+.d-crumb{margin:0;font-size:13px;color:var(--ink-3)}
+.d-title{margin:0;font-family:var(--f-head);font-weight:700;font-size:clamp(24px,3.4vw,30px);line-height:1.3;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.d-title .fr{font-family:var(--f-fr);font-weight:400;color:var(--red)}
+.d-what{margin:0;max-width:70ch}
+.combo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-family:var(--f-fr);font-size:clamp(24px,4vw,32px);line-height:1.2}
+.combo .op{font-family:var(--f-body);font-size:16px;color:var(--ink-3)}
+.combo .res{padding:2px 12px;border-radius:8px;background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue)}
+.combo .res.bad{background:var(--red-soft);box-shadow:0 0 0 2px var(--red);text-decoration:line-through;text-decoration-color:var(--red)}
+.combo .res.rare{background:var(--hover);box-shadow:none;outline:1.5px dashed var(--ink-3);outline-offset:0}
+.combo .vb{font-family:var(--f-body);font-size:14px;color:var(--ink-2)}
+.tag{display:inline-block;font-family:var(--f-body);font-size:12.5px;font-weight:600;border-radius:999px;padding:1px 10px}
+.tag.ok{background:var(--green-soft);color:var(--green-ink)}
+.tag.no{background:var(--red-soft);color:var(--red)}
+.tag.rare{background:var(--hover);color:var(--ink-2)}
+.ex{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ex li{display:flex;flex-direction:column;border-left:2px solid var(--rule);padding-left:12px}
+.ex .fr{font-family:var(--f-fr);font-size:17.5px;line-height:1.45}
+.ex .fr b{color:var(--blue)}
+.ex .ko{font-size:14px;color:var(--ink-2)}
+.note{margin:0;padding:10px 14px;background:var(--hover);border:1px solid var(--rule);border-radius:8px;font-size:14.5px;max-width:74ch}
+.note .lbl{font-weight:600;color:var(--blue);font-size:13px;margin-right:8px}
+.linkbtn{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;font:inherit;font-size:13px;color:var(--ink-3);text-decoration:underline;cursor:pointer;align-self:flex-start}
+
+/* ---------- rules ---------- */
+.rules-title{margin:12px 0 0;font-family:var(--f-head);font-weight:700;font-size:24px}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 48px}
+@media (max-width:860px){.rules{grid-template-columns:minmax(0,1fr)}}
+.rule{border-top:2px solid var(--ink);padding-top:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.rule.wide{grid-column:1 / -1}
+.rule.red{border-top-color:var(--red)}
+.rule h3{margin:0;font-family:var(--f-head);font-weight:700;font-size:20px;line-height:1.35;text-wrap:balance}
+.rule.red h3{color:var(--red)}
+.rule h3 small{display:block;font-family:var(--f-body);font-size:14px;font-weight:600;color:var(--ink-2);margin-top:4px}
+.rule p{margin:0;max-width:68ch}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:600;color:var(--ink-3);padding:6px 8px;border-bottom:1.5px solid var(--ink);white-space:nowrap}
+.tbl td{padding:8px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl td.fr{font-family:var(--f-fr);font-size:16px}
+.tbl td.fr b{color:var(--blue)}
+.tbl td.pn{font-family:var(--f-fr);font-size:17px;color:var(--red);white-space:nowrap}
+.small{font-size:13.5px;color:var(--ink-2)}
+.line{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.line .slot{border:1.5px solid var(--ink);border-radius:7px;padding:3px 10px;font-family:var(--f-fr);font-size:16px;background:var(--sheet);line-height:1.35}
+.line .slot.v{font-family:var(--f-body);font-size:13.5px;font-weight:600}
+.line .slot.p{border-color:var(--red);color:var(--red)}
+.line .dash{color:var(--ink-3)}
+a.inline{color:var(--blue);font-weight:600;text-underline-offset:3px}
+
+/* PONS green box */
+.pons{border:1.5px solid var(--green);background:var(--green-soft);border-radius:10px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.pons-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.pons-badge{font-family:var(--f-fr);font-weight:600;font-size:12.5px;letter-spacing:.1em;color:var(--sheet);background:var(--green);border-radius:4px;padding:2px 7px;line-height:1.3}
+.pons-title{font-weight:600;font-size:14.5px;color:var(--green-ink)}
+.pons-src{font-size:12.5px;color:var(--ink-3);margin-left:auto}
+.pons ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.6}
+.pons li::marker{color:var(--green)}
+
+footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px}
+
+
+/* ---------- relatives table ---------- */
+.rt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rt{width:100%;min-width:520px;border-collapse:collapse}
+.rt thead th{font-size:12.5px;font-weight:600;color:var(--ink-3);text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink);vertical-align:bottom}
+.rt thead th small{display:block;font-weight:400;font-family:var(--f-fr);font-style:italic;font-size:12px}
+.rt tbody th{text-align:left;font-size:14px;font-weight:600;padding:8px;border-bottom:1px solid var(--rule);vertical-align:middle;width:30%}
+.rt tbody th small{display:block;font-weight:400;font-size:12px;color:var(--ink-3);font-family:var(--f-fr);font-style:italic}
+.rt td{padding:5px 4px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.pc{appearance:none;-webkit-appearance:none;font:inherit;font-family:var(--f-fr);font-size:19px;line-height:1.2;color:var(--red);background:transparent;border:1.5px solid transparent;border-radius:8px;padding:4px 8px;cursor:pointer;text-align:left;transition:background-color .15s, border-color .15s}
+.pc:hover{background:var(--hover)}
+.pc.sel{background:var(--blue-soft);border-color:var(--blue);color:var(--ink)}
+.pc:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.rt .none{color:var(--ink-3);padding-left:10px}
+@media (max-width:600px){.rt{min-width:0;table-layout:fixed}.rt tbody th{width:31%;font-size:12.5px;padding:7px 4px 7px 2px}.rt tbody th small{font-size:11px}.rt thead th{padding:6px 3px;font-size:11.5px}.rt td{padding:4px 1px}.pc{font-size:15.5px;padding:3px 4px;overflow-wrap:anywhere}}
+.tbl-note{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+.tbl-note i{font-style:italic}
+/* ---------- steps ---------- */
+.d-head{display:flex;flex-direction:column;gap:4px}
+.steps{display:flex;flex-direction:column;gap:14px}
+.step{display:flex;gap:12px;align-items:flex-start;opacity:0;transform:translateY(6px);transition:opacity .3s, transform .3s}
+.step.on{opacity:1;transform:none}
+.step .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--sheet);font-size:12.5px;font-weight:600;display:grid;place-items:center;margin-top:2px}
+.step .b{min-width:0;display:flex;flex-direction:column;gap:4px}
+.step .t{margin:0;font-size:14px;color:var(--ink-2)}
+.step .fr{margin:0;font-family:var(--f-fr);font-size:19px;line-height:1.5;overflow-wrap:anywhere}
+.noun{background:var(--hl);border-radius:3px;padding:0 2px}
+.piece{color:var(--red);font-weight:600;background:var(--red-soft);border-radius:4px;padding:0 4px}
+.hole{display:inline-block;min-width:2.8em;height:1.1em;border:1.5px dashed var(--ink-3);border-radius:5px;vertical-align:-.15em}
+.x{color:var(--red);font-weight:600}
+/* Delatour box (#7F2425) */
+.dela{border:1.5px solid var(--dela);background:var(--dela-soft);border-radius:10px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px}
+.rule .dela{padding:12px 14px 14px}
+.dela-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.dela-badge{font-family:var(--f-fr);font-weight:600;font-size:12.5px;letter-spacing:.1em;color:var(--on-flag);background:var(--dela);border-radius:4px;padding:2px 7px;line-height:1.3}
+.dela-title{font-weight:600;font-size:14.5px;color:var(--dela-ink)}
+.dela h4{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--dela-ink)}
+.dela ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.6}
+.dela li::marker{color:var(--dela)}
+.dela-cite{margin:6px 0 0;font-size:12px;color:var(--ink-3)}
+.dela-cite i{font-style:italic}
+@media (prefers-reduced-motion: reduce){.step{transition:none}}
+
+/* ---------- theme toggle (top right) ---------- */
+.theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.theme-btn:hover{color:var(--ink);border-color:var(--ink-3)}
+.theme-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.theme-btn svg{width:20px;height:20px}
+.theme-btn .i-sun{display:none}
+:root[data-theme-now="dark"] .theme-btn .i-sun{display:block}
+:root[data-theme-now="dark"] .theme-btn .i-moon{display:none}
+
+@media (prefers-reduced-motion: reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
+<script>
+/* apply the saved theme before first paint. The choice is kept three ways so it survives moving
+   between pages even where storage is blocked: ?theme= on topic links, window.name, localStorage. */
+(function(){
+  var t = null, K = "french-tenses-theme";
+  try { var m = /[?&]theme=(light|dark)\b/.exec(location.search); if (m) t = m[1]; } catch (e) {}
+  if (!t) { try { var n = /(?:^|;)ft-theme=(light|dark)/.exec(window.name || ""); if (n) t = n[1]; } catch (e) {} }
+  if (!t) { try { t = localStorage.getItem(K); } catch (e) {} }
+  if (t === "light" || t === "dark") {
+    document.documentElement.setAttribute("data-theme", t);
+    try { localStorage.setItem(K, t); } catch (e) {}
+    try { window.name = (window.name || "").replace(/(?:^|;)ft-theme=(light|dark)/g, "") + ";ft-theme=" + t; } catch (e) {}
+  }
+})();
+</script>
+</head>
+<body>
+<button type="button" class="theme-btn" id="themeBtn" aria-label="다크 모드 켜기" title="다크 모드 켜기">
+  <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+</button>
+<div class="page">
+  <nav class="site-nav" aria-label="주제">
+    <a class="sn sn-bleu" href="index.html"><b>시제·법</b><small>les temps</small></a>
+    <a class="sn sn-blanc" href="pronoms.html"><b>대명사</b><small>les pronoms</small></a>
+    <a class="sn sn-rouge" href="relatifs.html" aria-current="page"><b>관계사</b><small>les relatifs</small></a>
+  </nav>
+
+  <header class="top">
+    <p class="eyebrow">Les pronoms relatifs</p>
+    <h1>프랑스어 관계사 지도</h1>
+    <p class="lede">관계사는 두 문장을 하나로 이을 때, 뒤 문장에서 빠져나간 명사의 자리를 메우는 말입니다. 그래서 고르는 기준은 하나입니다. 그 명사가 뒤 문장에서 무슨 역할이었는지. 아래 표는 그 역할(줄)과 선행사의 종류(칸)로 관계사를 나눈 것입니다. 칸을 누르면 그 아래 3단계 설명과 붉은 Delatour 상자가 그 칸에 맞게 바뀝니다.</p>
+  </header>
+
+  <section class="sheet" aria-label="관계사 표">
+    <div class="rt-wrap">
+      <table class="rt">
+        <thead><tr><th scope="col">뒤 문장에서의 역할</th><th scope="col">사람</th><th scope="col">동물·사물</th><th scope="col">중성 <small>ce, quelque chose, rien</small></th></tr></thead>
+        <tbody id="rt-body"></tbody>
+      </table>
+    </div>
+    <p class="tbl-note">표의 틀은 Delatour의 관계대명사 표를 따릅니다 (동물은 전치사 뒤에서 사물과 같이 <em>lequel</em> 계열). 출처: Delatour et al., <i>Nouvelle grammaire du français</i>, 211.</p>
+  </section>
+
+  <section class="detail" id="detail" aria-live="polite">
+    <div class="d-head">
+      <p class="d-crumb" id="d-crumb"></p>
+      <h2 class="d-title" id="d-title"></h2>
+    </div>
+    <div class="steps" id="steps"></div>
+    <div class="dela" id="d-dela" hidden></div>
+  </section>
+
+  <h2 class="rules-title">관계절 전체 규칙</h2>
+  <div class="rules" id="rules"></div>
+
+  <footer>초록 상자: PONS 「Grammatik Französisch – Auf einen Blick」 4장 관계절 부분(제목과 공식 박스)을 한국어로 정리<br>붉은 상자와 표의 틀: Yvonne Delatour et al., <i>Nouvelle grammaire du français</i> (Paris: Hachette Français Langue Étrangère, 2004), ISBN 978-2-01-155846-6. 해당 쪽의 내용을 한국어로 정리하고 예문은 책에서 짧게 인용<br>표 아래 3단계 예문: 이 사이트에서 만든 예문</footer>
+</div>
+
+<script>
+(function(){
+  var DELA = {"qui":[{"h":"쓰임: 관계절의 주어","p":"204","items":["선행사(관계대명사가 대신하는 말)는 사람·동물이든 사물·생각이든 상관없음","선행사가 명사: <em>Le diamant et l'émeraude sont deux pierres précieuses qui coûtent très cher.</em> · <em>Un spéléologue est un homme qui explore les cavernes et les grottes souterraines.</em>","선행사가 대명사: <em>Adressez-vous à l'employé du guichet n° 5, celui qui s'occupe des passeports.</em> · <em>Plusieurs projets ont été présentés&nbsp;; c'est le mien qui a été choisi.</em> · <em>La politesse, c'est quelque chose qui facilite les relations humaines.</em>"]},{"h":"주의","p":"102, 204–205","items":["<em>qui</em>는 절대 모음 생략을 하지 않음: ✗ <em>L'homme qu'explore…</em>","✗ <em>Les enfants qu'ils sont sages auront des bonbons.</em> → <em>Les enfants qui sont sages auront des bonbons.</em>","✗ <em>J'ai un ami lequel est russe.</em> → <em>J'ai un ami qui est russe.</em>","선행사가 인칭대명사면 동사는 그 대명사의 인칭에 맞춤: <em>C'est moi qui ai fait ça.</em> · ✗ <em>C'est nous qui sont arrivés les premiers.</em> → <em>C'est nous qui sommes arrivés…</em>","같은 규칙: <em>Vous qui êtes de Toulouse, indiquez-moi un bon restaurant dans votre ville&nbsp;!</em>"]},{"h":"그 밖의 쓰임","p":"205","items":["격식체나 법률 문장에서는 <em>qui</em> 대신 <em>lequel</em>을 쓰기도 함: <em>On a interrogé les témoins de l'accident, lesquels ont donné différentes versions des faits.</em>","속담·굳은 표현에서는 선행사 없이 <em>qui</em> = <em>celui qui</em>: <em>Qui dort, dîne.</em> · <em>Qui vivra, verra.</em>","<em>qui</em>가 선행사 바로 뒤에 오지 않을 때도 있음: <em>Où est Paul&nbsp;? Je l'ai vu il y a cinq minutes qui sortait de l'appartement.</em> · <em>Le train a du retard. Mais non, le voilà qui arrive.</em>"]}],"que":[{"h":"쓰임: 관계절의 직접목적어","p":"205","items":["선행사는 사람이든 사물이든 상관없음","선행사가 명사: <em>Nous avons des cousins brésiliens que nous voyons très rarement.</em> · <em>C'est de la confiture de framboise que j'ai faite avec les fruits du jardin.</em>","선행사가 대명사: <em>C'est elle que j'ai proposée pour le poste d'assistante de direction.</em> · <em>Parmi tous les romans de Jules Verne, il y en a certains que j'aime moins que les autres.</em> · <em>Dans un village, le boulanger est quelqu'un que tout le monde connaît.</em>"]},{"h":"형태","p":"205, 305","items":["모음이나 무음 <em>h</em> 앞에서 <em>que → qu'</em>: <em>Voilà le livre qu'il m'a offert.</em> · <em>Voici la maison qu'il / qu'elle / qu'on vient d'acheter.</em>","격식체에서는 발음 때문에 <em>qu'on</em> 대신 <em>que l'on</em>: <em>Naguère est un mot que l'on / qu'on emploie peu.</em>"]},{"h":"그 밖에","p":"158, 205, 209","items":["<em>que</em>가 보어(attribut)일 수도 있음: <em>L'amateur de vin que vous êtes appréciera sûrement ce merveilleux bordeaux.</em> · <em>…ce magnifique château qu'est Versailles.</em>","관계절의 주어가 명사이고 동사에 보어가 없으면 도치가 잦음: <em>Le bruit que fait cette machine est insupportable.</em> = <em>Le bruit que cette machine fait est insupportable.</em>","<em>avoir</em> 복합시제에서 과거분사는 <em>que</em>가 받는 선행사에 일치: <em>Les lettres que J.-P. Sartre a écrites à S. de Beauvoir…</em> (아래 「일치」 참고)"]}],"dont":[{"h":"쓰임: de로 이어지는 보어를 대신함","p":"206","items":["선행사는 사람이든 사물이든 상관없음","명사의 보어: <em>Je suis très content de mon téléphone portable dont l'écran est très lisible.</em> · <em>Nous avons un ami américain dont le nom de famille est d'origine française.</em>","동사의 보어: <em>J'ai écouté avec plaisir ce pianiste dont on m'avait beaucoup parlé.</em> (<em>parler de</em>) · <em>Lucile a offert à sa fille la montre dont elle avait très envie.</em> (<em>avoir envie de</em>)","형용사의 보어: <em>J'ai acheté un ordinateur dont je suis très satisfait.</em> (<em>être satisfait de</em>)","수 가운데 일부: <em>J'ai acheté trois pull-overs dont un en cachemire et soie.</em> (= 그중 하나는)"]},{"h":"주의","p":"206","items":["소유형용사를 겹쳐 쓰지 않음: ✗ <em>…un ami américain dont son nom de famille est d'origine française.</em>","<em>de</em>로 받는 동사를 <em>que</em>로 받지 않음: ✗ <em>…la montre qu'elle avait envie.</em>"]},{"h":"dont을 쓸 수 없는 경우","p":"208–209","items":["복합 전치사(<em>à côté de, près de, à cause de, au cours de, au milieu de, au-dessus de</em> 등) 뒤에는 <em>dont</em>을 쓸 수 없고 <em>de qui</em> / <em>duquel</em>을 씀: <em>Les enfants à côté de qui / à côté desquels j'étais assis pendant le spectacle n'ont pas cessé de rire et de parler.</em>","<em>Il y a souvent des concerts dans l'église en face de laquelle j'habite.</em> · <em>Dans leur salon, il y a un canapé près duquel ils ont placé un lampadaire.</em>","관계사가 '전치사가 붙은 명사'의 보어일 때도 <em>dont</em> 대신 <em>duquel</em> (주로 글에서): <em>L'homme avait un gros chien à la vue duquel l'enfant se mit à hurler.</em> · <em>C'était une grande maison sur les murs de laquelle grimpait une vigne vierge.</em>"]}],"ce_relatif":[{"h":"ce + qui / que / dont","p":"51, 206","items":["선행사가 중성 대명사 <em>ce</em>이고, <em>ce</em>가 무엇인지는 문맥이 정함","<em>Voici le menu. Choisis ce qui te plaît.</em> (<em>qui</em>: 주어) · <em>Écoutez bien ce que je vais dire.</em> (<em>que</em>: 직접목적어) · <em>J'ai trouvé tout ce dont j'avais besoin dans cette boutique de mode.</em> (<em>avoir besoin de</em>)","✗ <em>…tout ce que j'avais besoin.</em> → <em>…tout ce dont j'avais besoin.</em>","<em>Il fait ce qu'il veut.</em> · <em>Choisis ce que tu veux comme dessert.</em> · <em>Il m'a raconté tout ce qui s'était passé.</em>"]},{"h":"앞 문장 전체를 받는 ce","p":"51, 206–207","items":["<em>Les Dufort nous ont invités à dîner dimanche, ce qui nous a fait plaisir.</em> (<em>ce</em> = 초대받은 일)","<em>Beaucoup de piétons traversent hors des passages protégés, ce que je trouve très dangereux.</em>","<em>Jules et Marie viennent d'acheter une maison à la campagne, ce dont ils rêvaient depuis bien longtemps&nbsp;!</em>","<em>Il s'est mis à pleuvoir, ce qui a obligé tout le monde à rentrer.</em>"]},{"h":"혼동 주의","p":"51, 199–200, 209, 228","items":["<em>ce</em>(것·일)와 <em>ceux</em>(사람들)를 구분: <em>Il fait ce qu'il veut.</em> / <em>Il va inviter seulement ceux qu'il connaît bien.</em>","<em>ce</em> + 전치사 + <em>quoi</em>는 표의 중성 칸, 강조 구문 <em>c'est ce qui… / ce qui…, c'est…</em>는 아래 「강조 구문」 참고","간접의문문의 <em>ce qui / ce que</em>는 관계절이 아니라 의문사가 바뀐 것: <em>« Qu'est-ce qui se passe&nbsp;? »</em> → <em>Tout le monde se demande ce qui se passe.</em> (아래 「헷갈리는 같은 꼴」 참고)"]}],"ou":[{"h":"장소","p":"207, 211","items":["<em>La Bourgogne et le Bordelais sont des régions où on produit de très bons vins.</em> · <em>L'appartement de Sophie a une terrasse où elle a installé un barbecue.</em>","부사 <em>là, partout</em>가 선행사일 때: <em>Tournez à droite, là où il y a une station d'essence.</em> · <em>Partout où Julien va, il se fait des amis.</em>","전치사 <em>de, par</em>와 함께: <em>Montez au dernier étage de la tour Eiffel d'où vous aurez une vue magnifique sur Paris.</em> · <em>Indiquez-moi la route par où il faut passer.</em>","사람이 있는 곳(누구의 집)은 <em>où</em>가 아니라 <em>chez qui</em> (관계사 표)"]},{"h":"때","p":"207","items":["선행사가 때를 나타내는 명사(<em>l'époque, l'instant, le moment, l'heure, le mois, la saison</em> 등): <em>Nous étions aux États-Unis l'année où il y a eu un violent tremblement de terre en Californie.</em> · <em>Je suis arrivé un jour où il y avait beaucoup d'embouteillages…</em>","✗ <em>un jour quand il y avait…</em>","<em>époque, date, heure</em> 뒤에는 <em>à laquelle</em>도 씀: <em>Précise-moi l'heure à laquelle tu arriveras.</em>","<em>la première fois, la dernière fois</em> 뒤에는 보통 <em>que</em>: <em>La première fois que je l'ai vu, c'était dans le train Paris-Rome.</em>"]},{"h":"형태와 혼동","p":"201, 207, 211, 307","items":["격식체에서는 발음 때문에 <em>où l'on</em>: <em>…des régions où l'on produit…</em>","<em>où</em>의 악센트가 접속사 <em>ou</em>와 구분해 줌: <em>Voici la maison où j'habite.</em> / <em>Tu veux du thé ou du café&nbsp;?</em>","강조 구문 <em>c'est… que</em>에서는 <em>où</em>를 쓰지 않음: ✗ <em>C'est à Bordeaux où je pars.</em> → <em>C'est à Bordeaux que je pars.</em>","원형과 함께 '~할 곳': <em>Il cherchait un endroit calme où passer ses vacances.</em>"]}],"prep_qui":[{"h":"쓰임","p":"207–208, 211","items":["선행사가 사람이면 전치사 + <em>qui</em> 또는 전치사 + <em>lequel</em>: <em>C'est un ami avec qui / avec lequel je vais souvent faire du vélo.</em>","✗ <em>L'ami que je fais du vélo avec.</em>","<em>Alice est une jeune fille sur qui je peux vraiment compter pour garder les enfants.</em> (<em>compter sur qqn</em>) · <em>J'aime beaucoup les cousins chez qui nous sommes invités samedi.</em>","전치사 + <em>qui</em>가 전치사 + <em>lequel</em>보다 더 자주 쓰임","선행사가 <em>quelqu'un, personne</em>이면 <em>qui</em>만 씀: <em>C'est vraiment quelqu'un en qui on peut avoir confiance.</em> · <em>Je ne connais personne à qui tu pourrais demander cela.</em>","관계사 표: 사람에게 <em>à qui</em>(<em>auquel</em>), <em>pour qui</em>(<em>pour lequel</em>), <em>à côté de qui</em>(<em>à côté duquel</em>), 장소는 <em>chez qui</em>","원형과 함께 '~할 사람': <em>Elle est seule. Elle n'a personne à qui parler.</em>"]}],"lequel":[{"h":"형태","p":"207–208","items":["<em>lequel, laquelle, lesquels, lesquelles</em>: 선행사의 성·수에 맞춤","<em>à</em>와 축약: <em>auquel, auxquels, auxquelles</em> (단 <em>à laquelle</em>)","<em>de</em>와 축약: <em>duquel, desquels, desquelles</em> (단 <em>de laquelle</em>)"]},{"h":"쓰임","p":"204–205, 207–208","items":["선행사가 동물이나 사물이면 전치사 + <em>lequel…</em>: <em>Au zoo, il y a des animaux auxquels il est interdit de donner de la nourriture.</em> · <em>Voici des photos sur lesquelles on peut voir toute ma famille.</em> · <em>Une tondeuse est une machine avec laquelle on coupe l'herbe des pelouses.</em>","✗ <em>C'est la raison que j'étais absent.</em> → <em>C'est la raison pour laquelle j'étais absent.</em>","사람에게도 쓸 수 있지만(<em>avec lequel</em>) 전치사 + <em>qui</em>가 더 흔함","복합 전치사 뒤에서는 <em>dont</em> 대신 <em>duquel / de laquelle / desquel(le)s</em> (표의 <em>dont</em> 칸 참고)","격식체·법률 문장에서는 주어 <em>qui</em> 대신 쓰기도 함: <em>…les témoins de l'accident, lesquels ont donné différentes versions des faits.</em> 보통 문장에서는 ✗ <em>J'ai un ami lequel est russe.</em>"]},{"h":"혼동 주의","p":"184","items":["의문대명사 <em>lequel</em>과 꼴·축약이 같음: <em>Il y a trois guichets. Auquel dois-je m'adresser&nbsp;?</em> (의문)"]}],"prep_quoi":[{"h":"쓰임","p":"200, 209–211","items":["선행사가 <em>ce, quelque chose, rien</em>일 때: <em>Les droits de l'homme, c'est ce pour quoi nous nous battons.</em> · <em>La violence à l'école, c'est quelque chose contre quoi il faut lutter.</em> · <em>Mes vacances, il n'y a rien à quoi je tienne davantage&nbsp;!</em>","마지막 예처럼 부정 표현 뒤에서는 접속법이 올 수 있음 (아래 「관계절의 법」 참고)","앞 문장 전체를 받는 굳은 표현: <em>Range tes affaires, après quoi tu pourras jouer&nbsp;!</em> · <em>Mes fenêtres sont exposées au sud, grâce à quoi j'ai un balcon très fleuri.</em> · <em>Félix n'a que dix minutes de retard&nbsp;; il n'y a pas de quoi s'inquiéter.</em> · <em>N'oublie pas ta carte d'étudiant, faute de quoi on ne te laissera pas entrer.</em>","강조 구문: <em>…c'est ce à quoi aspirent les promeneurs.</em> · <em>…c'est ce sur quoi j'ai été interrogé à l'examen.</em>","관계사 표: 중성 선행사에는 <em>à quoi, pour quoi, à côté de quoi</em>"]}],"celui_qui":[{"h":"쓰임","p":"50, 204","items":["<em>celui, celle, ceux, celles</em>(단순형)는 혼자 못 쓰고 뒤에 <em>de</em>나 관계대명사가 와야 함: <em>J'ai choisi celle que proposait le réseau X.</em> · <em>Il y a deux chemins pour aller au village&nbsp;; celui qui passe par la forêt est le plus court.</em>","✗ <em>Donnez-moi celui-là qui est sur la table.</em> → <em>Donnez-moi celui qui est sur la table.</em>","<em>ceux qui</em> = '~하는 사람들'(앞의 명사를 받지 않음): <em>La montagne attire ceux qui aiment l'air pur et la solitude.</em>","관계절이 생략되고 과거분사나 <em>de</em> 아닌 전치사가 바로 올 수도 있음: <em>…ceux causés par l'alcool sont les plus fréquents.</em> (= <em>ceux qui sont causés</em>) · <em>…celles sur le sport.</em>","26장의 예: <em>Adressez-vous à l'employé du guichet n° 5, celui qui s'occupe des passeports.</em>"]}],"relatif_indefini":[{"h":"쓰임","p":"274","items":["Delatour는 대립·양보 표현 안에서 '부정(不定) 관계대명사'로 다룸. 뒤에는 접속법","<em>quoi que</em> (<em>quoi</em>는 동사의 보어, <em>faire, dire, penser</em>와 자주): <em>Quoi que je dise, quoi que je fasse, tu me critiques.</em> · <em>Quoi qu'il arrive, elle garde son sang-froid.</em>","<em>où que</em>: <em>À Paris, où qu'on aille, il y a toujours un café&nbsp;!</em> · <em>Olivier est très sociable. Où qu'il soit, il se fait des copains.</em>","<em>qui que</em> (드묾, 정해지지 않은 사람): <em>Qui que vous soyez, vous devez respecter le code de la route.</em>"]},{"h":"혼동 주의","p":"274","items":["<em>quoi que</em>(무엇을 ~하든)와 <em>quoique</em>(~인데도)를 구분: <em>J'ai raison quoi que vous en pensiez.</em> / <em>J'ai raison quoique cela paraisse surprenant.</em>"]}]};
+  var RULES = [{"id":"r-what","title":"관계절이란","sub":"선행사를 좁히거나, 설명을 덧붙이거나, 묘사함","blocks":[{"h":"관계절이란","p":"204","items":["관계절은 관계대명사로 시작하고, 관계대명사는 '선행사'라는 명사나 대명사를 대신함. 관계대명사의 꼴은 관계절 안에서의 기능에 따라 바뀜: <em>Le chat est un animal domestique qui aime la compagnie de l'homme.</em>","선행사의 뜻을 좁힘: <em>L'article que je viens de lire présente un point de vue intéressant sur le clonage humain.</em>","설명을 덧붙임: <em>Ma sœur, qui parle très bien le chinois, a trouvé facilement du travail.</em>","묘사함: <em>Nous avons visité un vieux château d'où on domine toute la vallée.</em>"]}],"wide":false},{"id":"r-mode","title":"관계절의 법","sub":"보통 직설법, 바람·최상급·부정 뒤에는 접속법","blocks":[{"h":"관계절의 법","p":"210–211, 249","items":["보통 직설법","가정이면 조건법: <em>Je connais un guide qui peut nous emmener au sommet du mont Blanc.</em> (확실한 정보) / <em>Je connais un guide qui pourrait nous emmener au sommet du mont Blanc.</em> (그가 시간이 된다면) · <em>…cette maison de campagne qui nous permettrait d'accueillir nos amis pendant le week-end.</em>","바람·요청이면 접속법: <em>J'ai trouvé un hôtel où les chiens sont acceptés.</em> (현실) / <em>Je cherche un hôtel où les chiens soient acceptés.</em> (바람) · <em>Y a-t-il parmi vous quelqu'un qui sache parler le coréen&nbsp;?</em> (요청)","목적(31장): <em>Cette entreprise recherche une assistante de direction qui soit parfaitement trilingue.</em> · <em>Nous aimerions trouver un appartement où les enfants aient chacun leur chambre.</em>","최상급이나 <em>le seul, l'unique, le premier</em> 뒤(예외·제한)면 접속법: <em>C'est le plus beau film que j'aie vu cette année.</em> · <em>Neil Armstrong est le premier homme qui ait marché sur la Lune.</em>","부정 표현(<em>rien, personne, aucun(e), pas un(e), pas de, ne… que</em> 등) 뒤면 접속법: <em>On n'a pas encore trouvé de médicament qui puisse guérir cette maladie.</em> · <em>Il n'y a que le titulaire qui connaisse le code de sa carte de crédit.</em>","단순한 사실 확인이면 최상급 뒤라도 직설법: <em>Ils habitent dans la plus haute tour que vous trouverez à gauche en sortant du métro.</em> / <em>C'est la plus haute tour qu'on ait construite à Paris.</em>","접속법을 <em>jamais</em>로 강조: <em>C'est la plus belle mise en scène de Carmen que j'aie jamais vue.</em>","가능성을 강조할 때 전치사 + 관계사나 <em>où</em> 뒤에 원형 (주절과 같은 주어): <em>Elle n'a personne à qui parler.</em> · <em>Pedro aimerait trouver deux étudiants avec qui partager son appartement.</em> · <em>Il cherchait un endroit calme où passer ses vacances.</em> · 비인칭 문장에서도: <em>Il n'est pas facile de trouver un restaurant où dîner après une heure du matin.</em>"]}],"wide":true},{"id":"r-accord","title":"일치","sub":"주어 qui의 동사, que 앞의 과거분사","blocks":[{"h":"일치","p":"102, 112, 158","items":["주어 <em>qui</em>의 동사는 선행사에 일치: <em>C'est moi qui ai fait cette erreur.</em> · <em>Il y a beaucoup d'espèces animales qui ont disparu.</em>","<em>avoir</em> 복합시제에서 <em>que</em> 앞의 선행사가 직접목적어면 과거분사가 일치: <em>Les lettres que J.-P. Sartre a écrites à S. de Beauvoir ont été publiées…</em> · <em>Jean s'est marié avec une jeune fille qu'il a rencontrée en Grèce.</em>","대명동사도 같음: <em>Voici la robe que je me suis achetée.</em>","예외: 비인칭 동사는 불변 (<em>la chaleur qu'il a fait cet été</em>), <em>faire / laisser</em> + 원형도 불변 (<em>les jouets qu'il a laissé traîner</em>)","지각동사 + 원형: <em>que</em>가 원형의 주어이기도 하면 일치: <em>L'actrice que j'ai vue jouer était merveilleuse.</em> / <em>La pièce que j'ai vu jouer était de Ionesco.</em>"]}],"wide":false},{"id":"r-place","title":"주어 자리·삽입절·철자","sub":"관계절 안의 어순과 쉼표","blocks":[{"h":"관계절 안의 주어 자리","p":"102, 209","items":["보통 주어가 동사 앞. 다만 주어가 명사이고 동사에 보어가 없으면 도치가 잦음: <em>Le bruit que fait cette machine est insupportable.</em> = <em>Le bruit que cette machine fait est insupportable.</em> · <em>À Guernesey, j'ai visité la maison où a vécu Victor Hugo.</em> = <em>…où Victor Hugo a vécu.</em>","<em>C'est dans ce quartier qu'habitaient mes grands-parents.</em>"]},{"h":"삽입된 관계절과 쉼표","p":"209–210","items":["관계절이 다른 절 안에 끼어들 수 있음. 이때 관계대명사를 선행사와 떼어 놓지 않음: <em>Le satellite qu'on vient de lancer permettra de recevoir dix chaînes de télévision de plus.</em> · <em>Ce champ qui borde la rivière est fréquemment inondé.</em>","✗ <em>Ce champ est fréquemment inondé qui borde la rivière.</em>","문장 뜻에 꼭 필요하지 않은 설명의 관계절은 쉼표 사이에 둘 수 있음: <em>Mon arrière-grand-mère, qui a 102 ans, vit seule chez elle.</em>"]},{"h":"철자","p":"204–205, 305, 307","items":["<em>que</em>는 모음 앞에서 <em>qu'</em>, <em>qui</em>는 줄이지 않음","<em>où</em>의 악센트는 접속사 <em>ou</em>와 구분하는 표시"]}],"wide":false},{"id":"r-relief","title":"강조 구문","sub":"c'est… qui / que / dont, ce qui…, c'est","blocks":[{"h":"c'est… qui / que / dont","p":"199","items":["<em>c'est</em> + 관계대명사는 아주 흔한 강조 방법: <em>C'est notre avenir qui est en cause.</em> · <em>Ce n'est pas un vendeur que je veux voir, mais le chef de rayon&nbsp;!</em> · <em>La Bourse de Paris est en baisse, c'est un sujet dont tout le monde parle en ce moment.</em>","다른 제시어도 관계사와 함께 씀: <em>Il y a une personne qui voudrait vous voir.</em> · <em>Voilà une question que je ne m'étais jamais posée.</em>"]},{"h":"c'est ce qui / ce que / ce dont / ce à quoi","p":"199–200","items":["두 순서가 다 됨: <em>Regarder la télévision, c'est ce qui lui a permis de faire des progrès en français.</em> = <em>Ce qui lui a permis de faire des progrès en français, c'est de regarder la télévision.</em>","<em>Ce que réclament les habitants de la ville, c'est l'ouverture d'une nouvelle ligne de tramway.</em>","<em>Ce dont Joseph a besoin après cette période très stressante, c'est de calme et de repos.</em>","<em>En montagne, ce à quoi aspirent les promeneurs, c'est profiter de l'air pur et de la nature.</em> · <em>Ce sur quoi j'ai été interrogé à l'examen, ce sont les migrations internationales.</em>"]},{"h":"관계사가 아닌 c'est… que","p":"201","items":["전치사구·상황어·종속절을 강조하는 <em>c'est… que</em>의 <em>que</em>는 관계대명사가 아니라 접속사: <em>C'est pour toi que j'ai fait ce dessin.</em> · <em>C'est demain que se réunira le Conseil de sécurité de l'ONU.</em> · <em>C'est parce qu'il n'avait pas attaché sa ceinture qu'il a été gravement blessé dans l'accident.</em>","그래서 장소를 강조해도 <em>où</em>가 아님: ✗ <em>C'est à Bordeaux où je pars.</em> → <em>C'est à Bordeaux que je pars.</em>"]}],"wide":true},{"id":"r-celui","title":"celui qui, ceux qui","sub":"지시대명사 + 관계사","blocks":[{"h":"쓰임","p":"50, 204","items":["<em>celui, celle, ceux, celles</em>(단순형)는 혼자 못 쓰고 뒤에 <em>de</em>나 관계대명사가 와야 함: <em>J'ai choisi celle que proposait le réseau X.</em> · <em>Il y a deux chemins pour aller au village&nbsp;; celui qui passe par la forêt est le plus court.</em>","✗ <em>Donnez-moi celui-là qui est sur la table.</em> → <em>Donnez-moi celui qui est sur la table.</em>","<em>ceux qui</em> = '~하는 사람들'(앞의 명사를 받지 않음): <em>La montagne attire ceux qui aiment l'air pur et la solitude.</em>","관계절이 생략되고 과거분사나 <em>de</em> 아닌 전치사가 바로 올 수도 있음: <em>…ceux causés par l'alcool sont les plus fréquents.</em> (= <em>ceux qui sont causés</em>) · <em>…celles sur le sport.</em>","26장의 예: <em>Adressez-vous à l'employé du guichet n° 5, celui qui s'occupe des passeports.</em>"]}],"wide":false},{"id":"r-quoique","title":"quoi que, où que, qui que","sub":"\"무엇을 / 어디서 / 누가 ~하든\" + 접속법","blocks":[{"h":"쓰임","p":"274","items":["Delatour는 대립·양보 표현 안에서 '부정(不定) 관계대명사'로 다룸. 뒤에는 접속법","<em>quoi que</em> (<em>quoi</em>는 동사의 보어, <em>faire, dire, penser</em>와 자주): <em>Quoi que je dise, quoi que je fasse, tu me critiques.</em> · <em>Quoi qu'il arrive, elle garde son sang-froid.</em>","<em>où que</em>: <em>À Paris, où qu'on aille, il y a toujours un café&nbsp;!</em> · <em>Olivier est très sociable. Où qu'il soit, il se fait des copains.</em>","<em>qui que</em> (드묾, 정해지지 않은 사람): <em>Qui que vous soyez, vous devez respecter le code de la route.</em>"]},{"h":"혼동 주의","p":"274","items":["<em>quoi que</em>(무엇을 ~하든)와 <em>quoique</em>(~인데도)를 구분: <em>J'ai raison quoi que vous en pensiez.</em> / <em>J'ai raison quoique cela paraisse surprenant.</em>"]}],"wide":false},{"id":"r-conf","title":"헷갈리는 같은 꼴","sub":"관계사냐, 의문사·접속사냐","blocks":[{"h":"que의 다섯 쓰임 (부록 표)","p":"303","items":["관계대명사: <em>Comment s'appelle le village que nous venons de traverser&nbsp;?</em>","의문대명사: <em>Que faites-vous ici&nbsp;?</em>","종속접속사: <em>J'espère que vous avez bien compris mes explications.</em>","감탄: <em>Qu'il fait beau&nbsp;!</em>","강조: <em>C'est demain que je pars pour le Brésil.</em>"]},{"h":"간접의문문의 ce qui / ce que / qui","p":"227–228","items":["의문사 <em>qu'est-ce qui / que</em>가 간접의문문에서 <em>ce qui / ce que</em>로 바뀐 것은 관계절이 아님: <em>« Qu'est-ce qui se passe&nbsp;? »</em> → <em>Tout le monde se demande ce qui se passe.</em> · <em>« Qu'est-ce que tu lis&nbsp;? »</em> → <em>Il voulait savoir ce que je lisais.</em>","✗ <em>Je ne sais pas qu'est-ce qui est dans la boîte.</em> → <em>Je ne sais pas ce qui est dans la boîte.</em>","사람은 <em>qui</em> 그대로: <em>Il a demandé qui voulait venir avec lui.</em>"]},{"h":"그 밖에","p":"51, 184, 208, 274, 307","items":["의문대명사 <em>lequel</em>(<em>Auquel dois-je m'adresser&nbsp;?</em>)과 관계대명사 <em>lequel</em>은 꼴·축약이 같음","<em>où</em>(관계사·의문사)와 <em>ou</em>(접속사): <em>Voici la maison où j'habite.</em> / <em>Où habitez-vous&nbsp;?</em> / <em>Tu veux du thé ou du café&nbsp;?</em>","<em>quoi que</em>(무엇을 ~하든)와 <em>quoique</em>(~인데도)","<em>ce qu'il veut</em>(것)와 <em>ceux qu'il connaît</em>(사람들)"]}],"wide":true},{"id":"r-part","title":"관계절 대신 쓰는 분사","sub":"주로 글에서","blocks":[{"h":"분사가 관계절을 대신함","p":"50, 153, 155–156","items":["현재분사는 관계절의 가치를 가질 수 있음(주로 글): <em>Les personnes ayant un ticket bleu doivent se présenter au contrôle.</em> (= <em>qui ont</em>) · <em>Une fillette portant un énorme bouquet s'avança vers le Président.</em> (= <em>qui portait</em>)","과거분사 단독: <em>J'ai trouvé une chambre à louer dans un appartement habité par une vieille dame.</em> (= <em>qui est habité</em>)","복합 분사: <em>Les élèves ayant obtenu la mention très bien au baccalauréat entrent sans examen dans cette école.</em> (= <em>qui ont obtenu</em>)","지시대명사 뒤에서도: <em>…ceux causés par l'alcool…</em> (= <em>ceux qui sont causés</em>)"]}],"wide":false},{"id":"r-art","title":"관계절과 관사","sub":"정관사냐 부정관사냐","blocks":[{"h":"관계절이 관사 선택에 주는 영향","p":"37, 40, 42","items":["관계절이 명사를 특정하면 정관사: <em>La route que nous avons prise pour aller à Avignon traverse des paysages magnifiques.</em>","관계절이 명사에 특징만 붙이면 부정관사: <em>C'est un paysage qui fait rêver.</em>","비교: <em>C'est l'acteur que je préfère.</em> (= 내가 가장 좋아하는 배우) / <em>C'est un acteur qui joue les rôles de jeune premier.</em> (= 그런 부류의 배우) · <em>Le travail qu'elle fait l'intéresse beaucoup.</em> (관계절로 특정)"]}],"wide":false},{"id":"r-pons","title":"PONS 문법표의 관계절","sub":"제목과 공식 박스 수준","pons":"<div class=\"pons-head\"><span class=\"pons-badge\">PONS</span><span class=\"pons-title\">문법표의 관계절</span><span class=\"pons-src\">4장 가운데·오른쪽 단</span></div><ul><li><em>qui</em>: 관계절의 주어</li><li><em>que</em>: 관계절의 직접목적어</li><li><em>dont</em>: <em>de</em> + 명사를 대신 (Delatour는 동사·형용사의 <em>de</em> 보어까지 넣음: 표의 <em>dont</em> 칸)</li><li><em>lequel</em>: 전치사 뒤 (사람에게는 전치사 + <em>qui</em>가 더 흔함: Delatour)</li><li><em>à + lequel = auquel</em> · <em>à + laquelle = à laquelle</em> · <em>à + lesquels = auxquels</em> · <em>à + lesquelles = auxquelles</em></li><li><em>où</em>: 장소·시간</li><li><em>ce qui</em>와 <em>ce que</em>: '~하는 것' (앞 문장 전체를 받는 <em>…, ce qui</em>도 있음: Delatour)</li></ul>","wide":true}];
+  var NAMES = {"qui": "주격 관계대명사", "que": "직접목적격 관계대명사", "dont": "de를 품은 관계대명사", "ce_relatif": "중성 선행사 ce + 관계사", "ou": "장소·때의 관계부사", "prep_qui": "전치사 + qui", "lequel": "전치사 + lequel", "prep_quoi": "전치사 + quoi", "celui_qui": "지시대명사 + 관계사", "relatif_indefini": "부정(不定) 관계사"};
+  var CITE = function(p){ return '<p class="dela-cite">출처: Delatour et al., <i>Nouvelle grammaire du français</i>, ' + p + '.</p>'; };
+  function delaHTML(blocks, title){
+    return '<div class="dela-head"><span class="dela-badge">DELATOUR</span><span class="dela-title">' + (title || "문법서 보충 설명") + '</span></div>' +
+      blocks.map(function(bl){
+        return '<div class="dela-blk"><h4>' + bl.h + '</h4><ul>' + bl.items.map(function(i){ return '<li>' + i.replace(/✗/g, '<span class="x" aria-label="틀린 문장">✗</span>') + '</li>'; }).join('') + '</ul>' + CITE(bl.p) + '</div>';
+      }).join('');
+  }
+
+  var ROLES = [
+    {id:"sub", ko:"주어", sub:"동사 앞"},
+    {id:"obj", ko:"직접목적어", sub:"동사 뒤, 전치사 없음"},
+    {id:"de", ko:"de로 이어지는 보어", sub:"parler de, avoir besoin de …"},
+    {id:"cprep", ko:"de가 든 복합 전치사", sub:"à côté de, près de, à cause de …"},
+    {id:"prep", ko:"그 밖의 전치사", sub:"avec, pour, derrière …"},
+    {id:"a", ko:"à로 이어지는 보어", sub:"penser à, prêter à …"},
+    {id:"lieu", ko:"장소", sub:"dans, à, chez …"},
+    {id:"temps", ko:"때", sub:"le jour, l'année …"}
+  ];
+  var COLS = [{id:"p", ko:"사람"}, {id:"t", ko:"동물·사물"}, {id:"n", ko:"중성"}];
+  /* each cell: k = form in the table, d = Delatour section id, then the 3-step demo:
+     n = antecedent, head = main clause with {N}, m = how it appears in sentence B, b = sentence B with {M},
+     gap = B with the hole {H}, r = the relative clause, ko, why, note. nodemo = table-only form */
+  var C = {
+    "sub-p":{k:"qui",d:"qui",n:"l'ami",head:"C'est {N}",m:"L'ami",b:"{M} habite à Lyon.",gap:"{H} habite à Lyon.",r:"<span class='piece'>qui</span> habite à Lyon",ko:"리옹에 사는 친구다.",why:"빠진 자리가 동사 앞, 즉 <b>주어</b>입니다. 그래서 <em>qui</em>."},
+    "sub-t":{k:"qui",d:"qui",n:"la maison",head:"C'est {N}",m:"La maison",b:"{M} donne sur la mer.",gap:"{H} donne sur la mer.",r:"<span class='piece'>qui</span> donne sur la mer",ko:"바다 쪽으로 난 집이다.",why:"빠진 자리가 동사 앞, 즉 <b>주어</b>입니다. 사람이든 사물이든 <em>qui</em>.",note:"<em>qui</em>는 모음 앞에서도 줄지 않습니다: <em>la maison qui est</em> (✗ <em>qu'est</em>)."},
+    "sub-n":{k:"ce qui",d:"ce_relatif",n:"ce",head:"Choisis {N}",m:"Cela",b:"{M} te plaît.",gap:"{H} te plaît.",r:"<span class='piece'>qui</span> te plaît",ko:"마음에 드는 걸 골라.",why:"선행사가 명사가 아니라 중성 <em>ce</em>(그것)입니다. 빠진 자리는 <b>주어</b>라서 <em>ce qui</em>."},
+    "obj-p":{k:"que",d:"que",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'ai invité {M}.",gap:"J'ai invité {H}.",r:"<span class='piece'>que</span> j'ai invité",ko:"내가 초대한 친구다.",why:"빠진 자리가 동사 뒤, 전치사 없음, 즉 <b>직접목적어</b>입니다. 그래서 <em>que</em>.",note:"모음 앞에서는 <em>qu'</em>: <em>l'ami qu'elle a invité</em>."},
+    "obj-t":{k:"que",d:"que",n:"la maison",head:"C'est {N}",m:"la maison",b:"J'ai acheté {M}.",gap:"J'ai acheté {H}.",r:"<span class='piece'>que</span> j'ai achet<b>ée</b>",ko:"내가 산 집이다.",why:"빠진 자리가 동사 뒤, 전치사 없음, 즉 <b>직접목적어</b>입니다. 그래서 <em>que</em>.",note:"<em>que</em>가 받는 <em>la maison</em>(여성 단수)이 조동사 <em>avoir</em> 앞에 왔으니 과거분사도 일치합니다: <em>achetée</em>."},
+    "obj-n":{k:"ce que",d:"ce_relatif",n:"ce",head:"Écoutez bien {N}",m:"cela",b:"Je vais dire {M}.",gap:"Je vais dire {H}.",r:"<span class='piece'>que</span> je vais dire",ko:"내가 할 말을 잘 들으세요.",why:"선행사가 중성 <em>ce</em>이고, 빠진 자리는 <b>직접목적어</b>라서 <em>ce que</em>."},
+    "de-p":{k:"dont",d:"dont",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"Je t'ai parlé de {M}.",gap:"Je t'ai parlé {H}.",r:"<span class='piece'>dont</span> je t'ai parlé",ko:"내가 너에게 말했던 친구다.",why:"빠진 자리가 <em>de</em> + 명사(<em>parler de</em>)입니다. <em>dont</em>은 <em>de</em>까지 통째로 삼킵니다.",note:"동사(<em>parler de</em>)뿐 아니라 명사(<em>l'ami dont le père est médecin</em>), 형용사(<em>être fier de</em>)의 보어도 <em>dont</em>."},
+    "de-t":{k:"dont",d:"dont",n:"la maison",head:"C'est {N}",m:"la maison",b:"Je t'ai parlé de {M}.",gap:"Je t'ai parlé {H}.",r:"<span class='piece'>dont</span> je t'ai parlé",ko:"내가 너에게 말했던 집이다.",why:"빠진 자리가 <em>de</em> + 명사입니다. <em>dont</em>이 <em>de</em>까지 삼킵니다.",note:"<em>de</em>로 받는 동사를 <em>que</em>로 받지 않습니다: ✗ <em>la maison que je t'ai parlé</em>."},
+    "de-n":{k:"ce dont",d:"ce_relatif",n:"ce",head:"J'ai trouvé tout {N}",m:"cela",b:"J'avais besoin de {M}.",gap:"J'avais besoin {H}.",r:"<span class='piece'>dont</span> j'avais besoin",ko:"필요했던 걸 전부 찾았다.",why:"선행사가 중성 <em>ce</em>이고, 빠진 자리가 <em>de</em> + 명사(<em>avoir besoin de</em>)라서 <em>ce dont</em>.",note:"✗ <em>tout ce que j'avais besoin</em>"},
+    "cprep-p":{k:"à côté de qui",d:"prep_qui",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'étais assis à côté de {M}.",gap:"J'étais assis {H}.",r:"<span class='piece'>à côté de qui</span> j'étais assis",ko:"내가 옆에 앉아 있던 친구다.",why:"빠진 자리가 <em>à côté de</em> + 사람입니다. <em>de</em>가 들어 있어도 복합 전치사 뒤에는 <em>dont</em>을 못 씁니다. 사람이면 <em>de qui</em>.",note:"<em>à côté duquel</em>도 맞습니다. ✗ <em>l'ami dont j'étais assis à côté</em>"},
+    "cprep-t":{k:"à côté duquel",d:"lequel",n:"le parc",head:"C'est {N}",m:"du parc",b:"Il y a un café à côté {M}.",gap:"Il y a un café {H}.",r:"<span class='piece'>à côté duquel</span> il y a un café",ko:"옆에 카페가 있는 공원이다.",why:"빠진 자리가 <em>à côté de</em> + 사물입니다. 복합 전치사 뒤라 <em>dont</em>은 안 되고, <em>de</em> + <em>lequel</em> = <em>duquel</em>.",note:"선행사의 성·수에 맞춤: <em>à côté duquel / de laquelle / desquels / desquelles</em>."},
+    "cprep-n":{k:"à côté de quoi",d:"prep_quoi",nodemo:"중성 선행사 뒤의 복합 전치사는 표에 있는 형태로, 실제로는 드뭅니다. 쓰임은 아래 붉은 상자(전치사 + quoi)를 보세요."},
+    "prep-p":{k:"pour qui",d:"prep_qui",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'ai acheté ce cadeau pour {M}.",gap:"J'ai acheté ce cadeau {H}.",r:"<span class='piece'>pour qui</span> j'ai acheté ce cadeau",ko:"내가 이 선물을 사 준 친구다.",why:"빠진 자리가 <em>pour</em> + 사람입니다. 전치사를 손잡이처럼 달고 사람은 <em>qui</em>.",note:"<em>pour lequel</em>도 맞지만 사람에게는 전치사 + <em>qui</em>가 더 흔합니다. ✗ <em>l'ami que j'ai acheté ce cadeau pour</em>"},
+    "prep-t":{k:"pour lequel",d:"lequel",n:"le projet",head:"C'est {N}",m:"ce projet",b:"Je me bats pour {M}.",gap:"Je me bats {H}.",r:"<span class='piece'>pour lequel</span> je me bats",ko:"내가 애쓰고 있는 계획이다.",why:"빠진 자리가 <em>pour</em> + 사물입니다. 사물에는 <em>qui</em>를 쓰지 않고 전치사 + <em>lequel</em>.",note:"선행사의 성·수에 맞춤: <em>pour lequel / laquelle / lesquels / lesquelles</em>. 같은 식으로 <em>la raison pour laquelle</em> (✗ <em>la raison que</em>)."},
+    "prep-n":{k:"pour quoi",d:"prep_quoi",n:"ce",head:"C'est {N}",m:"cela",b:"Nous nous battons pour {M}.",gap:"Nous nous battons {H}.",r:"<span class='piece'>pour quoi</span> nous nous battons",ko:"그게 우리가 싸우는 이유다.",why:"선행사가 중성 <em>ce</em>이고 빠진 자리가 <em>pour</em> + 그것입니다. 중성에는 전치사 + <em>quoi</em>."},
+    "a-p":{k:"à qui",d:"prep_qui",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'ai prêté mon vélo à {M}.",gap:"J'ai prêté mon vélo {H}.",r:"<span class='piece'>à qui</span> j'ai prêté mon vélo",ko:"내가 자전거를 빌려준 친구다.",why:"빠진 자리가 <em>à</em> + 사람입니다. 사람이면 <em>à qui</em>.",note:"<em>auquel</em>도 맞지만 <em>à qui</em>가 더 흔합니다. <em>quelqu'un, personne</em> 뒤에는 <em>qui</em>만: <em>personne à qui parler</em>."},
+    "a-t":{k:"auquel",d:"lequel",n:"le voyage",head:"C'est {N}",m:"au voyage",b:"Je pense souvent {M}.",gap:"Je pense souvent {H}.",r:"<span class='piece'>auquel</span> je pense souvent",ko:"내가 자주 생각하는 여행이다.",why:"빠진 자리가 <em>à</em> + 사물입니다. <em>à</em> + <em>lequel</em>이 붙어 <em>auquel</em>.",note:"<em>auquel, auxquels, auxquelles</em>, 단 여성 단수는 <em>à laquelle</em>."},
+    "a-n":{k:"à quoi",d:"prep_quoi",n:"ce",head:"C'est {N}",m:"cela",b:"Je pense à {M}.",gap:"Je pense {H}.",r:"<span class='piece'>à quoi</span> je pense",ko:"그게 내가 생각하는 거야.",why:"선행사가 중성 <em>ce</em>이고 빠진 자리가 <em>à</em> + 그것입니다. 그래서 <em>ce à quoi</em>."},
+    "lieu-p":{k:"chez qui",d:"prep_qui",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'ai dormi chez {M}.",gap:"J'ai dormi {H}.",r:"<span class='piece'>chez qui</span> j'ai dormi",ko:"내가 그 집에서 잔 친구다.",why:"사람이 있는 곳(누구의 집)은 <em>où</em>가 아니라 <em>chez qui</em>입니다."},
+    "lieu-t":{k:"où",d:"ou",n:"la maison",head:"C'est {N}",m:"la maison",b:"J'ai grandi dans {M}.",gap:"J'ai grandi {H}.",r:"<span class='piece'>où</span> j'ai grandi",ko:"내가 자란 집이다.",why:"빠진 자리가 장소(<em>dans la maison</em>)입니다. <em>où</em>는 장소의 전치사까지 함께 삼킵니다.",note:"<em>où</em>의 악센트는 접속사 <em>ou</em>(또는)와 구분하는 표시입니다."},
+    "lieu-n":null,
+    "temps-p":null,
+    "temps-t":{k:"où",d:"ou",n:"jour",head:"Je me souviens du {N}",m:"ce jour-là",b:"Tu es arrivé {M}.",gap:"Tu es arrivé {H}.",r:"<span class='piece'>où</span> tu es arrivé",ko:"네가 도착한 날을 기억한다.",why:"빠진 자리가 때(<em>ce jour-là</em>)입니다. 때에도 <em>où</em>.",note:"✗ <em>le jour quand tu es arrivé</em>. <em>la première fois</em> 뒤에는 보통 <em>que</em>: <em>la première fois que je l'ai vu</em>."},
+    "temps-n":null
+  };
+
+  var $ = function(id){ return document.getElementById(id); };
+  var cur = "obj-t", timers = [];
+  var tb = $("rt-body");
+  ROLES.forEach(function(r){
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<th scope="row">' + r.ko + '<small>' + r.sub + '</small></th>';
+    COLS.forEach(function(c){
+      var key = r.id + "-" + c.id, cell = C[key], td = document.createElement("td");
+      if (cell){
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "pc"; b.textContent = cell.k; b.setAttribute("data-c", key);
+        b.setAttribute("aria-label", cell.k + " (" + r.ko + ", " + c.ko + ")");
+        b.addEventListener("click", function(){ select(key, true); });
+        td.appendChild(b);
+      } else td.innerHTML = '<span class="none" aria-label="없음">—</span>';
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+
+  function hl(s){ return "<span class='noun'>" + s + "</span>"; }
+  function select(key, scroll){
+    cur = key;
+    Array.prototype.forEach.call(document.querySelectorAll(".pc"), function(b){
+      var on = b.getAttribute("data-c") === key; b.classList.toggle("sel", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var cell = C[key], parts = key.split("-");
+    var role = ROLES.filter(function(r){ return r.id === parts[0]; })[0], col = COLS.filter(function(c){ return c.id === parts[1]; })[0];
+    $("d-crumb").textContent = col.ko + " · " + role.ko;
+    $("d-title").innerHTML = '<span class="fr">' + cell.k + '</span>' + NAMES[cell.d];
+    timers.forEach(clearTimeout); timers = [];
+    var st = $("steps");
+    if (cell.nodemo){ st.innerHTML = '<p class="d-what">' + cell.nodemo + '</p>'; }
+    else {
+      var H = '<span class="hole" aria-label="빈자리"></span>';
+      st.innerHTML =
+        '<div class="step"><span class="n">1</span><div class="b"><p class="t">선행사 ' + hl(cell.n) + '이(가) 뒤 문장에 다시 나옵니다.</p><p class="fr">' + cell.b.replace("{M}", hl(cell.m)) + '</p></div></div>' +
+        '<div class="step"><span class="n">2</span><div class="b"><p class="t">뒤 문장에서 그 말을 빼면 빈자리가 생깁니다. ' + cell.why + '</p><p class="fr">' + cell.gap.replace("{H}", H) + '</p></div></div>' +
+        '<div class="step"><span class="n">3</span><div class="b"><p class="t">빈자리에 맞는 조각을 끼우고, 그 절을 선행사 바로 뒤에 붙입니다.</p><p class="fr">' + cell.head.replace("{N}", hl(cell.n)) + ' ' + cell.r + '.</p><p class="t">' + cell.ko + '</p>' +
+        (cell.note ? '<p class="note"><span class="lbl">주의</span>' + cell.note.replace(/✗/g, '<span class="x">✗</span>') + '</p>' : '') + '</div></div>';
+      Array.prototype.forEach.call(st.querySelectorAll(".step"), function(s, i){
+        timers.push(setTimeout(function(){ s.classList.add("on"); }, 60 + i * 420));
+      });
+    }
+    var db = $("d-dela"), dd = DELA[cell.d];
+    if (dd){ db.innerHTML = delaHTML(dd); db.hidden = false; } else { db.hidden = true; db.innerHTML = ""; }
+    if (scroll){
+      var r = $("detail").getBoundingClientRect();
+      if (r.top < 0 || r.top > window.innerHeight * 0.75) $("detail").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+    }
+  }
+
+  $("rules").innerHTML = RULES.map(function(r){
+    var body = r.pons ? '<div class="pons">' + r.pons + '</div>' : '<div class="dela">' + delaHTML(r.blocks, r.boxTitle) + '</div>';
+    return '<article class="rule' + (r.wide ? ' wide' : '') + '" id="' + r.id + '"><h3>' + r.title + (r.sub ? '<small>' + r.sub + '</small>' : '') + '</h3>' + body + '</article>';
+  }).join("");
+
+  select(cur, false);
+  Array.prototype.forEach.call(document.querySelectorAll(".step"), function(s){ s.classList.add("on"); });
+})();
+</script>
+<script>
+/* ---------- dark mode toggle ---------- */
+(function(){
+  var KEY = "french-tenses-theme", root = document.documentElement, btn = document.getElementById("themeBtn");
+  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function current(){ var t = root.getAttribute("data-theme"); return t === "light" || t === "dark" ? t : (mq && mq.matches ? "dark" : "light"); }
+  function sync(){
+    var dark = current() === "dark", label = dark ? "라이트 모드 켜기" : "다크 모드 켜기";
+    root.setAttribute("data-theme-now", dark ? "dark" : "light");
+    btn.setAttribute("aria-label", label); btn.title = label;
+  }
+  btn.addEventListener("click", function(){
+    var next = current() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+    try { window.name = (window.name || "").replace(/(?:^|;)ft-theme=(light|dark)/g, "") + ";ft-theme=" + next; } catch (e) {}
+    sync();
+  });
+  /* links to the other topic pages carry the chosen theme, so it survives even where storage is blocked */
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var h = a.getAttribute("href");
+    if (!/^(index|pronoms|relatifs)\.html/.test(h)) return;
+    var t = root.getAttribute("data-theme"), parts = h.split("#"), path = parts[0].split("?")[0];
+    a.setAttribute("href", path + (t === "light" || t === "dark" ? "?theme=" + t : "") + (parts[1] ? "#" + parts[1] : ""));
+  }, true);
+  if (mq){ if (mq.addEventListener) mq.addEventListener("change", sync); else if (mq.addListener) mq.addListener(sync); }
+  sync();
+})();
+</script>
+</body>
+</html>
