@@ -3,7 +3,7 @@
 프랑스어의 시제·법, 대명사, 관계사를 한 장씩 정리한 지도입니다.
 서버나 빌드 도구 없이 HTML 파일만으로 동작합니다.
 
-**접속 주소:** https://hyungwookha.github.io/frenchtensmaster
+**접속 주소:** https://hyungwookha.github.io/lestempslespronomslesrelatifs
 
 ## 구성
 - 맨 위 주제 탭 3개 (프랑스 국기 색 파랑·흰색·빨강): 시제·법 / 대명사 / 관계사

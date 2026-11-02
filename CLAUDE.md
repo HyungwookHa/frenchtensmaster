@@ -1,6 +1,6 @@
 # 작업 규칙 (Claude용)
 
-이 저장소는 HTML 파일로 동작하는 「프랑스어 시제 지도」입니다. `index.html`(시제·법), `pronoms.html`(대명사), `relatifs.html`(관계사)이 있고, 맨 위 국기 색 탭으로 오갑니다. 사이트: https://hyungwookha.github.io/frenchtensmaster
+이 저장소는 HTML 파일로 동작하는 「프랑스어 시제 지도」입니다. `index.html`(시제·법), `pronoms.html`(대명사), `relatifs.html`(관계사)이 있고, 맨 위 국기 색 탭으로 오갑니다. 사이트: https://hyungwookha.github.io/lestempslespronomslesrelatifs
 코드 구조는 `README.md`의 「고칠 때 볼 곳」 표를 참고하세요.
 
 ## 반드시 지킬 작업 순서
