@@ -24,6 +24,7 @@
   --red-soft:#FCEBED;
   --blue:#2A52C4;
   --blue-soft:#E3EAFC;
+  --tint:rgba(42,82,196,.09);
   --hl:rgba(255,204,30,.55);
   --green:#1F8A4C;
   --green-soft:#EBF6EF;
@@ -44,7 +45,7 @@
   :root:not([data-theme="light"]){
     --paper:#111318; --sheet:#181B22; --ink:#E7E9EE; --ink-2:#B3B9C5; --ink-3:#777E8C;
     --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
-    --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --hl:rgba(250,204,21,.32);
+    --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --tint:rgba(145,171,255,.12); --hl:rgba(250,204,21,.32);
     --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
     --fr-blanc:#E9EAEE;
 
@@ -55,7 +56,7 @@
 :root[data-theme="dark"]{
   --paper:#111318; --sheet:#181B22; --ink:#E7E9EE; --ink-2:#B3B9C5; --ink-3:#777E8C;
   --rule:#2C313B; --hover:#222632; --red:#FF6B7A; --red-soft:rgba(255,107,122,.13);
-  --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --hl:rgba(250,204,21,.32);
+  --blue:#91ABFF; --blue-soft:rgba(145,171,255,.17); --tint:rgba(145,171,255,.12); --hl:rgba(250,204,21,.32);
   --green:#5CC98A; --green-soft:rgba(92,201,138,.12); --green-ink:#BDEBCF;
   --fr-blanc:#E9EAEE;
 
@@ -102,8 +103,9 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .lg-dela{width:22px;height:14px;border-radius:3px;border:1.5px solid var(--dela);background:var(--dela-soft)}
 .lg-sel{width:24px;height:16px;border-radius:4px;background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue)}
 .lg-pair{width:24px;height:16px;border-radius:4px;border:1.5px dashed var(--blue)}
-.jumps{margin:-14px 0 0;font-size:13.5px}
-.jumps a{color:var(--blue);font-weight:600;text-underline-offset:3px}
+.jumps{margin:-14px 0 0}
+.jumps a{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border:1.5px solid var(--blue);border-radius:999px;background:var(--blue-soft);color:var(--blue);font-size:14px;font-weight:600;text-decoration:none}
+.jumps a:hover{background:var(--sheet)}
 .jumps a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
 /* ---------- note sheet / map ---------- */
@@ -187,7 +189,6 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .chip.sel{background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue)}
 .chip.pair{outline:1.5px dashed var(--blue);outline-offset:3px}
 .chip.has-pons::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--green)}
-.lit{font-size:10.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--ink-3);border-radius:3px;padding:0 4px;line-height:1.5}
 .box-red{border-color:var(--red);border-radius:3px 8px 4px 7px / 6px 3px 8px 4px}
 .circ{width:72px;height:72px;border-radius:50%;padding:0;justify-content:center;border-color:var(--ink)}
 .circ.red{border-color:var(--red)}
@@ -336,7 +337,16 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .fends{display:grid;grid-template-columns:repeat(6,auto);gap:4px}
 .fend{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:50px;min-height:46px;padding:3px 7px;border:1px solid var(--rule);border-radius:7px;background:var(--sheet);font-family:var(--f-fr);font-size:16px;line-height:1.15}
 .fend i{font-style:normal;font-family:var(--f-body);font-size:10.5px;color:var(--ink-3);margin-bottom:2px}
-@media (max-width:560px){.fends{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){
+  .fends{grid-template-columns:repeat(3,minmax(0,1fr))}
+  /* person endings + participle: stay on one line, the participle box wraps its own text instead */
+  .feq.has-ends{flex-wrap:nowrap;gap:4px}
+  .feq.has-ends .fends{flex:0 1 auto;min-width:0;gap:3px}
+  .feq.has-ends .fend{min-width:0;padding:3px 4px;font-size:15px}
+  .feq.has-ends .fbox{flex:0 1 auto;min-width:0;padding:4px 8px;font-size:13px}
+  .feq.has-ends .fbox small{font-size:11px}
+  .feq.has-ends .fplus{padding:0}
+}
 .fends-3{grid-template-columns:repeat(3,auto)}
 .fends-3 .fend{font-family:var(--f-body);font-size:13.5px;padding:4px 10px;text-align:center}
 .fends-3 .fend small{font-size:11px;color:var(--ink-3)}
@@ -398,7 +408,9 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .sot-line .lbl{display:block;font-size:12.5px;font-weight:600;color:var(--blue);margin-bottom:2px}
 .sot-line a{color:var(--blue);font-weight:600;font-size:13.5px;margin-left:6px;white-space:nowrap}
 /* 시제 일치 section */
-.sot-sec{display:flex;flex-direction:column;gap:18px;scroll-margin-top:16px;border-top:2px solid var(--blue);padding-top:16px}
+.sot-sec{display:flex;flex-direction:column;gap:18px;scroll-margin-top:16px;border:1.5px solid var(--blue);border-radius:12px;background:var(--blue-soft);padding:20px 20px 22px}
+@media (max-width:560px){.sot-sec{padding:16px 12px 18px}}
+.sot-sec h2{color:var(--blue)}
 .sot-sec h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:24px}
 .sot-sec > p{margin:0;max-width:74ch}
 .sot-sec h3{margin:0 0 8px;font-size:15px;font-weight:600}
@@ -453,6 +465,26 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 .tbl .go{appearance:none;-webkit-appearance:none;font:inherit;font-weight:600;color:var(--blue);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap}
 .tbl .go:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .tbl .arrow{color:var(--ink-3);text-align:center;padding-inline:2px}
+/* phones: in the sequence-of-tenses tables the example column drops under its row.
+   .tbl-arrow = "direct → indirect" table: two equal halves mirrored around a fixed arrow column */
+@media (max-width:560px){
+  .tbl-stack,.tbl-stack thead,.tbl-stack tbody{display:block}
+  .tbl-stack tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:0}
+  .tbl-stack.tbl-arrow tr{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr)}
+  .tbl-stack thead tr{border-bottom:1.5px solid var(--ink)}
+  .tbl-stack thead th:last-child{display:none}
+  .tbl-stack tbody tr{border-bottom:1px solid var(--rule);padding:8px 0 10px;row-gap:6px}
+  .tbl-stack th,.tbl-stack td{border-bottom:0;min-width:0;padding:4px 10px}
+  .tbl-stack th{white-space:normal}
+  /* plain table: vertical rule between the two halves */
+  .tbl-stack:not(.tbl-arrow) th:nth-child(2),.tbl-stack:not(.tbl-arrow) td:nth-child(2){border-left:1px solid var(--rule)}
+  /* arrow table: left half leans on the arrow, right half starts from it */
+  .tbl-stack.tbl-arrow th:first-child,.tbl-stack.tbl-arrow td:first-child{text-align:right}
+  .tbl-stack.tbl-arrow .arrow,.tbl-stack.tbl-arrow th:nth-child(2){padding-inline:0;text-align:center}
+  /* the example: its own full-width cell */
+  .tbl-stack td:last-child{grid-column:1 / -1;background:var(--tint);border-radius:7px;padding:6px 10px 7px;margin:0 2px;line-height:1.5}
+  .tbl-stack td:last-child::before{content:"예";display:block;font-family:var(--f-body);font-size:10.5px;font-weight:600;color:var(--ink-3);letter-spacing:.04em;margin-bottom:1px}
+}
 .small{font-size:13.5px;color:var(--ink-2)}
 .omit{display:flex;flex-direction:column;gap:12px;border-top:1px dashed var(--ink-3);padding-top:16px;margin-top:8px}
 .omit h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:20px}
@@ -466,6 +498,15 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 
 .view{display:flex;flex-direction:column;gap:28px}
 [hidden]{display:none !important}
+
+/* ---------- reference helpers: register tags, "site explanation" tag, copy-link ---------- */
+.lit{font-size:10.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--ink-3);border-radius:3px;padding:0 4px;line-height:1.5;white-space:nowrap}
+.own{display:inline-block;font-size:11px;font-weight:500;color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:4px;padding:0 5px;line-height:1.5;white-space:nowrap;vertical-align:1px}
+.d-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:4px}
+.copylink{appearance:none;-webkit-appearance:none;font:inherit;font-size:12.5px;color:var(--ink-2);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:2px 10px;cursor:pointer}
+.copylink:hover{border-color:var(--ink-3);color:var(--ink)}
+.copylink:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.linkbox{flex:1 1 220px;min-width:0;font:inherit;font-size:12.5px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:3px 8px}
 
 /* ---------- theme toggle (top right) ---------- */
 .theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
@@ -518,13 +559,14 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     <li><span class="lg-box" aria-hidden="true"></span>빨간 네모: 시제가 아닌 3형제</li>
     <li><span class="lg-circ" aria-hidden="true"></span>동그라미: 현재</li>
     <li><svg class="lg-arrow" viewBox="0 0 26 10" aria-hidden="true"><path d="M1 5H23M18 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>미래까지 담당</li>
-    <li><span class="lit">문어</span>글에서만 쓰는 형태</li>
+    <li><span class="lit">문어</span>쓰임 범위 (문어 · 드묾)</li>
+    <li><span class="own">사이트 설명</span>상자 밖 글: 두 문법서를 바탕으로 이 사이트가 정리</li>
     <li><span class="lg-dot" aria-hidden="true"></span>초록 점: PONS 보충 설명 있음</li>
     <li><span class="lg-dela" aria-hidden="true"></span>붉은 상자: Delatour 문법서 설명 (모든 칸)</li>
     <li><span class="lg-sel" aria-hidden="true"></span>파란 칸: 지금 보고 있는 시제</li>
     <li><span class="lg-pair" aria-hidden="true"></span>파란 점선: 짝꿍 (복합형 ↔ 그 조동사의 시제)</li>
   </ul>
-  <p class="jumps"><a href="#sot">시제 일치 표 바로가기 ↓</a></p>
+  <p class="jumps"><a href="#sot">시제 일치 (간접화법) 표 보기 <span aria-hidden="true">↓</span></a></p>
 
   <section class="sheet" aria-label="시제 지도">
     <p class="hint hint-scroll">표를 옆으로 밀면 미래 쪽까지 보입니다 →</p>
@@ -666,6 +708,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <p class="d-crumb" id="d-crumb"></p>
       <h2 class="d-title" id="d-title"></h2>
       <p class="d-alias" id="d-alias" hidden></p>
+      <div class="d-tools"><button type="button" class="copylink" id="copylink" title="이 설명으로 바로 오는 주소를 복사">링크 복사</button><input class="linkbox" id="linkbox" readonly hidden aria-label="이 설명의 주소"></div>
     </div>
     <div class="d-info">
       <div><h3>만드는 법</h3><div class="formula" id="d-formula"></div></div>
@@ -700,6 +743,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   <section class="sot-sec" id="sot" aria-labelledby="sot-h">
     <h2 id="sot-h">시제 일치 (간접화법)</h2>
     <p>남의 말이나 생각을 <em>que</em>로 옮겨 말할 때, 주절의 시제에 따라 <em>que</em> 뒤 동사의 시제가 정해지는 규칙입니다. 주절이 현재면 그대로 두고, 주절이 과거(<em>Il a dit, Il disait</em>)면 과거 쪽으로 옮깁니다. 지도로 보면 현재와 복합과거는 한 칸 왼쪽으로, 반과거와 대과거는 그대로, 미래 시제는 조건법 줄로 내려갑니다.</p>
+    <p class="small">이것은 원칙입니다. 일반적인 진리나 말하는 지금도 사실인 내용은 옮기지 않기도 합니다 (<em>Le professeur expliquait que la Terre tourne autour du Soleil.</em>). 허용되는 조건은 아래 붉은 상자의 「일치를 안 해도 되는 경우」를 보세요.</p>
     <p class="small">지도의 파란 점선(짝꿍)과는 다른 관계입니다. 짝꿍은 "복합형을 만드는 조동사의 시제", 시제 일치는 "주절이 과거일 때 옮겨 가는 시제"입니다. 예를 들어 복합과거의 짝꿍은 현재이지만, 시제 일치에서 복합과거는 대과거로 바뀝니다.</p>
     <div class="sot-grid">
       <div>
@@ -718,7 +762,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <div>
         <h3>② 주절이 과거일 때: 과거 쪽으로 이동</h3>
         <div class="tbl-wrap">
-          <table class="tbl">
+          <table class="tbl tbl-stack tbl-arrow">
             <thead><tr><th>따옴표 안 (직접화법)</th><th></th><th>간접화법</th><th>예</th></tr></thead>
             <tbody>
               <tr><td><button class="go" data-t="present">현재</button></td><td class="arrow">→</td><td><button class="go" data-t="imparfait">반과거</button></td><td class="fr">« Je pars. » → Il a dit qu'il partait.</td></tr>
@@ -740,7 +784,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     <div>
       <h3>함께 바뀌는 것</h3>
       <div class="tbl-wrap">
-        <table class="tbl">
+        <table class="tbl tbl-stack">
           <thead><tr><th>무엇이</th><th>어떻게</th><th>예</th></tr></thead>
           <tbody>
             <tr><td>예/아니오 의문문</td><td><em>si</em> + 평서문 어순</td><td class="fr">« Tu viens ? » → Il m'a demandé si je venais.</td></tr>
@@ -777,7 +821,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   <section class="rules">
     <article class="rule">
       <h3>복합시제는 늘 짝꿍 단순시제의 왼쪽</h3>
-      <p>복합시제는 조동사 <em>avoir</em> / <em>être</em> + 과거분사입니다. 조동사를 어떤 시제로 활용하느냐가 복합시제의 이름을 정하고, 복합시제는 늘 짝꿍보다 한 발 먼저 끝난 일을 말합니다. 그래서 지도에서도 짝꿍의 왼쪽에 놓입니다.</p>
+      <p>복합시제는 조동사 <em>avoir</em> / <em>être</em> + 과거분사입니다. 조동사를 어떤 시제로 활용하느냐가 복합시제의 이름을 정하고, 복합시제는 짝꿍 단순시제가 가리키는 기준 시점보다 한 발 먼저 끝난 일을 말합니다. 그래서 지도에서도 짝꿍의 왼쪽에 놓입니다. 이 "먼저"는 기준 시점에 대한 것이지, 지금보다 과거라는 뜻은 아닙니다: 전미래 <em>Quand tu arriveras, j'aurai fini.</em>은 미래의 한 시점보다 먼저 끝날 일입니다.</p>
       <div class="tbl-wrap">
         <table class="tbl">
           <thead><tr><th>조동사의 시제</th><th>avoir / être</th><th></th><th>복합시제</th></tr></thead>
@@ -987,7 +1031,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       links:["futur_simple","present","passe_recent","present_prog"]},
 
     passe_compose:{ko:"복합과거",fr:"Passé composé",crumb:"직설법 · 구어 · 복합시제",b:{c:"present"},
-      f:[{aux:"present"},{lb:"부정문 어순 (모든 복합시제 공통)",seq:[["주어","fmid"],["<em>ne</em>","fmid"],["(대명사)","fmid"],["조동사","fbase"],["<em>pas</em>","fmid"],["과거분사","fpp"]],ex:"Je ne l'ai pas vu. · Elle ne s'est pas levée. · Ils n'étaient pas encore arrivés."}],
+      f:[{aux:"present"},{lb:"부정문 어순 (인칭이 있는 복합시제 공통. 부정법 과거는 <em>ne pas avoir</em> + 과거분사)",seq:[["주어","fmid"],["<em>ne</em>","fmid"],["(대명사)","fmid"],["조동사","fbase"],["<em>pas</em>","fmid"],["과거분사","fpp"]],ex:"Je ne l'ai pas vu. · Elle ne s'est pas levée. · Ils n'étaient pas encore arrivés."}],
       irr:[
         {h:"과거분사 규칙형",items:[["-er","-é"],["-ir","-i"],["-dre","-u"]]},
         {h:"자주 쓰는 불규칙 과거분사",items:[["avoir","eu"],["être","été"],["faire","fait"],["prendre","pris"],["mettre","mis"],["venir","venu"],["voir","vu"],["pouvoir","pu"],["vouloir","voulu"],["devoir","dû"],["savoir","su"],["naître","né"]]}],
@@ -1509,7 +1553,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   }
   function boxHTML(x, cls){ return '<span class="fbox' + (cls ? " " + cls : "") + '">' + x + '</span>'; }
   function rowHTML(lb, inner, ex){
-    return '<div class="frow">' + (lb ? '<span class="flb">' + lb + '</span>' : '') + '<div class="feq">' + inner + '</div>' + (ex ? '<p class="fex">' + ex + '</p>' : '') + '</div>';
+    return '<div class="frow">' + (lb ? '<span class="flb">' + lb + '</span>' : '') + '<div class="feq' + (inner.indexOf('class="fends"') >= 0 ? ' has-ends' : '') + '">' + inner + '</div>' + (ex ? '<p class="fex">' + ex + '</p>' : '') + '</div>';
   }
   function formulaHTML(t){
     var out = [];
@@ -1632,6 +1676,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   function select(k, scroll){
     if (!T[k]) return;
     cur = k;
+    setHash(k);
     renderMap();
     renderDetail();
     if (scroll){
@@ -1655,7 +1700,26 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     }
   });
 
-  select(cur, false);
+
+  /* ---------- direct links: #id opens that item; "링크 복사" copies the current address ---------- */
+  function setHash(h){ try { if (location.hash !== "#" + h) history.replaceState(null, "", "#" + h); } catch (e) {} }
+  function readHash(){ try { return decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return ""; } }
+  function bindCopy(){
+    var b = document.getElementById("copylink"), box = document.getElementById("linkbox");
+    if (!b || b.getAttribute("data-bound")) return;
+    b.setAttribute("data-bound", "1");
+    b.addEventListener("click", function(){
+      var u = location.href;
+      function done(){ b.textContent = "복사됨"; setTimeout(function(){ b.textContent = "링크 복사"; }, 1500); }
+      function fallback(){ box.value = u; box.hidden = false; box.focus(); box.select(); }
+      try { navigator.clipboard.writeText(u).then(done, fallback); } catch (e) { fallback(); }
+    });
+  }
+  bindCopy();
+  var h0 = readHash();
+  if (T[h0]){ cur = h0; select(cur, false); var dd = $("detail"); if (dd) setTimeout(function(){ dd.scrollIntoView({block:"start"}); }, 60); }
+  else { renderMap(); renderDetail(); }
+  window.addEventListener("hashchange", function(){ var h = readHash(); if (T[h] && h !== cur) select(h, true); });
 })();
 </script>
 

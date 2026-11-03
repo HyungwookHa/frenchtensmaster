@@ -226,6 +226,16 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 .dela-cite i{font-style:italic}
 @media (prefers-reduced-motion: reduce){.step{transition:none}}
 
+/* ---------- reference helpers: register tags, "site explanation" tag, copy-link ---------- */
+.lit{font-size:10.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--ink-3);border-radius:3px;padding:0 4px;line-height:1.5;white-space:nowrap}
+.own{display:inline-block;font-size:11px;font-weight:500;color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:4px;padding:0 5px;line-height:1.5;white-space:nowrap;vertical-align:1px}
+.d-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:4px}
+.copylink{appearance:none;-webkit-appearance:none;font:inherit;font-size:12.5px;color:var(--ink-2);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:2px 10px;cursor:pointer}
+.copylink:hover{border-color:var(--ink-3);color:var(--ink)}
+.copylink:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.linkbox{flex:1 1 220px;min-width:0;font:inherit;font-size:12.5px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:3px 8px}
+.steps-h{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-3)}
+
 /* ---------- theme toggle (top right) ---------- */
 .theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .theme-btn:hover{color:var(--ink);border-color:var(--ink-3)}
@@ -268,7 +278,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   <header class="top">
     <p class="eyebrow">Les pronoms relatifs</p>
     <h1>프랑스어 관계사 지도</h1>
-    <p class="lede">관계사는 두 문장을 하나로 이을 때, 뒤 문장에서 빠져나간 명사의 자리를 메우는 말입니다. 그래서 고르는 기준은 하나입니다. 그 명사가 뒤 문장에서 무슨 역할이었는지. 아래 표는 그 역할(줄)과 선행사의 종류(칸)로 관계사를 나눈 것입니다. 칸을 누르면 그 아래 3단계 설명과 붉은 Delatour 상자가 그 칸에 맞게 바뀝니다.</p>
+    <p class="lede">관계사는 두 문장을 하나로 이을 때, 뒤 문장에서 빠져나간 명사의 자리를 메우는 말입니다. 그래서 고르는 기준은 하나입니다. 그 명사가 뒤 문장에서 무슨 역할이었는지. 아래 표는 그 역할(줄)과 선행사의 종류(칸)로 관계사를 나눈 것입니다. 칸을 누르면 그 아래 3단계 설명과 붉은 Delatour 상자가 그 칸에 맞게 바뀝니다. 3단계 예문에는 <span class="own">사이트 예문</span>, 드물게 쓰는 형태에는 <span class="lit">드묾</span> 표시가 붙습니다.</p>
   </header>
 
   <section class="sheet" aria-label="관계사 표">
@@ -285,6 +295,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     <div class="d-head">
       <p class="d-crumb" id="d-crumb"></p>
       <h2 class="d-title" id="d-title"></h2>
+      <div class="d-tools"><button type="button" class="copylink" id="copylink" title="이 설명으로 바로 오는 주소를 복사">링크 복사</button><input class="linkbox" id="linkbox" readonly hidden aria-label="이 설명의 주소"></div>
     </div>
     <div class="steps" id="steps"></div>
     <div class="dela" id="d-dela" hidden></div>
@@ -335,7 +346,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     "de-n":{k:"ce dont",d:"ce_relatif",n:"ce",head:"J'ai trouvé tout {N}",m:"cela",b:"J'avais besoin de {M}.",gap:"J'avais besoin {H}.",r:"<span class='piece'>dont</span> j'avais besoin",ko:"필요했던 걸 전부 찾았다.",why:"선행사가 중성 <em>ce</em>이고, 빠진 자리가 <em>de</em> + 명사(<em>avoir besoin de</em>)라서 <em>ce dont</em>.",note:"✗ <em>tout ce que j'avais besoin</em>"},
     "cprep-p":{k:"à côté de qui",d:"prep_qui",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'étais assis à côté de {M}.",gap:"J'étais assis {H}.",r:"<span class='piece'>à côté de qui</span> j'étais assis",ko:"내가 옆에 앉아 있던 친구다.",why:"빠진 자리가 <em>à côté de</em> + 사람입니다. <em>de</em>가 들어 있어도 복합 전치사 뒤에는 <em>dont</em>을 못 씁니다. 사람이면 <em>de qui</em>.",note:"<em>à côté duquel</em>도 맞습니다. ✗ <em>l'ami dont j'étais assis à côté</em>"},
     "cprep-t":{k:"à côté duquel",d:"lequel",n:"le parc",head:"C'est {N}",m:"du parc",b:"Il y a un café à côté {M}.",gap:"Il y a un café {H}.",r:"<span class='piece'>à côté duquel</span> il y a un café",ko:"옆에 카페가 있는 공원이다.",why:"빠진 자리가 <em>à côté de</em> + 사물입니다. 복합 전치사 뒤라 <em>dont</em>은 안 되고, <em>de</em> + <em>lequel</em> = <em>duquel</em>.",note:"선행사의 성·수에 맞춤: <em>à côté duquel / de laquelle / desquels / desquelles</em>."},
-    "cprep-n":{k:"à côté de quoi",d:"prep_quoi",nodemo:"중성 선행사 뒤의 복합 전치사는 표에 있는 형태로, 실제로는 드뭅니다. 쓰임은 아래 붉은 상자(전치사 + quoi)를 보세요."},
+    "cprep-n":{k:"à côté de quoi",reg:"드묾",d:"prep_quoi",nodemo:"중성 선행사 뒤의 복합 전치사는 표에 있는 형태로, 실제로는 드뭅니다. 쓰임은 아래 붉은 상자(전치사 + quoi)를 보세요."},
     "prep-p":{k:"pour qui",d:"prep_qui",n:"l'ami",head:"C'est {N}",m:"l'ami",b:"J'ai acheté ce cadeau pour {M}.",gap:"J'ai acheté ce cadeau {H}.",r:"<span class='piece'>pour qui</span> j'ai acheté ce cadeau",ko:"내가 이 선물을 사 준 친구다.",why:"빠진 자리가 <em>pour</em> + 사람입니다. 전치사를 손잡이처럼 달고 사람은 <em>qui</em>.",note:"<em>pour lequel</em>도 맞지만 사람에게는 전치사 + <em>qui</em>가 더 흔합니다. ✗ <em>l'ami que j'ai acheté ce cadeau pour</em>"},
     "prep-t":{k:"pour lequel",d:"lequel",n:"le projet",head:"C'est {N}",m:"ce projet",b:"Je me bats pour {M}.",gap:"Je me bats {H}.",r:"<span class='piece'>pour lequel</span> je me bats",ko:"내가 애쓰고 있는 계획이다.",why:"빠진 자리가 <em>pour</em> + 사물입니다. 사물에는 <em>qui</em>를 쓰지 않고 전치사 + <em>lequel</em>.",note:"선행사의 성·수에 맞춤: <em>pour lequel / laquelle / lesquels / lesquelles</em>. 같은 식으로 <em>la raison pour laquelle</em> (✗ <em>la raison que</em>)."},
     "prep-n":{k:"pour quoi",d:"prep_quoi",n:"ce",head:"C'est {N}",m:"cela",b:"Nous nous battons pour {M}.",gap:"Nous nous battons {H}.",r:"<span class='piece'>pour quoi</span> nous nous battons",ko:"그게 우리가 싸우는 이유다.",why:"선행사가 중성 <em>ce</em>이고 빠진 자리가 <em>pour</em> + 그것입니다. 중성에는 전치사 + <em>quoi</em>."},
@@ -352,6 +363,8 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 
   var $ = function(id){ return document.getElementById(id); };
   var cur = "obj-t", timers = [];
+  var COLNAME = {p:"personne", t:"chose", n:"neutre"}, COLKEY = {personne:"p", chose:"t", neutre:"n"};
+
   var tb = $("rt-body");
   ROLES.forEach(function(r){
     var tr = document.createElement("tr");
@@ -361,6 +374,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       if (cell){
         var b = document.createElement("button");
         b.type = "button"; b.className = "pc"; b.textContent = cell.k; b.setAttribute("data-c", key);
+        if (cell.reg){ var rg = document.createElement("span"); rg.className = "lit"; rg.textContent = cell.reg; b.appendChild(document.createTextNode(" ")); b.appendChild(rg); }
         b.setAttribute("aria-label", cell.k + " (" + r.ko + ", " + c.ko + ")");
         b.addEventListener("click", function(){ select(key, true); });
         td.appendChild(b);
@@ -373,6 +387,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   function hl(s){ return "<span class='noun'>" + s + "</span>"; }
   function select(key, scroll){
     cur = key;
+    var kk = key.split("-"); setHash(kk[0] + "-" + COLNAME[kk[1]]);
     Array.prototype.forEach.call(document.querySelectorAll(".pc"), function(b){
       var on = b.getAttribute("data-c") === key; b.classList.toggle("sel", on); b.setAttribute("aria-pressed", on ? "true" : "false");
     });
@@ -385,7 +400,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     if (cell.nodemo){ st.innerHTML = '<p class="d-what">' + cell.nodemo + '</p>'; }
     else {
       var H = '<span class="hole" aria-label="빈자리"></span>';
-      st.innerHTML =
+      st.innerHTML = '<p class="steps-h">고르는 과정 <span class="own">사이트 예문</span></p>' +
         '<div class="step"><span class="n">1</span><div class="b"><p class="t">선행사 ' + hl(cell.n) + '이(가) 뒤 문장에 다시 나옵니다.</p><p class="fr">' + cell.b.replace("{M}", hl(cell.m)) + '</p></div></div>' +
         '<div class="step"><span class="n">2</span><div class="b"><p class="t">뒤 문장에서 그 말을 빼면 빈자리가 생깁니다. ' + cell.why + '</p><p class="fr">' + cell.gap.replace("{H}", H) + '</p></div></div>' +
         '<div class="step"><span class="n">3</span><div class="b"><p class="t">빈자리에 맞는 조각을 끼우고, 그 절을 선행사 바로 뒤에 붙입니다.</p><p class="fr">' + cell.head.replace("{N}", hl(cell.n)) + ' ' + cell.r + '.</p><p class="t">' + cell.ko + '</p>' +
@@ -407,8 +422,31 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     return '<article class="rule' + (r.wide ? ' wide' : '') + '" id="' + r.id + '"><h3>' + r.title + (r.sub ? '<small>' + r.sub + '</small>' : '') + '</h3>' + body + '</article>';
   }).join("");
 
-  select(cur, false);
+
+  /* ---------- direct links: #id opens that item; "링크 복사" copies the current address ---------- */
+  function setHash(h){ try { if (location.hash !== "#" + h) history.replaceState(null, "", "#" + h); } catch (e) {} }
+  function readHash(){ try { return decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return ""; } }
+  function bindCopy(){
+    var b = document.getElementById("copylink"), box = document.getElementById("linkbox");
+    if (!b || b.getAttribute("data-bound")) return;
+    b.setAttribute("data-bound", "1");
+    b.addEventListener("click", function(){
+      var u = location.href;
+      function done(){ b.textContent = "복사됨"; setTimeout(function(){ b.textContent = "링크 복사"; }, 1500); }
+      function fallback(){ box.value = u; box.hidden = false; box.focus(); box.select(); }
+      try { navigator.clipboard.writeText(u).then(done, fallback); } catch (e) { fallback(); }
+    });
+  }
+  function keyFromHash(){
+    var h = readHash().split("-"); if (h.length !== 2 || !COLKEY[h[1]]) return null;
+    var k = h[0] + "-" + COLKEY[h[1]]; return C[k] ? k : null;
+  }
+  bindCopy();
+  var k0 = keyFromHash();
+  if (k0){ select(k0, false); setTimeout(function(){ $("detail").scrollIntoView({block:"start"}); }, 60); }
+  else { var h1 = readHash(); select(cur, false); try { history.replaceState(null, "", location.pathname + location.search + (h1 ? "#" + h1 : "")); } catch (e) {} }
   Array.prototype.forEach.call(document.querySelectorAll(".step"), function(s){ s.classList.add("on"); });
+  window.addEventListener("hashchange", function(){ var k = keyFromHash(); if (k && k !== cur) select(k, true); });
 })();
 </script>
 <script>
