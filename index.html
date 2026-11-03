@@ -316,6 +316,7 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(28px,4.4vw,40px);li
 
 /* ---------- detail ---------- */
 .detail{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px 40px;scroll-margin-top:16px}
+.detail > .d-wide{grid-column:1 / -1}
 @media (max-width:860px){.detail{grid-template-columns:minmax(0,1fr)}}
 .d-head{grid-column:1 / -1;display:flex;flex-direction:column;gap:4px;border-top:2px solid var(--ink);padding-top:16px}
 .d-crumb{margin:0;font-size:13px;color:var(--ink-3);letter-spacing:.02em}
@@ -740,8 +741,6 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <div class="pron" id="d-pron" hidden></div>
       <p class="d-note" id="d-note" hidden></p>
       <p class="sot-line" id="d-sot" hidden></p>
-      <div class="pons" id="d-pons" hidden></div>
-      <div class="dela" id="d-dela" hidden></div>
       <div><h3>같이 보기</h3><div class="links" id="d-links"></div></div>
     </div>
     <div class="conj-box" id="conj-box">
@@ -762,6 +761,8 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <p class="conj-legend" id="conj-legend"></p>
       <p class="conj-note" id="conj-note"></p>
     </div>
+    <div class="pons d-wide" id="d-pons" hidden></div>
+    <div class="dela d-wide" id="d-dela" hidden></div>
   </section>
 
   <section class="sot-sec" id="sot" aria-labelledby="sot-h">
