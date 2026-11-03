@@ -175,6 +175,18 @@ a.inline{color:var(--blue);font-weight:600;text-underline-offset:3px}
 
 footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px}
 
+/* ---------- reference helpers: register tags, "site explanation" tag, copy-link ---------- */
+.lit{font-size:10.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--ink-3);border-radius:3px;padding:0 4px;line-height:1.5;white-space:nowrap}
+.own{display:inline-block;font-size:11px;font-weight:500;color:var(--ink-2);border:1px dashed var(--ink-3);border-radius:4px;padding:0 5px;line-height:1.5;white-space:nowrap;vertical-align:1px}
+.d-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:4px}
+.copylink{appearance:none;-webkit-appearance:none;font:inherit;font-size:12.5px;color:var(--ink-2);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:2px 10px;cursor:pointer}
+.copylink:hover{border-color:var(--ink-3);color:var(--ink)}
+.copylink:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.linkbox{flex:1 1 220px;min-width:0;font:inherit;font-size:12.5px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:3px 8px}
+.logic{border-left:3px solid var(--ink-3);padding:2px 0 2px 14px;display:flex;flex-direction:column;gap:6px;max-width:74ch}
+.logic-h{margin:0;font-size:13px;font-weight:600;color:var(--ink-2);display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.logic ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:4px;font-size:14.5px}
+
 /* ---------- theme toggle (top right) ---------- */
 .theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .theme-btn:hover{color:var(--ink);border-color:var(--ink-3)}
@@ -240,7 +252,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <li><b>④</b><em>y</em> · à + 사물·생각, 장소</li>
       <li><b>⑤</b><em>en</em> · de + 명사, 수량</li>
     </ul>
-    <p class="hint">동사 앞에는 대명사가 많아야 두 개까지 옵니다. 긍정 명령문(<em>Donne-le-moi</em>)만 순서가 다릅니다 (아래 규칙 참고).</p>
+    <p class="hint">대명사를 누르면 나오는 「논리의 흐름」에는 <span class="own">사이트 설명</span> 표시가 붙어 있습니다. 문법서를 옮긴 것이 아니라 이 사이트가 정리한 판단 순서라는 뜻입니다. 동사 앞에는 대명사가 많아야 두 개까지 옵니다. 긍정 명령문(<em>Donne-le-moi</em>)만 순서가 다릅니다 (아래 규칙 참고).</p>
   </section>
 
   <section class="detail" id="detail" aria-live="polite"></section>
@@ -257,9 +269,9 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
           <tr><td class="pn">se</td><td>주어 자신 (대명동사의 재귀대명사)</td><td class="fr">Elle <b>se</b> lève.</td></tr>
           <tr><td class="pn">le la les</td><td>정관사·소유형용사·지시형용사가 붙은 직접목적어 (사람·사물)</td><td class="fr">Tu vois Paul ? — Je <b>le</b> vois.</td></tr>
           <tr><td class="pn">le</td><td>(중성) 문장·생각 전체</td><td class="fr">Il est malade ? — Je <b>le</b> sais.</td></tr>
-          <tr><td class="pn">lui leur</td><td><em>à</em> + 사람 (남녀 모양이 같음)</td><td class="fr">Tu parles à Marie ? — Je <b>lui</b> parle.</td></tr>
-          <tr><td class="pn">y</td><td><em>à</em> + 사물·생각, 장소 (<em>à, en, chez, dans</em> …)</td><td class="fr">Tu vas à Paris ? — J'<b>y</b> vais.</td></tr>
-          <tr><td class="pn">en</td><td><em>de</em> + 명사, 부분관사·부정관사·수량 표현이 붙은 명사</td><td class="fr">Tu veux du café ? — J'<b>en</b> veux.<br>Tu as des frères ? — J'<b>en</b> ai deux.</td></tr>
+          <tr><td class="pn">lui leur</td><td><em>à</em> + 사람을 받는 동사의 간접목적어 (<em>parler à, écrire à, donner à</em>). 남녀 모양이 같음. <em>penser à, s'intéresser à</em> 같은 동사는 <em>à</em> + 강세형 (<em>Je pense à elle.</em>)</td><td class="fr">Tu parles à Marie ? — Je <b>lui</b> parle.</td></tr>
+          <tr><td class="pn">y</td><td><em>à</em> + 사물·생각, 장소 (<em>à, en, chez, dans</em> …). 사람이면 보통 <em>lui</em>나 <em>à</em> + 강세형</td><td class="fr">Tu vas à Paris ? — J'<b>y</b> vais.</td></tr>
+          <tr><td class="pn">en</td><td><em>de</em> + 명사, 부분관사·부정관사·수량 표현이 붙은 명사. 사람이면 보통 <em>de</em> + 강세형 (<em>Je parle d'elle.</em>)</td><td class="fr">Tu veux du café ? — J'<b>en</b> veux.<br>Tu as des frères ? — J'<b>en</b> ai deux.</td></tr>
         </tbody>
       </table></div>
       <p class="small"><em>me, te, se, le, la</em>는 모음이나 무음 h 앞에서 <em>m', t', s', l'</em>로 줄어듭니다 (<em>Je l'aime. Il m'appelle.</em>). <em>lui, leur, les</em>는 줄지 않습니다.</p>
@@ -350,9 +362,10 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     les:{c:2,ko:"3인칭 복수 직접목적어 · 그들을 / 그것들을",what:"정관사·소유형용사·지시형용사가 붙은 복수 직접목적어를 대신합니다. 남녀 모양이 같습니다.",ex:[["Tu as les clés ? — Oui, je <b>les</b> ai.","열쇠 있어? 응, 있어."],["Les photos ? Je <b>les</b> ai prises.","사진? 내가 찍었어. (과거분사 일치)"],["Je <b>les</b> attends.","그들을 기다린다."]],note:"줄어들지 않습니다. 부정관사 <em>des</em>가 붙은 명사는 <em>les</em>가 아니라 <em>en</em>입니다 (<em>J'ai des clés → J'en ai.</em>)."},
     lui:{c:3,ko:"3인칭 단수 간접목적어 · 그에게 / 그녀에게",what:"<em>à</em> + 사람(단수)을 대신합니다. 남성·여성 모양이 같습니다.",ex:[["Tu parles à Marie ? — Oui, je <b>lui</b> parle.","마리에게 말해? 응."],["Il voudrait <b>lui</b> montrer cette bague.","그는 그녀에게 이 반지를 보여 주고 싶어 한다. (PONS)"],["Je ne vais pas <b>lui</b> téléphoner.","그에게 전화하지 않을 거야. (PONS)"]],note:"사물이면 <em>y</em>입니다. <em>penser à, s'intéresser à</em> + 사람은 <em>lui</em> 대신 <em>à lui / à elle</em>: <em>Je pense à elle.</em>"},
     leur:{c:3,ko:"3인칭 복수 간접목적어 · 그들에게",what:"<em>à</em> + 사람(복수)을 대신합니다. 남성·여성 모양이 같습니다.",ex:[["Tu écris à tes parents ? — Oui, je <b>leur</b> écris.","부모님께 편지 써? 응."],["Je <b>leur</b> ai parlé.","그들에게 말했다. (과거분사 일치 없음)"]],note:"대명사 <em>leur</em>는 -s가 붙지 않습니다. <em>leurs</em>(그들의)는 소유형용사로 다른 말입니다."},
-    y:{c:4,ko:"à + 사물·생각, 장소 · 거기에 / 그것에",what:"<em>à</em> + 사물·생각, 또는 <em>à, en, chez, dans, sur</em> 같은 전치사가 붙은 장소를 대신합니다.",ex:[["Tu vas à Paris ? — Oui, j'<b>y</b> vais.","파리에 가? 응, 가."],["Tu penses à ton examen ? — Oui, j'<b>y</b> pense.","시험 생각해? 응."],["Il <b>y</b> a un problème.","문제가 있다. (<em>il y a</em>)"]],note:"사람에게는 쓰지 않습니다 (→ <em>lui</em> 또는 <em>à lui</em>). <em>aller</em>의 tu 명령형은 <em>Vas-y</em>입니다."},
-    en:{c:5,ko:"de + 명사, 수량 · 그것을 (얼마간) / 거기서",what:"<em>de</em> + 명사, 부분관사(<em>du, de la</em>)·부정관사 복수(<em>des</em>)·수량 표현이 붙은 명사를 대신합니다. 수가 있으면 수는 뒤에 남깁니다.",ex:[["Tu veux du café ? — Oui, j'<b>en</b> veux.","커피 마실래? 응."],["Tu as des frères ? — Oui, j'<b>en</b> ai deux.","형제 있어? 응, 둘."],["Tu parles de ton voyage ? — Oui, j'<b>en</b> parle.","여행 얘기해? 응."],["Tu viens de la gare ? — Oui, j'<b>en</b> viens.","역에서 오는 길이야? 응."]],note:"<em>en</em> 앞에서는 과거분사가 일치하지 않습니다: <em>Des pommes ? J'en ai mangé.</em>"}
+    y:{c:4,ko:"à + 사물·생각, 장소 · 거기에 / 그것에",what:"<em>à</em> + 사물·생각, 또는 <em>à, en, chez, dans, sur</em> 같은 전치사가 붙은 장소를 대신합니다.",ex:[["Tu vas à Paris ? — Oui, j'<b>y</b> vais.","파리에 가? 응, 가."],["Tu penses à ton examen ? — Oui, j'<b>y</b> pense.","시험 생각해? 응."],["Il <b>y</b> a un problème.","문제가 있다. (<em>il y a</em>)"]],note:"사람에게는 보통 쓰지 않습니다 (→ <em>lui</em> 또는 <em>à lui</em>). <em>aller</em>의 tu 명령형은 <em>Vas-y</em>입니다."},
+    en:{c:5,ko:"de + 명사, 수량 · 그것을 (얼마간) / 거기서",what:"<em>de</em> + 명사, 부분관사(<em>du, de la</em>)·부정관사 복수(<em>des</em>)·수량 표현이 붙은 명사를 대신합니다. 수가 있으면 수는 뒤에 남깁니다.",ex:[["Tu veux du café ? — Oui, j'<b>en</b> veux.","커피 마실래? 응."],["Tu as des frères ? — Oui, j'<b>en</b> ai deux.","형제 있어? 응, 둘."],["Tu parles de ton voyage ? — Oui, j'<b>en</b> parle.","여행 얘기해? 응."],["Tu viens de la gare ? — Oui, j'<b>en</b> viens.","역에서 오는 길이야? 응."]],note:"<em>en</em> 앞에서는 과거분사가 일치하지 않습니다: <em>Des pommes ? J'en ai mangé.</em> <em>de</em> + 사람은 보통 <em>en</em> 대신 <em>de</em> + 강세형: <em>Tu parles de Marie ? — Oui, je parle d'elle.</em> (말할 때는 사람에게도 <em>en</em>을 쓰는 경우가 있음)"}
   };
+  var LOGIC = {"me": ["1·2인칭은 직접목적어와 간접목적어 모양이 같습니다.", "그래서 대명사를 고를 때는 동사가 <em>à</em>를 요구하는지 따지지 않아도 됩니다.", "구분이 필요한 곳은 복합시제의 과거분사 일치뿐입니다: <em>Il m'a vu(e).</em> (직접 → 일치) / <em>Il m'a parlé.</em> (간접 → 일치 없음)"], "te": ["1·2인칭은 직접목적어와 간접목적어 모양이 같습니다.", "그래서 대명사를 고를 때는 동사가 <em>à</em>를 요구하는지 따지지 않아도 됩니다.", "구분이 필요한 곳은 복합시제의 과거분사 일치뿐입니다: <em>Je t'ai vu(e).</em> (직접 → 일치) / <em>Je t'ai écrit.</em> (간접 → 일치 없음)"], "nous": ["1·2인칭은 직접목적어와 간접목적어 모양이 같습니다.", "그래서 대명사를 고를 때는 동사가 <em>à</em>를 요구하는지 따지지 않아도 됩니다.", "구분이 필요한 곳은 복합시제의 과거분사 일치뿐입니다: <em>Elle nous a vus.</em> (직접 → 일치) / <em>Elle nous a parlé.</em> (간접 → 일치 없음)"], "vous": ["1·2인칭은 직접목적어와 간접목적어 모양이 같습니다.", "그래서 대명사를 고를 때는 동사가 <em>à</em>를 요구하는지 따지지 않아도 됩니다.", "구분이 필요한 곳은 복합시제의 과거분사 일치뿐입니다: <em>Je vous ai vus.</em> (직접 → 일치) / <em>Je vous ai écrit.</em> (간접 → 일치 없음)"], "se": ["목적어가 주어와 같은 사람·사물이면 <em>se</em>입니다 (대명동사).", "<em>se</em>가 직접목적어인지 간접목적어인지는 과거분사 일치에서만 중요합니다: <em>Elle s'est lavée.</em> (직접) / <em>Elles se sont parlé.</em> (간접: <em>parler à</em>)"], "le": ["동사가 전치사 없이 목적어를 받습니다 (<em>voir, connaître, aimer</em> + 명사).", "그 명사가 정해진 것입니다 (정관사·소유형용사·지시형용사).", "그래서 <em>le / la / les</em>. 정해지지 않은 양(<em>du, des, deux</em> …)이면 여기서 <em>en</em>으로 갈라집니다."], "lui": ["동사가 <em>à</em> + 사람을 요구합니다 (<em>parler à, écrire à, donner qc à</em>).", "같은 <em>à</em> + 사람이라도 동사마다 다릅니다. <em>penser à, songer à, faire attention à</em> 같은 동사는 <em>lui</em>를 쓰지 않고 <em>à</em> + 강세형으로 남깁니다: <em>Je pense à elle.</em>", "대명동사 + <em>à</em> + 사람도 <em>à</em> + 강세형입니다. 동사 앞 ① 칸에 이미 <em>se</em>가 있어서 ③ <em>lui</em>를 함께 쓸 수 없기 때문입니다: <em>Je m'adresse à lui.</em>"], "leur": ["동사가 <em>à</em> + 사람(복수)을 요구합니다 (<em>parler à, écrire à, donner qc à</em>).", "같은 <em>à</em> + 사람이라도 동사마다 다릅니다. <em>penser à, songer à</em> 같은 동사는 <em>leur</em>를 쓰지 않고 <em>à eux / à elles</em>로 남깁니다.", "대명동사 + <em>à</em> + 사람도 <em>à</em> + 강세형입니다. ① 칸의 <em>se</em>와 ③ <em>leur</em>를 함께 쓸 수 없기 때문입니다: <em>Je m'adresse à eux.</em>"], "y": ["동사나 표현이 <em>à</em>(또는 장소 전치사)를 요구합니다 (<em>penser à, aller à, être dans</em>).", "그 대상이 사람이 아니라 사물·생각·장소입니다.", "그래서 <em>y</em>. 대상이 사람이면 <em>lui / leur</em> 또는 <em>à</em> + 강세형으로 갈라집니다."], "en": ["동사·형용사가 <em>de</em>를 요구하거나(<em>parler de, avoir besoin de, être content de</em>), 명사 앞에 <em>du, de la, des</em>나 수량 표현이 있습니다.", "그 대상이 사람이 아니라 사물·생각·양입니다.", "그래서 <em>en</em>. 수가 있으면 수는 뒤에 남깁니다 (<em>J'en ai deux.</em>). 대상이 사람이면 보통 <em>de</em> + 강세형 (<em>Je parle d'elle.</em>)."], "la": ["동사가 전치사 없이 목적어를 받습니다 (<em>voir, connaître, aimer</em> + 명사).", "그 명사가 정해진 것입니다 (정관사·소유형용사·지시형용사).", "그래서 <em>le / la / les</em>. 정해지지 않은 양(<em>du, des, deux</em> …)이면 여기서 <em>en</em>으로 갈라집니다."], "les": ["동사가 전치사 없이 목적어를 받습니다 (<em>voir, connaître, aimer</em> + 명사).", "그 명사가 정해진 것입니다 (정관사·소유형용사·지시형용사).", "그래서 <em>le / la / les</em>. 정해지지 않은 양(<em>du, des, deux</em> …)이면 여기서 <em>en</em>으로 갈라집니다."]};
   var COLS = {1:["me","te","se","nous","vous"],2:["le","la","les"],3:["lui","leur"],4:["y"],5:["en"]};
   var CNAME = {1:"① 1·2인칭·재귀",2:"② 3인칭 직접목적어",3:"③ 3인칭 간접목적어",4:"④ y",5:"⑤ en"};
   /* column pairs: s = ok | rare | no */
@@ -412,6 +425,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
           '<h2 class="d-title"><span class="fr">' + p + '</span>' + t.ko + '</h2>' +
           '<p class="d-what">' + t.what + '</p>' + exHTML(t.ex) +
           '<p class="note"><span class="lbl">주의</span>' + t.note + '</p>' +
+          (LOGIC[p] ? '<div class="logic"><p class="logic-h">논리의 흐름 <span class="own">사이트 설명</span></p><ol>' + LOGIC[p].map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ol></div>' : '') +
           '<p class="hint">다른 대명사를 하나 더 누르면 함께 쓸 때의 순서가 나옵니다.</p>';
     } else {
       var a = sel[0], b = sel[1];
@@ -431,11 +445,37 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
             exHTML([pr.ex]) + (pr.note ? '<p class="note"><span class="lbl">주의</span>' + pr.note + '</p>' : '');
       }
     }
-    if (sel.length) h += '<button type="button" class="linkbtn" id="clr">선택 지우기</button>';
+    if (sel.length){
+      h += '<div class="d-tools"><button type="button" class="copylink" id="copylink" title="이 설명으로 바로 오는 주소를 복사">링크 복사</button><input class="linkbox" id="linkbox" readonly hidden aria-label="이 설명의 주소"></div>' + '<button type="button" class="linkbtn" id="clr">선택 지우기</button>';
+      var hs = sel.slice().sort(function(a, b){ return PR[a].c - PR[b].c; }); setHash(hs.join("-"));
+    } else { try { if (location.hash) history.replaceState(null, "", location.pathname + location.search); } catch (e) {} }
     d.innerHTML = h;
     var clr = $("clr"); if (clr) clr.addEventListener("click", function(){ sel = []; render(); });
+    bindCopy();
   }
+
+  /* ---------- direct links: #id opens that item; "링크 복사" copies the current address ---------- */
+  function setHash(h){ try { if (location.hash !== "#" + h) history.replaceState(null, "", "#" + h); } catch (e) {} }
+  function readHash(){ try { return decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return ""; } }
+  function bindCopy(){
+    var b = document.getElementById("copylink"), box = document.getElementById("linkbox");
+    if (!b || b.getAttribute("data-bound")) return;
+    b.setAttribute("data-bound", "1");
+    b.addEventListener("click", function(){
+      var u = location.href;
+      function done(){ b.textContent = "복사됨"; setTimeout(function(){ b.textContent = "링크 복사"; }, 1500); }
+      function fallback(){ box.value = u; box.hidden = false; box.focus(); box.select(); }
+      try { navigator.clipboard.writeText(u).then(done, fallback); } catch (e) { fallback(); }
+    });
+  }
+  function fromHash(){
+    var parts = readHash().split("-").filter(function(x){ return PR[x]; }).slice(0, 2);
+    if (parts.length){ sel = parts; return true; } return false;
+  }
+  var had = fromHash();
   render();
+  if (had) setTimeout(function(){ $("detail").scrollIntoView({block:"start"}); }, 60);
+  window.addEventListener("hashchange", function(){ var before = sel.join("-"); if (fromHash() && sel.join("-") !== before) render(); });
 })();
 </script>
 <script>
