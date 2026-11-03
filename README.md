@@ -1,5 +1,7 @@
 # Les temps · les pronoms · les relatifs
 
+**프랑스어 학습 지도 (시제-대명사-관계사)**
+
 프랑스어 문법에서 학습자가 가장 많이 헷갈리는 세 가지, **시제와 법**, **대명사의 순서**, **관계사**를 각각 한 장의 지도로 정리한 사이트입니다.
 
 **접속 주소:** https://hyungwookha.github.io/lestempslespronomslesrelatifs
@@ -44,6 +46,7 @@
 
 - **다크 모드:** 오른쪽 위 버튼. 한 번 고르면 세 페이지를 오가도 유지됩니다. localStorage `french-tenses-theme`에 저장되고, 저장 기능이 막힌 환경을 위해 탭 링크의 `?theme=`와 `window.name`에도 함께 실어 넘깁니다.
 - **항목별 바로가기:** 칸을 누르면 주소 끝이 그 항목으로 바뀝니다 (`index.html#passe_compose`, `pronoms.html#en`, `pronoms.html#le-lui`, `relatifs.html#de-personne`). 그 주소로 들어오면 그 설명이 바로 열리고, 「링크 복사」 버튼으로 주소를 복사할 수 있습니다.
+- **만든 사람의 말:** 국기 탭 위 선에 선 금색 수탉을 누르면 사이트를 만든 이유와 다루지 않는 범위를 적은 글이 열립니다. 수탉 그림(`coq.png`)은 20프랑 금화(쥘클레망 샤플랭 디자인, 1899년, 퍼블릭 도메인)의 수탉입니다.
 - **서버·빌드 없음:** HTML 파일 세 개가 각각 혼자 동작합니다. 글꼴(Gowun Batang, IBM Plex Sans KR, Newsreader)만 Google Fonts에서 불러옵니다.
 
 ## 고칠 때 볼 곳

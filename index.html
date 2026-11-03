@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="프랑스어 시제와 법을 한 장에 놓은 지도">
-<title>프랑스어 시제 지도</title>
+<meta name="description" content="프랑스어 시제·대명사·관계사를 한 장씩 정리한 학습 지도">
+<title>프랑스어 학습 지도 (시제-대명사-관계사)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,13 +69,13 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body)
 em{font-family:var(--f-fr);font-style:italic;font-size:1.06em}
 b{font-weight:600}
 
-.page{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:66px 72px;display:flex;flex-direction:column;gap:28px}
+.page{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:104px 72px;display:flex;flex-direction:column;gap:28px}
 
 /* ---------- site nav: 3 topic banners on one line = bleu · blanc · rouge ---------- */
 .site-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;border-bottom:3px solid var(--ink);margin-top:-8px}
 .sn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 6px 7px;text-decoration:none;line-height:1.3;text-align:center;min-width:0}
-.sn:first-child{border-top-left-radius:6px}
-.sn:last-child{border-top-right-radius:6px}
+.sn-bleu{border-top-left-radius:10px}
+.sn-rouge{border-top-right-radius:10px}
 .sn b{font-family:var(--f-head);font-weight:700;font-size:15px}
 .sn small{font-family:var(--f-fr);font-style:italic;font-size:12px;opacity:.82}
 .sn-bleu{background:var(--fr-bleu);color:var(--on-flag)}
@@ -508,6 +508,29 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 .copylink:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .linkbox{flex:1 1 220px;min-width:0;font:inherit;font-size:12.5px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:3px 8px}
 
+/* ---------- rooster emblem (on a line above the topic bar) + author's note ---------- */
+.site-nav{position:relative}
+/* thin line floating above the tabs; its ends curve down smoothly */
+.site-nav::before{content:"";position:absolute;left:-7px;right:-7px;top:-7px;bottom:-3px;border:1.5px solid var(--ink-3);border-bottom:3px solid var(--ink);border-radius:17px 17px 0 0;pointer-events:none}
+/* the rooster of the 20-franc gold coin (Chaplain, 1899) stands on that line; fixed gold in both themes */
+.marianne{position:absolute;left:50%;top:-66px;transform:translateX(-50%);z-index:3;appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;width:64px;height:60px;cursor:pointer;border-radius:8px;transition:transform .15s}
+.marianne img{display:block;width:100%;height:100%;object-fit:contain}
+.marianne:hover,.marianne:focus-visible{transform:translateX(-50%) translateY(-3px)}
+.marianne:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.about{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));background:rgba(17,19,24,.55)}
+.about[hidden]{display:none}
+.about-card{position:relative;width:100%;max-width:560px;max-height:100%;overflow-y:auto;background:var(--sheet);color:var(--ink);border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.25);padding:28px 22px 24px;display:flex;flex-direction:column;gap:12px}
+.about-card::before{content:"";position:absolute;left:0;right:0;top:0;height:7px;border-radius:14px 14px 0 0;box-shadow:inset 0 -1px 0 var(--rule);background:linear-gradient(90deg,var(--fr-bleu) 0 33.3%,var(--fr-blanc) 33.3% 66.6%,var(--fr-rouge) 66.6%)}
+.about-card h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:22px;line-height:1.3;padding-right:56px}
+.about-card p{margin:0;font-size:15px;line-height:1.75}
+.about-card ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:14.5px;line-height:1.65}
+.about-card h3{margin:6px 0 0;font-size:14px;font-weight:600;color:var(--ink-2)}
+.about-card .sign{color:var(--ink-2)}
+.about-x{position:absolute;top:18px;right:14px;appearance:none;-webkit-appearance:none;font:inherit;font-size:13px;color:var(--ink-2);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:3px 12px;cursor:pointer}
+.about-x:hover{color:var(--ink);border-color:var(--ink-3)}
+.about-x:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.marianne{transition:none}}
+
 /* ---------- theme toggle (top right) ---------- */
 .theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .theme-btn:hover{color:var(--ink);border-color:var(--ink-3)}
@@ -543,6 +566,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 </button>
 <div class="page">
   <nav class="site-nav" aria-label="주제">
+    <button type="button" class="marianne" id="marianne" aria-haspopup="dialog" aria-controls="about" aria-label="만든 사람의 말 보기" title="만든 사람의 말"><img src="coq.png" alt="" width="64" height="60" decoding="async"></button>
     <a class="sn sn-bleu" href="index.html" aria-current="page"><b>시제·법</b><small>les temps</small></a>
     <a class="sn sn-blanc" href="pronoms.html"><b>대명사</b><small>les pronoms</small></a>
     <a class="sn sn-rouge" href="relatifs.html"><b>관계사</b><small>les relatifs</small></a>
@@ -1755,5 +1779,36 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 })();
 </script>
 
+<div class="about" id="about" role="dialog" aria-modal="true" aria-labelledby="about-h" hidden>
+  <div class="about-card" tabindex="-1">
+    <button type="button" class="about-x" id="about-x">닫기</button>
+    <h2 id="about-h">만든 사람의 말</h2>
+    <p>이 사이트는 정보 전달용 참고 자료입니다. 연습 문제나 점수 기능은 없습니다. 지도를 보고, 칸을 눌러 설명을 읽는 것이 전부입니다.</p>
+    <p>저는 대학에서 독일어를 전공하는 학생입니다. 프랑스어를 처음 접했을 때, 독일어보다 훨씬 다양한 동사 활용과 시제 개념에 놀랐습니다. 그래서 제 공부를 수월하게 하고 시제를 제대로 이해하려고, 프랑스어과 친구의 도움을 받아 시제 표를 먼저 만들었습니다. 이 사이트는 그 표에서 시작했습니다.</p>
+    <p>만들고 보니 시제만 있기는 아쉬워서, 공부하면서 자주 틀렸던 대명사와 관계사를 더했습니다. 그렇게 세 가지 개념을 다루는 사이트가 되었습니다.</p>
+    <h3>이렇게 만들었습니다</h3>
+    <ul>
+      <li><b>한 주제에 그림 한 장.</b> 페이지 맨 위에 주제를 한눈에 보는 그림이 있고, 그 아래에 누른 칸의 설명, 맨 아래에 규칙 정리가 이어집니다.</li>
+      <li><b>근거를 밝힙니다.</b> 두 문법서(PONS, Delatour)의 내용을 색 상자로 붙이고 출처를 적었습니다. 사이트가 직접 쓴 설명과 예문은 따로 표시했습니다.</li>
+      <li><b>휴대폰에서 읽기 좋게.</b> 휴대폰 화면을 기준으로 만들었고, 다크 모드를 지원합니다.</li>
+    </ul>
+    <h3>다루지 않는 것</h3>
+    <p>제 필요에서 출발한 사이트라, 프랑스어의 다른 부분은 정보가 부족하거나 아예 없습니다. 문법의 기본인 명사나 발음이 그렇습니다. 처음부터 제가 중요하게 여긴 문법만, 그리고 비전공자가 다루고 납득할 수 있는 범위만 담는다는 분명한 한계를 두고 만들었습니다.</p>
+    <p>이 사이트는 상업적으로 이용하지 않습니다.</p>
+    <p class="sign">모든 학습자 여러분의 건투를 빕니다.</p>
+  </div>
+</div>
+<script>
+/* ---------- rooster emblem: opens the author's note ---------- */
+(function(){
+  var btn = document.getElementById("marianne"), box = document.getElementById("about"), x = document.getElementById("about-x");
+  function open(){ box.hidden = false; document.body.style.overflow = "hidden"; x.focus(); }
+  function close(){ box.hidden = true; document.body.style.overflow = ""; btn.focus(); }
+  btn.addEventListener("click", open);
+  x.addEventListener("click", close);
+  box.addEventListener("click", function(e){ if (e.target === box) close(); });
+  document.addEventListener("keydown", function(e){ if (!box.hidden && e.key === "Escape") close(); });
+})();
+</script>
 </body>
 </html>
