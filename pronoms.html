@@ -198,6 +198,7 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 .marianne:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .about{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));background:rgba(17,19,24,.55)}
 .about[hidden]{display:none}
+[hidden]{display:none !important}
 .about-card{position:relative;width:100%;max-width:560px;max-height:100%;overflow-y:auto;background:var(--sheet);color:var(--ink);border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.25);padding:28px 22px 24px;display:flex;flex-direction:column;gap:12px}
 .about-card::before{content:"";position:absolute;left:0;right:0;top:0;height:7px;border-radius:14px 14px 0 0;box-shadow:inset 0 -1px 0 var(--rule);background:linear-gradient(90deg,var(--fr-bleu) 0 33.3%,var(--fr-blanc) 33.3% 66.6%,var(--fr-rouge) 66.6%)}
 .about-card h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:22px;line-height:1.3;padding-right:56px}
@@ -209,6 +210,42 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
 .about-x:hover{color:var(--ink);border-color:var(--ink-3)}
 .about-x:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){.marianne{transition:none}}
+
+/* ---------- personal pronoun tables (toggle under the triangle) ---------- */
+.ptab{display:flex;flex-direction:column;gap:14px;margin-top:-10px}
+.ptab-btn{align-self:flex-start;appearance:none;-webkit-appearance:none;font:inherit;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border:1.5px solid var(--ink);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer}
+.ptab-btn:hover{background:var(--hover)}
+.ptab-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.ptab-btn .chev{transition:transform .2s}
+.ptab-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.ptab-body{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px 16px 18px;display:flex;flex-direction:column;gap:12px}
+.ptab-body h2{margin:0;font-family:var(--f-head);font-size:20px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.ptab-body h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.ptab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:18px 28px;align-items:start}
+@media (max-width:760px){.ptab-grid{grid-template-columns:minmax(0,1fr)}}
+.ptab-col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.ptbl{width:100%;border-collapse:collapse;font-size:14.5px;text-align:center}
+.ptbl th,.ptbl td{border:1px solid var(--rule);padding:6px 4px;vertical-align:middle}
+.ptbl thead th{background:var(--hover);font-size:12.5px;font-weight:600;color:var(--ink-2);line-height:1.3}
+.ptbl tbody th{font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.ptbl tbody th small{font-weight:400;color:var(--ink-3)}
+.ptbl td{font-family:var(--f-fr);font-size:17px}
+.ptbl td small{font-size:13px;color:var(--ink-3)}
+.ptbl tr.grp th{background:var(--paper);font-size:12px;color:var(--ink-3);text-align:left;padding:3px 8px;letter-spacing:.04em}
+.ptbl td.o{background:var(--red-soft)}
+.ptbl a.pl{color:var(--red);text-decoration:none;border-bottom:1px dashed var(--red)}
+.ptbl a.pl:hover{border-bottom-style:solid}
+.ptbl a.pl:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.ptab-btn .chev{transition:none}}
+
+/* ---------- 이 정리표에 넣지 않은 것 (same as index) ---------- */
+.omit{display:flex;flex-direction:column;gap:12px;border-top:1px dashed var(--ink-3);padding-top:16px;margin-top:8px}
+.omit h2{margin:0;font-family:var(--f-head);font-weight:700;font-size:20px}
+.omit > p{margin:0;max-width:72ch;color:var(--ink-2)}
+.omit .tbl td{font-size:14px}
+.omit .tbl td.fr{font-size:15px}
+.omit .tbl .ko{font-family:var(--f-body);font-size:12.5px;color:var(--ink-2)}
+.omit .tbl tr.grp td{background:var(--hover);font-size:12.5px;font-weight:600;color:var(--ink-2);padding:6px 8px}
 
 /* ---------- theme toggle (top right) ---------- */
 .theme-btn{position:fixed;top:max(12px, env(safe-area-inset-top, 0px));right:max(12px, env(safe-area-inset-right, 0px));z-index:50;appearance:none;-webkit-appearance:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink-2);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
@@ -277,6 +314,51 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       <li><b>⑤</b><em>en</em> · de + 명사, 수량</li>
     </ul>
     <p class="hint">대명사를 누르면 나오는 「논리의 흐름」에는 <span class="own">사이트 설명</span> 표시가 붙어 있습니다. 문법서를 옮긴 것이 아니라 이 사이트가 정리한 판단 순서라는 뜻입니다. 동사 앞에는 대명사가 많아야 두 개까지 옵니다. 긍정 명령문(<em>Donne-le-moi</em>)만 순서가 다릅니다 (아래 규칙 참고).</p>
+  </section>
+
+  <section class="ptab" aria-label="인칭대명사 표">
+    <button type="button" class="ptab-btn" id="ptab-btn" aria-expanded="false" aria-controls="ptab"><span id="ptab-lbl">인칭대명사 표 펼치기</span> <span class="chev" aria-hidden="true">▾</span></button>
+    <div class="ptab-body" id="ptab" hidden>
+      <h2>인칭대명사 한눈에 보기 <span class="own">사이트 정리</span></h2>
+      <div class="ptab-grid">
+        <div class="ptab-col">
+          <h3>① 주어 인칭대명사와 강세형</h3>
+          <div class="tbl-wrap"><table class="ptbl">
+          <thead><tr><th scope="col">뜻</th><th scope="col">주어</th><th scope="col">강세형</th></tr></thead>
+          <tbody>
+            <tr class="grp"><th colspan="3" scope="rowgroup">단수</th></tr>
+            <tr><th scope="row">나</th><td>je</td><td>moi</td></tr>
+            <tr><th scope="row">너</th><td>tu</td><td>toi</td></tr>
+            <tr><th scope="row">그 / 그녀</th><td>il / elle</td><td>lui / elle</td></tr>
+            <tr class="grp"><th colspan="3" scope="rowgroup">복수</th></tr>
+            <tr><th scope="row">우리</th><td>nous</td><td>nous</td></tr>
+            <tr><th scope="row">당신 / 너희</th><td>vous</td><td>vous</td></tr>
+            <tr><th scope="row">그들 (남 / 여)</th><td>ils / elles</td><td>eux / elles</td></tr>
+          </tbody>
+        </table></div>
+          <p class="small">주어 인칭대명사는 늘 주어 자리에 씁니다. 강세형은 주어를 강조할 때(<em>Moi, je reste.</em>), 전치사 뒤(<em>avec moi</em>), <em>c'est</em> 뒤(<em>C'est lui.</em>)에 씁니다. 자세한 쓰임은 아래 「강세형 대명사」 규칙에 있습니다.</p>
+        </div>
+        <div class="ptab-col">
+          <h3>② 인칭과 자리에 따른 모든 꼴</h3>
+          <div class="tbl-wrap"><table class="ptbl ptbl-all">
+          <thead><tr><th scope="col">인칭</th><th scope="col">주어</th><th scope="col">직접<br>목적</th><th scope="col">간접<br>목적</th><th scope="col">강세형</th></tr></thead>
+          <tbody>
+            <tr class="grp"><th colspan="5" scope="rowgroup">단수</th></tr>
+            <tr><th scope="row">1</th><td>je</td><td class="o"><a class="pl" href="#me">me</a> <small>(m')</small></td><td class="o"><a class="pl" href="#me">me</a> <small>(m')</small></td><td>moi</td></tr>
+            <tr><th scope="row">2</th><td>tu</td><td class="o"><a class="pl" href="#te">te</a> <small>(t')</small></td><td class="o"><a class="pl" href="#te">te</a> <small>(t')</small></td><td>toi</td></tr>
+            <tr><th scope="row">3 <small>남</small></th><td>il</td><td class="o"><a class="pl" href="#le">le</a> <small>(l')</small></td><td class="o" rowspan="2"><a class="pl" href="#lui">lui</a></td><td>lui</td></tr>
+            <tr><th scope="row">3 <small>여</small></th><td>elle</td><td class="o"><a class="pl" href="#la">la</a> <small>(l')</small></td><td>elle</td></tr>
+            <tr class="grp"><th colspan="5" scope="rowgroup">복수</th></tr>
+            <tr><th scope="row">1</th><td>nous</td><td class="o"><a class="pl" href="#nous">nous</a></td><td class="o"><a class="pl" href="#nous">nous</a></td><td>nous</td></tr>
+            <tr><th scope="row">2</th><td>vous</td><td class="o"><a class="pl" href="#vous">vous</a></td><td class="o"><a class="pl" href="#vous">vous</a></td><td>vous</td></tr>
+            <tr><th scope="row">3 <small>남</small></th><td>ils</td><td class="o" rowspan="2"><a class="pl" href="#les">les</a></td><td class="o" rowspan="2"><a class="pl" href="#leur">leur</a></td><td>eux</td></tr>
+            <tr><th scope="row">3 <small>여</small></th><td>elles</td><td>elles</td></tr>
+          </tbody>
+        </table></div>
+          <p class="small">1·2인칭(<em>me, te, nous, vous</em>)은 직접목적과 간접목적의 모양이 같고, 3인칭만 <em>le / la / les</em>와 <em>lui / leur</em>로 갈라집니다. 괄호는 모음이나 무음 h 앞에서 줄어든 꼴입니다. 빨간 대명사를 누르면 위 삼각형에서 그 대명사의 설명이 열립니다.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="detail" id="detail" aria-live="polite"></section>
@@ -369,6 +451,29 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
       </div>
     </div>
   </div>
+
+  <section class="omit" id="omit" aria-labelledby="omit-h">
+    <h2 id="omit-h">이 정리표에 넣지 않은 것</h2>
+    <p>대명사와 관련된 내용 중 이 페이지에 넣지 않은 것들입니다. 프랑스어 문법 총정리 기준으로 이 사이트가 다루지 않는 대명사와, 대명사가 대신하는 명사 쪽 문법도 함께 적었습니다.</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>개념</th><th>예</th><th>넣지 않은 이유</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="3">문법 총정리 기준으로 이 사이트에 없는 것 (다른 대명사)</td></tr>
+          <tr><td>주어 인칭대명사</td><td class="fr">je, tu, il, elle, nous, vous, ils, elles</td><td>위 「인칭대명사 표」에 꼴만 정리. 활용은 시제 페이지 활용표에</td></tr>
+          <tr><td>부정대명사</td><td class="fr">Personne n'est venu. · Chacun a son idée.<br><span class="ko">아무도 오지 않았다. · 각자 생각이 있다.</span></td><td>다루지 않음</td></tr>
+          <tr><td>지시대명사</td><td class="fr">Je prends celui-ci. · Ça me plaît.<br><span class="ko">이걸로 할게. · 그게 마음에 들어.</span></td><td>관계사와 함께 쓰는 <em>celui qui, ceux qui</em>만 관계사 페이지에서 다룸</td></tr>
+          <tr class="grp"><td colspan="3">문법 총정리 기준으로 이 사이트에 없는 것 (대명사가 대신하는 명사 쪽)</td></tr>
+          <tr><td>명사의 성·수</td><td class="fr">un livre / une table · des livres</td><td><em>le / la / les</em>를 고를 때 필요하지만 따로 다루지 않음</td></tr>
+          <tr><td>관사 (정관사·부정관사·부분관사)</td><td class="fr">le, la, les · un, une, des · du, de la</td><td><em>le / la / les</em>냐 <em>en</em>이냐를 가르는 기준으로만 언급</td></tr>
+          <tr><td>형용사 (수·지시·소유)</td><td class="fr">deux livres · ce livre · mon livre<br><span class="ko">책 두 권 · 이 책 · 내 책</span></td><td>다루지 않음</td></tr>
+          <tr class="grp"><td colspan="3">대명사 쓰임 중 넣지 않은 것</td></tr>
+          <tr><td>소유대명사</td><td class="fr">Ce livre est le mien.<br><span class="ko">이 책은 내 거야.</span></td><td>다루지 않음 (PONS 6장에 제목만 있음)</td></tr>
+          <tr><td>주어 <em>on</em>의 여러 뜻</td><td class="fr">On y va ? · On m'a volé mon vélo.<br><span class="ko">갈까? · 누가 내 자전거를 훔쳐 갔다.</span></td><td>주어 대명사의 쓰임이라 이 페이지 범위 밖</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <footer>초록 상자와 삼각형 순서: PONS 「Grammatik Französisch – Auf einen Blick」 6장(대명사)·4장·2장을 한국어로 정리 · 나머지 설명과 예문은 일반 문법을 바탕으로 정리</footer>
 </div>
@@ -499,7 +604,16 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
   var had = fromHash();
   render();
   if (had) setTimeout(function(){ $("detail").scrollIntoView({block:"start"}); }, 60);
-  window.addEventListener("hashchange", function(){ var before = sel.join("-"); if (fromHash() && sel.join("-") !== before) render(); });
+  /* personal pronoun tables: toggle */
+  (function(){
+    var b = $("ptab-btn"), body = $("ptab"), lbl = $("ptab-lbl");
+    b.addEventListener("click", function(){
+      var open = body.hidden;
+      body.hidden = !open; b.setAttribute("aria-expanded", open ? "true" : "false");
+      lbl.textContent = open ? "인칭대명사 표 접기" : "인칭대명사 표 펼치기";
+    });
+  })();
+  window.addEventListener("hashchange", function(){ var before = sel.join("-"); if (fromHash()){ if (sel.join("-") !== before) render(); $("detail").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"}); } });
 })();
 </script>
 <script>
@@ -548,7 +662,8 @@ footer{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padd
     </ul>
     <h3>다루지 않는 것</h3>
     <p>제 필요에서 출발한 사이트라, 프랑스어의 다른 부분은 정보가 부족하거나 아예 없습니다. 문법의 기본인 명사나 발음이 그렇습니다. 처음부터 제가 중요하게 여긴 문법만, 그리고 비전공자가 다루고 납득할 수 있는 범위만 담는다는 분명한 한계를 두고 만들었습니다.</p>
-    <p>이 사이트는 상업적으로 이용하지 않습니다.</p>
+    <p>하지만 사용자 편의를 위해, 대학프랑스어 교양강의에서 강사분께서 배포해 주신 문법 자료를 기반으로 하여, 사이트에서 다루지 않은 부분은 각 페이지 하단의 「이 정리표에 넣지 않은 것」에 표시하였습니다.</p>
+    <p>이 사이트는 상업적으로 이용되지 않을 것이며, 어디까지나 학습자의 편의를 최우선으로 생각할 것입니다.</p>
     <p class="sign">모든 학습자 여러분의 건투를 빕니다.</p>
   </div>
 </div>
